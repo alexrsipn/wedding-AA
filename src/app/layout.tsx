@@ -1,7 +1,9 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
+import {JSX, Suspense} from "react";
 import "./globals.css";
 import {AudioProvider} from "@/context/AudioContext";
+import {GuestProvider} from "@/context/GuestContext";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -22,15 +24,17 @@ export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
-}>) {
+}>): JSX.Element {
   return (
     <html lang="en">
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-      <AudioProvider>
-          {children}
-      </AudioProvider>
+      <Suspense fallback={<div>Cargando...</div>}>
+          <AudioProvider>
+              <GuestProvider>{children}</GuestProvider>
+          </AudioProvider>
+      </Suspense>
       </body>
     </html>
   );

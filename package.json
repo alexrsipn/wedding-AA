@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "airtable": "^0.12.2",
     "framer-motion": "^12.23.12",
     "next": "15.4.6",
     "postcss": "^8.5.6",

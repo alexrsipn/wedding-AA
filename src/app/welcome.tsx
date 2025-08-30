@@ -1,10 +1,12 @@
 "use client";
 import {useState, useEffect} from "react";
 import Image from "next/image";
+import {useGuest} from "@/context/GuestContext";
 
 export default function Welcome() {
     const [isOpen, setIsOpen] = useState(true);
     const [isClosing, setIsClosing] = useState(false);
+    const {guest, isLoading, error} = useGuest();
     useEffect(() => {
         if (isOpen) {
             document.body.style.overflow = "hidden";
@@ -21,6 +23,7 @@ export default function Welcome() {
             setIsOpen(false);
         }, 500)
     };
+
     return isOpen ? (
         <>
             <section className={`w-screen h-screen z-50 absolute top-0 left-0 bg-black/50 flex items-center justify-center backdrop-blur-sm transition-opacity duration-500 ${isClosing ? "opacity-0" : "opacity-100"}`}>
@@ -37,8 +40,17 @@ export default function Welcome() {
                                     <p className="font-semibold py-2 text-xl text-center font-serif">Andrea & Alexis</p>
                                     <p>Tenemos el honor de invitarlos a la celebración de nuestra unión en matrimonio</p>
                                     <div className="flex flex-col font-serif italic font-medium py-4">
-                                        <span>Nombre de invitado</span>
-                                        <span>Cantidad de boletos</span>
+                                        {isLoading ? (
+                                            <span>Cargando invitación...</span>
+                                        ) : error ? (
+                                            <span>Invitación no encontrada</span>
+                                        ) : guest ? (
+                                            <>
+                                                <span>Hola <b>{guest.name}</b>, te hemos asignado <b>{guest.assignedTickets}</b> boletos ...</span>
+                                            </>
+                                        ) : (
+                                            <span>Bienvenido/a</span>
+                                        )}
                                     </div>
                                     <div className="flex justify-around items-center py-4">
                                         <span className="font-serif font-normal">SÁBADO</span>
