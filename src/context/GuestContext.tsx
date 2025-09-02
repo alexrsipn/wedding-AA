@@ -7,6 +7,7 @@ export interface Guest {
     id: string,
     name?: string,
     guestListDetails?: string,
+    guestDetails?: string[],
     assignedTickets?: number,
     confirmedTickets?: number,
     guestList?: string,
@@ -54,7 +55,22 @@ export const GuestProvider = ({children}: {children: ReactNode}) => {
                     return;
                 }
                 const data: Guest = await response.json();
-                setGuest(data);
+                const guestList = data.guestListDetails?.split(";");
+                const guestData = {
+                    id: data.id,
+                    name: data.name,
+                    guestListDetails: data.guestListDetails,
+                    guestDetails: guestList,
+                    assignedTickets: data.assignedTickets,
+                    confirmedTickets: data.confirmedTickets,
+                    guestList: data.guestList,
+                    guestCode: data.guestCode,
+                    phone: data.phone,
+                    email: data.email,
+                    confirmed: data.confirmed,
+                    invitationStatus: data.invitationStatus
+                }
+                setGuest(guestData);
             } catch (err: unknown) {
                 if (err instanceof Error) {
                     console.error("Caught an error: ", err.message);
