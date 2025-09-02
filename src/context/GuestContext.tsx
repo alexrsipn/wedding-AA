@@ -48,12 +48,23 @@ export const GuestProvider = ({children}: {children: ReactNode}) => {
             try {
                 const response = await fetch(`/api/netlify/functions/get-guest?guestId=${guestId}`);
                 if (!response.ok) {
-                    throw new Error("No pudimos encontrar tu invitación");
+                    /*throw new Error("No pudimos encontrar tu invitación");*/
+                    console.error("No pudimos encontrar tu invitación");
+                    setError("No pudimos encontrar tu invitación");
+                    return;
                 }
                 const data: Guest = await response.json();
                 setGuest(data);
-            } catch (err: Error) {
-                setError(err.message);
+            } catch (err: unknown) {
+                if (err instanceof Error) {
+                    console.error("Caught an error: ", err.message);
+                    setError(err.message);
+                } else if (typeof err === "string") {
+                    console.error("Caught an error: ", err);
+                    setError(err);
+                } else {
+                    console.error("Caught an unknown error");
+                }
             } finally {
                 setIsLoading(false);
             }
