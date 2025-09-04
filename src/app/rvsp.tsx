@@ -1,9 +1,14 @@
+"use client";
+
+import HighlightedText from "@/components/HighlightedText";
+
 export default function Confirmation() {
     return (
         <>
-            <section className="text-gray-600 body-font relative">
-                <div className="container px-5 py-24 mx-auto flex sm:flex-nowrap flex-wrap">
-                    <div className="lg:w-1/3 md:w-1/2 bg-white flex flex-col md:ml-auto w-full md:py-8 mt-8 md:mt-0">
+            <section id="#rvsp" className="text-gray-600 body-font relative">
+                <div className="container px-4 mx-auto flex flex-col sm:flex-nowrap flex-wrap">
+                    <HighlightedText className="text-3xl lg:text-2xl text-center font-medium title-font mb-4 text-gray-900 dark:text-white">Confirma tu asistencia</HighlightedText>
+                    {/*<div className="lg:w-1/3 md:w-1/2 bg-white flex flex-col md:ml-auto w-full md:py-8 mt-8 md:mt-0 border border-red-500">
                         <h2 className="text-gray-900 text-lg mb-1 font-medium title-font">Feedback</h2>
                         <p className="leading-relaxed mb-5 text-gray-600">Post-ironic portland shabby chic echo park,
                             banjo fashion axe</p>
@@ -27,6 +32,9 @@ export default function Confirmation() {
                         </button>
                         <p className="text-xs text-gray-500 mt-3">Chicharrones blog helvetica normcore iceland tousled
                             brook viral artisan.</p>
+                    </div>*/}
+                    <div className="flex justify-center items-center p-40">
+                        <p>Sección en construcción</p>
                     </div>
                 </div>
             </section>

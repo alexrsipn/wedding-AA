@@ -18,8 +18,8 @@ const Word: FC<WordProps> = ({ children, progress, range}) => {
     const opacity = useTransform(progress, range, [0.2, 1]);
     return (
         <span className="relative">
-            <span className="absolute opacity-20">{children}</span>
-            <motion.span style={{opacity}}>{children}</motion.span>
+            <span className="absolute opacity-10">{children}&nbsp;</span>
+            <motion.span style={{opacity}}>{children}&nbsp;</motion.span>
         </span>
     )
 }
@@ -33,7 +33,7 @@ const HighlightedText: FC<HighlightedTextProps> = ({children, className}) => {
 
     const words = children.split(" ");
     return (
-        <p ref={containerRef} className={`flex flex-wrap ${className}`}>
+        <p ref={containerRef} className={`flex flex-wrap justify-center items-center ${className}`}>
             {words.map((word, i) => {
                 const start = i / words.length;
                 const end = start + 1 / words.length;

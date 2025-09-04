@@ -5,6 +5,7 @@ import Hero from "@/app/hero";
 import Footer from "@/app/footer";
 import Confirmation from "@/app/rvsp";
 import Details from "@/app/details";
+import Facilities from "@/app/facilities";
 
 export default function Home() {
   return (
@@ -13,8 +14,9 @@ export default function Home() {
       <Header/>
       <Hero/>
       <History/>
-        <Details/>
+      <Details/>
       <Confirmation/>
+      <Facilities/>
       <Footer/>
     </div>
   );

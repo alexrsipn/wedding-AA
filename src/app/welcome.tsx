@@ -8,6 +8,11 @@ export default function Welcome() {
     const [isClosing, setIsClosing] = useState(false);
     const {guest, isLoading, error} = useGuest();
     useEffect(() => {
+        if (window.history.scrollRestoration) {
+            window.history.scrollRestoration = "manual";
+        }
+        window.scrollTo(0,0);
+
         if (isOpen) {
             document.body.style.overflow = "hidden";
         } else {

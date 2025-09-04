@@ -7,7 +7,7 @@ import {useAudio} from "@/context/AudioContext";
 const navLinks = [
     { name: 'Inicio', href: '#home' },
     { name: 'Nuestra historia', href: '#history' },
-    { name: 'Detalles', href: '#detalles' },
+    { name: 'Detalles', href: '#details' },
     { name: 'Confirma tu asistencia', href: '#rvsp' },
 ]
 
@@ -31,23 +31,23 @@ export default function Header() {
                 isScrolled ? 'bg-white/80 shadow-md backdrop-blur-sm dark:bg-coyote/80' : 'bg-white dark:bg-coyote'
             }`}
         >
-            <div className="container mx-auto flex items-center justify-between">
-                <Link href="#home" className="flex-shrink-0 p-4" onClick={closeMenu}>
-                    <Image
-                        src="/images/logo_AA_light.svg"
-                        alt="Logo boda Andrea y Alexis"
-                        width={80}
-                        height={80}
-                        priority
-                        className="dark:invert"
-                    />
-                </Link>
+            <div className={`container mx-auto flex items-center justify-between transition-all duration-300 ${isScrolled ? 'py-0' : 'py-2'}`}>
+                {/*<Link href="#home" className={`flex-shrink-0 transition-all duration-300 ${isScrolled ? 'p-2' : 'p-4'}`} onClick={closeMenu}>*/}
+                <Image
+                    src="/images/logo_AA_light.svg"
+                    alt="Logo boda Andrea y Alexis"
+                    width={isScrolled ? 50 : 80}
+                    height={isScrolled ? 50 : 80}
+                    priority
+                    className="dark:invert"
+                />
+                {/*</Link>*/}
                 <nav className="hidden md:flex md:items-center md:justify-center md:gap-x-6 lg:gap-x-8">
                     {navLinks.map((link) => (
                         <Link
                             key={link.name}
                             href={link.href}
-                            className="text-lg font-medium text-gray-600 transition-colors duration-200 hover:text-gray-900 dark:text-gray-300 dark:hover:text-white hover:underline underline-offset-4 px-4 py-2 rounded-md"
+                            className={`text-lg font-medium text-gray-600 transition-all duration-300 hover:text-gray-900 dark:text-gray-300 dark:hover:text-white hover:underline underline-offset-4 px- rounded-md ${isScrolled ? 'p-0' : 'p-2'}`}
                         >
                             {link.name}
                         </Link>
@@ -75,7 +75,7 @@ export default function Header() {
                             aria-hidden="true"
                         >
                             <path
-                                className={`transition-transform duration-300 ease-in-out ${isMenuOpen ? 'rotate-45 -translate-y-0.5 translate-x-1/3' : ''}`}
+                                className={`transition-transform duration-300 ease-in-out ${isMenuOpen ? 'rotate-45 -translate-y-[0.14rem] translate-x-[0.56rem]' : ''}`}
                                 strokeLinecap="round"
                                 strokeLinejoin="round"
                                 strokeWidth="2"
