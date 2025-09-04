@@ -15,13 +15,11 @@ interface AirtableGuestFields extends FieldSet {
     InvitationStatus?: string
 }
 
-/*exports.handler = async (event: any) => {*/
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
     const {guestId} = req.query;
     if (!guestId || typeof guestId !== "string") {
         return res.status(400).json({error: 'El ID del invitado es requerido'});
     }
-    /*const {guestId} = event.queryStringParameters;*/
     if (!guestId) {
         return {
             statusCode: 400,
@@ -37,7 +35,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
     try {
         const record: Record<AirtableGuestFields> = await base(tableName).find(guestId);
-
         const guest: Guest = {
             id: record.id,
             name: record.fields.FullName,
@@ -52,11 +49,9 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
             invitationStatus: record.fields.InvitationStatus
         };
 
-        /*return {statusCode: 200, body: JSON.stringify(guest)};*/
         return res.status(200).json(guest);
     } catch (error) {
         console.log(error);
-        /*return {statusCode: 404, body: JSON.stringify({error: "Invitado no encontrado"})}*/
         return res.status(404).json({error: "Invitado no encontrado"})
     }
 }

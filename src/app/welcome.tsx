@@ -23,13 +23,12 @@ export default function Welcome() {
             setIsOpen(false);
         }, 500)
     };
-
     return isOpen ? (
         <>
             <section className={`w-screen h-screen z-50 absolute top-0 left-0 bg-black/50 flex items-center justify-center backdrop-blur-sm transition-opacity duration-500 ${isClosing ? "opacity-0" : "opacity-100"}`}>
-                <div className={`bg-white rounded-xl shadow-xl text-center flex flex-col gap-2 h-4/5 w-full lg:w-1/2 mx-4 transition-all duration-500 ${isClosing ? "scale-95 opacity-0" : "scale-100 opacity-100"}`}>
+                <div className={`bg-white rounded-xl shadow-xl text-center flex flex-col gap-2 h-4/5 w-full lg:w-1/2 mx-4 -mt-20 lg:mt-0 transition-all duration-500 ${isClosing ? "scale-95 opacity-0" : "scale-100 opacity-100"}`}>
                     <div className="relative lg:min-w-xl h-full">
-                        <Image className="absolute -top-24 lg:-top-31 left-4 w-11/12 lg:w-3/5 lg:left-1/5" src="/images/envelope.svg" alt="Sobre de invitación" width={500} height={325}/>
+                        <Image className="absolute -top-24 lg:-top-31 left-4 w-11/12 lg:w-3/5 lg:left-1/5" src="/images/envelope.png" alt="Sobre de invitación" width={500} height={325}/>
                         <div className="overflow-hidden h-full">
                             <div className="text-white text-center relative w-full h-full">
                                 <Image className="absolute top-16 lg:top-38 left-0 w-full h-full px-6 transform scale-200 lg:scale-125" src="/images/arc.svg" alt="Arco" width={1000} height={100}/>
@@ -37,9 +36,9 @@ export default function Welcome() {
                             </div>
                             <div className="absolute top-32 lg:top-48 w-full transition-all duration-500">
                                 <div className="relative w-4/6 lg:w-2/5 mx-auto px-2 bg-white shadow-xl rounded">
-                                    <p className="font-semibold py-2 text-xl text-center font-serif">Andrea & Alexis</p>
-                                    <p className="font-light">Tenemos el honor de invitarte a la celebración de nuestro matrimonio</p>
-                                    <div className="flex flex-col font-serif italic font-medium py-2 text-left px-2">
+                                    <p className="font-semibold py-2 lg:py-4 text-xl text-center font-serif">Andrea & Alexis</p>
+                                    <p className="font-light py-1 lg:py-2">Tenemos el honor de invitarte a la celebración de nuestro matrimonio</p>
+                                    <div className="flex flex-col font-serif italic font-medium py-2 text-left px-2 lg:py-2">
                                         {isLoading ? (
                                             <span className="text-center font-semibold">Cargando invitación...</span>
                                         ) : error ? (
@@ -68,7 +67,7 @@ export default function Welcome() {
                                             <span>Bienvenido/a</span>
                                         )}
                                     </div>
-                                    <div className="flex justify-around items-center p-2">
+                                    <div className="flex justify-around items-center py-2 lg:py-4">
                                         <span className="font-serif font-normal">SÁBADO</span>
                                         <div className="flex flex-col justify-center items-center text-lg font-serif font-medium border-x border-black px-1.5">
                                             <span>28</span>
@@ -78,7 +77,7 @@ export default function Welcome() {
                                         <span className="font-serif font-normal">3:30 PM</span>
                                     </div>
                                     <div className="pb-1">
-                                        <button className="bg-paynesgray cursor-pointer text-white font-semibold px-4 py-2 rounded-md disabled:bg-gray-300 disabled:cursor-not-allowed" onClick={handleClose} disabled={!guest}>Más información</button>
+                                        <button className="bg-paynesgray cursor-pointer text-white px-4 py-2 rounded-md disabled:bg-gray-300 disabled:cursor-not-allowed" onClick={handleClose} disabled={!guest}>Más información</button>
                                     </div>
                                 </div>
                             </div>

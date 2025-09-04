@@ -2,8 +2,9 @@ import Welcome from "@/app/welcome";
 import Header from "@/app/header";
 import History from "@/app/history";
 import Hero from "@/app/hero";
-import RVSP from "@/app/rvsp";
 import Footer from "@/app/footer";
+import Confirmation from "@/app/rvsp";
+import Details from "@/app/details";
 
 export default function Home() {
   return (
@@ -12,7 +13,8 @@ export default function Home() {
       <Header/>
       <Hero/>
       <History/>
-      <RVSP/>
+        <Details/>
+      <Confirmation/>
       <Footer/>
     </div>
   );

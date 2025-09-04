@@ -27,11 +27,9 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
             }
         ]);
 
-        /*return {statusCode: 200, body: JSON.stringify({message: 'Confirmación exitosa'})}*/
         return res.status(200).json({message: "Confirmación exitosa"});
     } catch (error) {
         console.error(error);
-        /*return {statusCode: 500, body: JSON.stringify({error: 'Error al actualizar la confirmación'})}*/
         return res.status(500).json({error: 'Error al actualizar la confirmación'});
     }
 }

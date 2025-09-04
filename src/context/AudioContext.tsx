@@ -10,7 +10,7 @@ interface AudioContextType {
 const AudioContext = createContext<AudioContextType | undefined>(undefined);
 
 export const AudioProvider = ({children}: {children: ReactNode}) => {
-    const [isMuted, setIsMuted] = useState(true);
+    const [isMuted, setIsMuted] = useState(false);
     const toggleMute = useCallback(() => {
         setIsMuted(prev => !prev)
     }, []);
