@@ -9,7 +9,7 @@ import Facilities from "@/app/facilities";
 
 export default function Home() {
   return (
-    <div className="bg-neutral-50 dark:bg-neutral-800">
+    <div className="bg-white dark:bg-stone-900 text-gray-900 dark:text-slate-200">
       <Welcome/>
       <Header/>
       <Hero/>

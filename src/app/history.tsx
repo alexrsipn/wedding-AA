@@ -97,8 +97,8 @@ export default function History() {
     const scrollableHeight = totalItems * 100;
     return (
         <>
-            <section id="history" className="text-gray-600 body-font dark:text-gray-300">
-                <div className="container mx-auto py-4">
+            <section id="history" className="body-font">
+                <div className="container mx-auto p-4">
                     <div className="flex flex-col items-center justify-center text-center w-full">
                         {/*<h3 className="text-3xl lg:text-2xl text-center font-medium title-font mb-4 text-gray-900 dark:text-white">Nuestra historia</h3>*/}
                         <HighlightedText className="text-3xl lg:text-2xl text-center font-medium title-font mb-4 text-gray-900 dark:text-white">Nuestra historia</HighlightedText>
@@ -108,7 +108,7 @@ export default function History() {
                         )}
                         {/*<span>Te recomendamos activar el audio para una mejor experiencia.</span>*/}
                         <div className="py-4">
-                            <button onClick={toggleMute} aria-label={isMuted ? "Activar sonido" : "Silenciar"} className="py-2 px-4 rounded-full bg-gray-600 text-gray-50 font-medium  cursor-pointer transition-colors hover:bg-gray-700 dark:text-gray-300 dark:hover::bg-gray-800 dark:hover:text-white">
+                            <button onClick={toggleMute} aria-label={isMuted ? "Activar sonido" : "Silenciar"} className="bg-sky-700 hover:bg-sky-800 dark:bg-sky-800 dark:hover:bg-sky-700 cursor-pointer text-white px-4 py-2 rounded-md font-medium transition-colors">
                                 {isMuted ? (
                                     <span>Activar música</span>
                                 ) : (

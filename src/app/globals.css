@@ -24,4 +24,9 @@ body {
   --color-isabelline: #EDE7E3;
   --color-vanilla: #D4E09B;
   --color-cornsilk: #f8f7ff;
+    --color-dusty-darkblue: #8296aa;
+    --color-dusty-blue: #aab9cd;
+    --color-dusty-lightblue: #cdd7e6;
+    --color-dusty-green: #e1e1d7;
+    --color-dusty-white: #faf5f5;
 }

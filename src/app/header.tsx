@@ -28,7 +28,7 @@ export default function Header() {
     return (
         <header
             className={`sticky top-0 z-40 transition-all duration-400 ${
-                isScrolled ? 'bg-white/80 shadow-md backdrop-blur-sm dark:bg-coyote/80' : 'bg-white dark:bg-coyote'
+                isScrolled ? 'bg-white/80 shadow-md backdrop-blur-sm dark:bg-stone-950/80' : 'bg-white dark:bg-stone-950'
             }`}
         >
             <div className={`container mx-auto flex items-center justify-between transition-all duration-300 ${isScrolled ? 'p-2' : 'p-4'}`}>
@@ -52,7 +52,7 @@ export default function Header() {
                             {link.name}
                         </Link>
                     ))}
-                    <button onClick={toggleMute} aria-label={isMuted ? "Activar sonido" : "Silenciar"} className="rounded-full text-gray-600 transition-colors hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover::bg-gray-800 dark:hover:text-white">
+                    <button onClick={toggleMute} aria-label={isMuted ? "Activar sonido" : "Silenciar"} className="rounded-full p-2 text-gray-600 transition-colors hover:bg-gray-500 hover:text-gray-900 dark:text-gray-300 dark:hover::bg-gray-800 dark:hover:text-white cursor-pointer">
                         {isMuted ? (
                             <svg className="h-6 w-6" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><line x1="23" y1="9" x2="17" y2="15"></line><line x1="17" y1="9" x2="23" y2="15"></line></svg>
                         ) : (
