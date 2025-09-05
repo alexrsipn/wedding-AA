@@ -8,7 +8,7 @@ const navLinks = [
     { name: 'Inicio', href: '#home' },
     { name: 'Nuestra historia', href: '#history' },
     { name: 'Detalles', href: '#details' },
-    { name: 'Confirma tu asistencia', href: '#rvsp' },
+    { name: 'Asistencia', href: '#rvsp' },
 ]
 
 export default function Header() {
@@ -31,7 +31,7 @@ export default function Header() {
                 isScrolled ? 'bg-white/80 shadow-md backdrop-blur-sm dark:bg-coyote/80' : 'bg-white dark:bg-coyote'
             }`}
         >
-            <div className={`container mx-auto flex items-center justify-between transition-all duration-300 ${isScrolled ? 'py-0' : 'py-2'}`}>
+            <div className={`container mx-auto flex items-center justify-between transition-all duration-300 ${isScrolled ? 'p-2' : 'p-4'}`}>
                 {/*<Link href="#home" className={`flex-shrink-0 transition-all duration-300 ${isScrolled ? 'p-2' : 'p-4'}`} onClick={closeMenu}>*/}
                 <Image
                     src="/images/logo_AA_light.svg"
@@ -52,7 +52,7 @@ export default function Header() {
                             {link.name}
                         </Link>
                     ))}
-                    <button onClick={toggleMute} aria-label={isMuted ? "Activar sonido" : "Silenciar"} className="p-2 rounded-full text-gray-600 transition-colors hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover::bg-gray-800 dark:hover:text-white">
+                    <button onClick={toggleMute} aria-label={isMuted ? "Activar sonido" : "Silenciar"} className="rounded-full text-gray-600 transition-colors hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover::bg-gray-800 dark:hover:text-white">
                         {isMuted ? (
                             <svg className="h-6 w-6" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><line x1="23" y1="9" x2="17" y2="15"></line><line x1="17" y1="9" x2="23" y2="15"></line></svg>
                         ) : (

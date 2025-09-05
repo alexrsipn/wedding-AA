@@ -110,7 +110,7 @@ export default function History() {
                         <div className="py-4">
                             <button onClick={toggleMute} aria-label={isMuted ? "Activar sonido" : "Silenciar"} className="py-2 px-4 rounded-full bg-gray-600 text-gray-50 font-medium  cursor-pointer transition-colors hover:bg-gray-700 dark:text-gray-300 dark:hover::bg-gray-800 dark:hover:text-white">
                                 {isMuted ? (
-                                    <span>Activar sonidos</span>
+                                    <span>Activar música</span>
                                 ) : (
                                     <span>Silenciar</span>
                                 )}

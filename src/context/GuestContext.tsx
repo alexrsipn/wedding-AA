@@ -11,10 +11,9 @@ export interface Guest {
     assignedTickets?: number,
     confirmedTickets?: number,
     guestList?: string,
-    guestCode?: string,
     phone?: string,
     email?: string,
-    confirmed?: string,
+    confirmed?: boolean,
     invitationStatus?: string
 }
 
@@ -55,6 +54,7 @@ export const GuestProvider = ({children}: {children: ReactNode}) => {
                     return;
                 }
                 const data: Guest = await response.json();
+                console.log(data);
                 const guestList = data.guestListDetails?.split(";");
                 const guestData = {
                     id: data.id,
@@ -64,7 +64,6 @@ export const GuestProvider = ({children}: {children: ReactNode}) => {
                     assignedTickets: data.assignedTickets,
                     confirmedTickets: data.confirmedTickets,
                     guestList: data.guestList,
-                    guestCode: data.guestCode,
                     phone: data.phone,
                     email: data.email,
                     confirmed: data.confirmed,

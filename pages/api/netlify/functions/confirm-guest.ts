@@ -6,8 +6,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         return res.status(405).json({message: 'Method Not Allowed'});
     }
     try {
-        const {guestId, isConfirmed, attendees} = req.body;
-        if (!guestId) {
+        const {GuestId, Confirmed, ConfirmedTickets, ConfirmedAttendees, InvitationStatus} = req.body;
+        if (!GuestId) {
             return res.status(400).json({error: 'El ID del invitado es requerido'})
         }
 
@@ -17,15 +17,27 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
         const base = new Airtable({apiKey}).base(baseId!);
 
-        await base (tableName).update([
+        const body = {
+            "id": GuestId,
+            "fields": {
+                "Confirmed": Confirmed,
+                "ConfirmedTickets": ConfirmedTickets,
+                "ConfirmedAttendees": ConfirmedAttendees.join(";"),
+                "InvitationStatus": InvitationStatus
+            }
+        }
+        console.log(body);
+        await base (tableName).update([body]);
+
+/*        await base (tableName).update([
             {
-                "id": guestId,
+                "id": GuestId,
                 "fields": {
-                    "Confirmed": isConfirmed ? "Sí" : "No",
+                    "Confirmed": Confirmed,
                     "ConfirmedTickets": attendees
                 }
             }
-        ]);
+        ]);*/
 
         return res.status(200).json({message: "Confirmación exitosa"});
     } catch (error) {

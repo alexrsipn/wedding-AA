@@ -3,7 +3,7 @@ import Header from "@/app/header";
 import History from "@/app/history";
 import Hero from "@/app/hero";
 import Footer from "@/app/footer";
-import Confirmation from "@/app/rvsp";
+import RVSP from "@/app/rvsp";
 import Details from "@/app/details";
 import Facilities from "@/app/facilities";
 
@@ -15,7 +15,7 @@ export default function Home() {
       <Hero/>
       <History/>
       <Details/>
-      <Confirmation/>
+      <RVSP/>
       <Facilities/>
       <Footer/>
     </div>

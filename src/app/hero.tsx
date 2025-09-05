@@ -33,7 +33,7 @@ export default function Hero() {
     }, []);
     return (
         <>
-            <section className="text-gray-600 dark:text-white body-font">
+            <section id="home" className="text-gray-600 dark:text-white body-font">
                 <div className="container mx-auto flex px-5 py-8 items-center justify-center flex-col lg:flex-row gap-4">
                     <Image className="lg:w-1/2 md:w-3/6 w-full mb-4 object-cover object-center rounded" alt="hero"
                          src="/images/hero.jpg" width={700} height={600}/>
@@ -48,12 +48,12 @@ export default function Hero() {
                             <h4 className="text-2xl lg:text-xl font-medium text-gray-900">Nuestros padres</h4>
                             <div className="flex justify-evenly items-center">
                                 <div className="text-right">
-                                    <p>Salvador Lugo</p>
-                                    <p>Ana María Rivero</p>
+                                    <p>Martín Salvador Lugo Aquino</p>
+                                    <p>Ana María Rivero Ramírez</p>
                                 </div>
                                 <div className="text-left">
-                                    <p>Juan Carlos Ruiz</p>
-                                    <p>Noemí Santiago</p>
+                                    <p>Juan Carlos Ruiz de la Cruz</p>
+                                    <p>Noemí Santiago Santiago</p>
                                 </div>
                             </div>
                         </div>
