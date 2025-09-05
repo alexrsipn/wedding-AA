@@ -11,7 +11,7 @@ interface AirtableGuestFields extends FieldSet {
     GuestCode?: string,
     Phone?: string,
     Email?: string,
-    Confirmed?: string,
+    Confirmed?: boolean,
     InvitationStatus?: string
 }
 
@@ -42,7 +42,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
             assignedTickets: record.fields.AssignedTickets,
             confirmedTickets: record.fields.ConfirmedTickets,
             guestList: record.fields.GuestList,
-            guestCode: record.fields.GuestCode,
             phone: record.fields.Phone,
             email: record.fields.Email,
             confirmed: record.fields.Confirmed,

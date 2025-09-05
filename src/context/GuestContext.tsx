@@ -54,7 +54,7 @@ export const GuestProvider = ({children}: {children: ReactNode}) => {
                     return;
                 }
                 const data: Guest = await response.json();
-                console.log(data);
+
                 const guestList = data.guestListDetails?.split(";");
                 const guestData = {
                     id: data.id,
