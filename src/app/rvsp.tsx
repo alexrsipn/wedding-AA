@@ -1,8 +1,10 @@
 "use client";
 
-import {useState, useEffect} from "react";
+import {useState, useEffect, useRef, useCallback} from "react";
 import HighlightedText from "@/components/HighlightedText";
 import {useGuest} from "@/context/GuestContext";
+import {toPng} from "html-to-image";
+import {Ticket} from "@/components/Ticket";
 
 export default function RVSP() {
     return (
@@ -49,6 +51,7 @@ function RVSPForm() {
     const {guest, isLoading, error} = useGuest();
     const [selectedGuests, setSelectedGuests] = useState<string[]>([]);
     const [status, setStatus] = useState<'idle' | 'submitting' | 'success' | 'error'>('idle');
+    const ticketRef = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
         if (guest?.guestDetails) {
@@ -126,6 +129,23 @@ function RVSPForm() {
         document.body.removeChild(link);
     };
 
+    const handleDownloadTicket = useCallback(() => {
+        if (ticketRef.current === null) {
+            return;
+        }
+
+        toPng(ticketRef.current, { cacheBust: true, pixelRatio: 2})
+            .then((dataUrl) => {
+                const link = document.createElement('a');
+                link.download = 'boleto-boda-andrea-alexis.png';
+                link.href = dataUrl;
+                link.click();
+            })
+            .catch((error) => {
+                console.error('Error al generar la imagen:', error)
+            });
+    }, [ticketRef]);
+
     if (isLoading) {
         return <p className="mt-8">Cargando tu invitación...</p>
     }
@@ -139,12 +159,16 @@ function RVSPForm() {
         );
     }
 
-    if (status === 'success' || guest.confirmed) {
+    if (status === 'success' || guest.invitationStatus === "Confirmed") {
         return (
-            <div className="w-full flex flex-col justify-center items-center">
-                <h3 className="text-2xl lg:text-xl text-center font-medium title-font mb-4 text-gray-900 dark:text-white">¡Gracias por confirmar!</h3>
-                <p className="text-xl lg:text-lg text-center font-normal text-gray-900 dark:text-white">Tu respuesta ha sido guardada. ¡Nos llena de alegría saber que nos acompañarás!</p>
-                <button onClick={handleAddToCalendar} className="bg-indigo-500 text-white font-semibold my-8 py-2 px-4 rounded-md hover:bg-indigo-700 transition-all duration-300 transform hover:scale-105">Añadir evento al calendario</button>
+            <div className="w-full flex flex-col justify-center items-center text-center mt-8">
+                <h3 className="text-2xl lg:text-3xl font-serif font-semibold title-font mb-4 text-gray-900 dark:text-white">¡Gracias por confirmar!</h3>
+                <p className="text-xl lg:text-lg font-normal text-gray-900 dark:text-white pb-4">Tu respuesta ha sido guardada. ¡Nos llena de alegría saber que nos acompañarás!</p>
+                <Ticket ref={ticketRef} guestName={guest.name} confirmedGuests={guest.guestDetails || []} guestId={guest.id} />
+                <div className="flex flex-col sm:flex-row gap-8 mt-8">
+                    <button onClick={handleDownloadTicket} className="bg-sky-600 text-white font-semibold py-3 px-6 rounded-lg cursor-pointer shadow-md hover:bg-sky-700 transition-all duration-300 transform hover:scale-105">Descargar boleto</button>
+                    <button onClick={handleAddToCalendar} className="bg-indigo-500 text-white font-semibold py-3 px-6 rounded-lg cursor-pointer hover:bg-indigo-700 transition-all duration-300 transform hover:scale-105">Añadir evento al calendario</button>
+                </div>
             </div>
         );
     }

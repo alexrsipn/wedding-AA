@@ -63,11 +63,9 @@ export default function Details() {
                                 <h2 className="title-font font-semibold text-gray-900 tracking-widest">Ubicación</h2>
                                 <p className="hidden md:block mt-1">Carr. Cuautla-el Hospital 45, 10 de Abril, 62744 Cuautla, Mor.</p>
                             </div>
-                            <div className="w-full lg:w-1/2 lg:mt-0 text-center flex flex-col justify-center items-center gap-2">
-                                {/*<h2 className="title-font font-semibold text-gray-900 tracking-widest text-xs">Google Maps</h2>*/}
-                                <Link href="https://maps.app.goo.gl/NGLMagYyz4J17V2o6" target="_blank" className="text-neutral-100 leading-relaxed block p-2 rounded bg-indigo-600 cursor-pointer font-semibold">Cómo llegar con Google Maps</Link>
-                                {/*<h2 className="title-font font-semibold text-gray-900 tracking-widest text-xs mt-4">Waze</h2>*/}
-                                <Link href="https://ul.waze.com/ul?place=ChIJV-cwHw9vzoURmEcT9DiPanw&ll=18.81484290%2C-98.96175350&navigate=yes&utm_campaign=default&utm_source=waze_website&utm_medium=lm_share_location" target="_blank" className="text-neutral-100 leading-relaxed block p-2 rounded bg-indigo-600 cursor-pointer font-semibold">Cómo llegar con Waze</Link>
+                            <div className="w-full lg:w-1/2 lg:mt-0 text-center flex flex-col justify-center items-center gap-2 p-2">
+                                <Link href="https://maps.app.goo.gl/NGLMagYyz4J17V2o6" target="_blank" className="w-full text-neutral-100 leading-relaxed block p-2 rounded bg-indigo-600 cursor-pointer font-semibold">Cómo llegar con Google Maps</Link>
+                                <Link href="https://ul.waze.com/ul?place=ChIJV-cwHw9vzoURmEcT9DiPanw&ll=18.81484290%2C-98.96175350&navigate=yes&utm_campaign=default&utm_source=waze_website&utm_medium=lm_share_location" target="_blank" className="w-full text-neutral-100 leading-relaxed block p-2 rounded bg-indigo-600 cursor-pointer font-semibold">Cómo llegar con Waze</Link>
                             </div>
                         </div>
                     </div>
