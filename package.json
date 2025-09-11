@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@yudiel/react-qr-scanner": "^2.3.1",
     "airtable": "^0.12.2",
     "framer-motion": "^12.23.12",
     "html-to-image": "^1.11.13",
