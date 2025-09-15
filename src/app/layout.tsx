@@ -1,15 +1,11 @@
 import type { Metadata } from "next";
-/*import { Geist, Geist_Mono } from "next/font/google";*/
 import {Cinzel, Montserrat, Geist_Mono} from "next/font/google";
 import {JSX, Suspense} from "react";
 import "./globals.css";
 import {AudioProvider} from "@/context/AudioContext";
 import {GuestProvider} from "@/context/GuestContext";
+import {SmoothScrollProvider} from "@/components/SmoothScrollProvider";
 
-/*const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});*/
 const montserrat = Montserrat({
     subsets: ["latin"],
     weight: ["100", "200", "300", "400", "500", "600", "700", "800", "900"],
@@ -39,13 +35,15 @@ export default function RootLayout({
   children: React.ReactNode;
 }>): JSX.Element {
   return (
-    <html lang="en">
+    <html lang="es">
       <body
         className={`${montserrat.variable} ${cinzel.variable} ${geistMono.variable} antialiased`}
       >
       <Suspense fallback={<div>Cargando...</div>}>
           <AudioProvider>
-              <GuestProvider>{children}</GuestProvider>
+              <GuestProvider>
+                  <SmoothScrollProvider>{children}</SmoothScrollProvider>
+              </GuestProvider>
           </AudioProvider>
       </Suspense>
       </body>

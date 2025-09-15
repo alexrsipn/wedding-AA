@@ -1,8 +1,14 @@
 "use client";
-import {useState, useEffect} from "react";
+
+import {useState, useEffect, useRef} from "react";
 import Image from "next/image";
 import Typewriter from "@/components/Typewriter";
 import HighlightedText from "@/components/HighlightedText";
+import {useGSAP} from "@gsap/react";
+import {gsap} from "gsap";
+import {ScrollTrigger} from "gsap/ScrollTrigger";
+
+gsap.registerPlugin(ScrollTrigger);
 
 interface timeLeft {
     dias?: number;
@@ -31,13 +37,34 @@ export default function Hero() {
         const timer = setInterval(() => setTimeLeft(calculateTimeLeft()), 1000);
         return () => clearInterval(timer);
     }, []);
+
+    const heroRef = useRef<HTMLElement>(null);
+    const imageRef = useRef<HTMLImageElement>(null);
+
+    useGSAP(() => {
+        gsap.to(imageRef.current, {
+            y: "-50%",
+            ease: "none",
+            scrollTrigger: {
+                trigger: heroRef.current,
+                start: "top top",
+                end: "bottom top",
+                scrub: true
+            }
+        });
+    }, {scope: heroRef});
     return (
         <>
-            <section id="home" className="text-gray-900 dark:text-slate-200 body-font">
+            <section ref={heroRef} id="home" className="text-gray-900 dark:text-slate-200 body-font overflow-hidden">
                 <div className="container mx-auto flex px-5 py-8 items-center justify-center flex-col lg:flex-row gap-4">
-                    <Image className="lg:w-1/2 md:w-3/6 w-full mb-4 object-cover object-center rounded" alt="hero"
-                         src="/images/hero.jpg" width={700} height={600}/>
+                    <div className="lg:w-1/2 w-full mb-4 rounded overflow-hidden">
+                        <Image ref={imageRef} className="w-full mb-4 object-cover object-center rounded" alt="hero"
+                               src="/images/hero.jpg" width={700} height={600}/>
+                    </div>
                     <div className="text-center lg:w-2/3 w-full">
+                        <div className="flex items-center justify-center m-0 p-0">
+                            <Image src="/images/hero_flowers.png" alt="Flores" className="w-1/4 h-1/4 scale-x-110" width={300} height={400}/>
+                        </div>
                         <div className="lg:mb-6 mb-4">
                             <Typewriter text="¡Nos casamos!" finalBar={false} className="text-4xl lg:text-3xl font-medium mb-4"/>
                             {/*<HighlightedText className="text-center text-4xl lg:text-3xl font-medium text-gray-900 dark:text-gray-100 mb-4">¡ N o s  c a s a m o s !</HighlightedText>*/}
@@ -84,6 +111,9 @@ export default function Hero() {
                             ) : (
                                 <p className="text-2xl mt-4 font-semibold">¡El gran día ha llegado!</p>
                             )}
+                        </div>
+                        <div className="flex items-center justify-center m-0 p-0">
+                            <Image src="/images/hero_flowers.png" alt="Flores" className="w-1/4 h-1/4 scale-x-110 rotate-180" width={300} height={400}/>
                         </div>
                     </div>
                 </div>

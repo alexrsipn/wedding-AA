@@ -1,14 +1,17 @@
 "use client";
 
-import {motion, useScroll, useTransform, useInView} from "framer-motion";
-import {useRef} from "react";
-import type {FC} from "react";
+/*import {motion, useScroll, useTransform, useInView} from "framer-motion";*/
+import {useRef, useState, useEffect} from "react";
 import Image from "next/image";
-import {useAudioOnScroll} from "@/hooks/useAudioOnScroll";
 import Typewriter from "@/components/Typewriter";
 import {useAudio} from "@/context/AudioContext";
 import {useGuest} from "@/context/GuestContext";
 import HighlightedText from "@/components/HighlightedText";
+import {gsap} from "gsap";
+import {ScrollTrigger} from "gsap/ScrollTrigger";
+import {useGSAP} from "@gsap/react";
+
+gsap.registerPlugin(ScrollTrigger);
 
 type HistoryItem = {
     id: number;
@@ -50,13 +53,13 @@ const historyItems: HistoryItem[] = [
     }
 ];
 
-interface HistoryCardProps {
+/*interface HistoryCardProps {
     item: HistoryItem,
     progress: ReturnType<typeof useScroll>['scrollYProgress'],
     range: [number, number, number, number]
-}
+}*/
 
-const HistoryCard: FC<HistoryCardProps> = ({item, progress, range}) => {
+/*const HistoryCard: FC<HistoryCardProps> = ({item, progress, range}) => {
     const cardRef = useRef<HTMLDivElement>(null);
     const isInView = useInView(cardRef, {once: true, margin: "-40% 0px -40% 0px"});
     const opacity = useTransform(progress, range, [0, 1, 1, 0]);
@@ -68,7 +71,7 @@ const HistoryCard: FC<HistoryCardProps> = ({item, progress, range}) => {
             <div className="mx-auto">
                 <motion.div style={{y}}>
                     <h2 className="text-lg font-medium title-font text-neutral-800 dark:text-white mb-1">{item.subtitle}</h2>
-                    {/*<h1 className="sm:text-4xl text-3xl font-bold title-font text-gray-900 dark:text-white mb-3">{item.title}</h1>*/}
+                    {/!*<h1 className="sm:text-4xl text-3xl font-bold title-font text-gray-900 dark:text-white mb-3">{item.title}</h1>*!/}
                     <Typewriter text={item.title} finalBar={true} className="text-4xl lg:text-3xl font-bold title-font text-gray-900 dark:text-white mb-3" startAnimation={isInView}/>
                     <div className="flex flex-col lg:flex-row justify-center items-center w-full gap-4 lg:gap-2 p-4 border border-gray-200 rounded-lg shadow-xl">
                         <Image src={item.imageUrl} alt={item.title} width={800} height={600} className="w-2/5 h-full object-cover object-center order-1 lg:order-2"/>
@@ -83,18 +86,157 @@ const HistoryCard: FC<HistoryCardProps> = ({item, progress, range}) => {
             </div>
         </motion.div>
     );
-}
+}*/
+
+/*<div className="sticky top-0 flex h-screen items-center justify-center overflow-hidden">
+    <div className="relative flex h-full w-full items-center justify-center">
+        {historyItems.map((item, index) => {
+            const start = index / totalItems;
+            const end = (index + 1) / totalItems;
+            const transitionPoint = 0.1;
+            const range: [number, number, number, number] = [
+                start,
+                start + (end-start) * transitionPoint,
+                end - (end-start) * transitionPoint,
+                end
+            ]
+            return (
+                <></>
+                /!*<HistoryCard key={item.id} item={item} progress={scrollYProgress} range={range}/>*!/
+            )
+        })}
+    </div>
+</div>*/
 
 export default function History() {
     const {guest} = useGuest();
     const {isMuted, toggleMute} = useAudio();
     const containerRef = useRef<HTMLDivElement>(null);
-    const {scrollYProgress} = useScroll({
+/*    const {scrollYProgress} = useScroll({
         target: containerRef,
         offset: ["start start", "end end"],
     });
     const totalItems = historyItems.length;
-    const scrollableHeight = totalItems * 100;
+    const scrollableHeight = totalItems * 100;*/
+    const horizontalWrapperRef = useRef<HTMLDivElement>(null);
+    const [activeCard, setActiveCard] = useState(0);
+    const audioRefs = useRef<(HTMLAudioElement | null)[]>([]);
+    useEffect(() => {
+        audioRefs.current = historyItems.map(item => item.audioUrl ? new Audio(item.audioUrl) : null);
+        return () => {
+            audioRefs.current.forEach(audio => audio?.pause());
+        };
+    }, []);
+
+    useEffect(() => {
+        audioRefs.current.forEach((audio, index) => {
+            if (!audio) return;
+            audio.loop = true;
+            if (index === activeCard && !isMuted) {
+                audio.play().catch(e => console.error("Audio play error: ", e));
+            } else {
+                audio.pause();
+            }
+        });
+    }, [activeCard, isMuted]);
+
+    useGSAP(() => {
+        /*const cards = gsap.utils.toArray<HTMLDivElement>('.history-card')
+        const images = gsap.utils.toArray<HTMLImageElement>('.history-image');
+        const texts = gsap.utils.toArray<HTMLDivElement>('.history-text');*/
+        const horizontalSections = gsap.utils.toArray<HTMLDivElement>('.history-card');
+
+        gsap.to(horizontalSections, {
+            x: () => -(horizontalWrapperRef.current!.scrollWidth - window.innerWidth),
+            ease: "none",
+            scrollTrigger: {
+                trigger: containerRef.current,
+                pin: true,
+                scrub: 1,
+                start: "top top",
+                end: () => "+=" + (horizontalWrapperRef.current!.scrollWidth - window.innerWidth),
+                invalidateOnRefresh: true,
+                onUpdate: (self) => {
+                    const progress = self.progress;
+                    const newActiveCard = Math.floor(progress * horizontalSections.length);
+                    if (newActiveCard !== activeCard) {
+                        setActiveCard(newActiveCard);
+                    }
+                }
+            }
+        });
+
+        horizontalSections.forEach((section, index) => {
+            const image = section.querySelector('.history-image');
+            const text = section.querySelector('.history-text');
+
+            gsap.from(image, {
+                scale: 1.3,
+                scrollTrigger: {
+                    trigger: section,
+                    /*containerAnimation: ScrollTrigger.get(horizontalWrapperRef.current),*/
+                    start: "left right",
+                    end: "left left",
+                    scrub: true,
+                }
+            });
+
+            gsap.from(text, {
+                y: 100,
+                autoAlpha: 0,
+                scrollTrigger: {
+                    trigger: section,
+                    /*containerAnimation: ScrollTrigger.get(horizontalWrapperRef.current)*/
+                    start: "left center",
+                    end: "left left",
+                    scrub: true
+                }
+            });
+        });
+
+        /*gsap.set(cards, { autoAlpha: 0, y: 50, scale: 0.9 });*/
+
+/*        const tl = gsap.timeline({
+            scrollTrigger: {
+                trigger: containerRef.current,
+                pin: true,
+                scrub: 0.5,
+                start: "top top",
+                end: "+=4000"
+            }
+        });*/
+
+        /*cards.forEach((card, index) => {
+            const image = images[index];
+            const text = texts[index];
+
+            tl.to(card, {
+                autoAlpha: 1,
+                y: 0,
+                duration: 1,
+                ease: "power2.out"
+            }, `card${index}`)
+                .to(image, {
+                    scale: 1.15,
+                    ease: "none"
+                }, `card${index}`)
+                .from(text, {
+                    autoAlpha: 0,
+                    y: 30,
+                    duration: 0.8,
+                }, `card${index}+=0.5`);
+
+            if (index < cards.length - 1) {
+                tl.to(card, {
+                    autoAlpha: 0,
+                    y: -50,
+                    duration: 1,
+                    ease: "power2.in"
+                }, `card${index}+=2`);
+            }
+        });*/
+    }, { scope: containerRef });
+
     return (
         <>
             <section id="history" className="body-font">
@@ -117,24 +259,38 @@ export default function History() {
                             </button>
                         </div>
                     </div>
-                    <div ref={containerRef} className="relative" style={{height: `${scrollableHeight/2}vh`}}>
-                        <div className="sticky top-0 flex h-screen items-center justify-center overflow-hidden">
-                            <div className="relative flex h-full w-full items-center justify-center">
-                                {historyItems.map((item, index) => {
-                                    const start = index / totalItems;
-                                    const end = (index + 1) / totalItems;
-                                    const transitionPoint = 0.1;
-                                    const range: [number, number, number, number] = [
-                                        start,
-                                        start + (end-start) * transitionPoint,
-                                        end - (end-start) * transitionPoint,
-                                        end
-                                    ]
-                                    return (
-                                        <HistoryCard key={item.id} item={item} progress={scrollYProgress} range={range}/>
-                                    )
-                                })}
+                    <div ref={containerRef} className="relative h-screen w-full overflow-hidden border border-red-500">
+                        <div ref={horizontalWrapperRef} className="flex h-full" style={{width: `${historyItems.length * 100}vw`}}>
+                        {historyItems.map((item, index) => (
+                            <div key={item.id} className="history-card w-full h-full flex items-center justify-center relative p-8">
+                                <div className="absolute inset-0 overflow-hidden">
+                                    <Image src={item.imageUrl} alt={item.title} fill className="history-image object-cover"/>
+                                </div>
+                                <div className="history-text relative max-w-3xl w-full bg-white/70 dark:bg-slate-900/70 backdrop-blur-md p-6 md:p-10 rouded-xl shadow-2xl text-center">
+                                    <h2 className="text-lg font-medium title-font text-neutral-800 dark:text-white mb-1">{item.subtitle}</h2>
+                                    <Typewriter text={item.title} finalBar={false} className="text-4xl lg:text-3xl font-bold title-font text-gray-900 dark:text-white mb-4" startAnimation={activeCard === index} />
+                                    <div className="flex flex-col md:flex-row gap-4 text-justify text-sm md:text-base">
+                                        <p className="leading-relaxed">{item.descriptionAndy}</p>
+                                        <p className="leading-relaxed">{item.descriptionAlexis}</p>
+                                    </div>
+                                </div>
+                                {/*<div className="mx-auto max-w-5xl w-full">
+                                    <div className="flex flex-col lg:flex-row justify-center items-center w-full gap-4 lg:gap-8 p-4 bg-white/50 dark:bg-slate-800/50 backdrop-blur-sm border border-gray-200 dark:border-slate-700 rounded-lg shadow-2xl">
+                                        <div className="w-full lg:w-2/5 h-96 rounded-lg overflow-hidden">
+                                            <Image src={item.imageUrl} alt={item.title} width={800} height={600} className="history-image w-full h-full object-cover scale-100"/>
+                                        </div>
+                                        <div className="history-text w-full lg:w-3/5 px-2 lg:px-4">
+                                            <h2 className="text-lg font-medium title-font text-neutral-800 dark:text-white mb-1">{item.subtitle}</h2>
+                                            <Typewriter text={item.title} finalBar={true} className="text-4xl lg:text-3xl font-bold title-font text-gray-900 dark:text-white mb-3" startAnimation={true} />
+                                            <div className="flex flex-col md:flex-row gap-4 text-justify">
+                                                <p className="leading-relaxed">{item.descriptionAndy}</p>
+                                                <p className="leading-relaxed">{item.descriptionAlexis}</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>*/}
                             </div>
+                        ))}
                         </div>
                     </div>
                 </div>
