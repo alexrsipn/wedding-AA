@@ -78,6 +78,14 @@ export default function History() {
         });
     }, [activeCard, isMuted]);
 
+    useEffect(() => {
+        const timeout = setTimeout(() => {
+            ScrollTrigger.refresh();
+        }, 100);
+
+        return () => clearTimeout(timeout);
+    }, [])
+
     useGSAP(() => {
         const horizontalSections = gsap.utils.toArray<HTMLDivElement>('.history-card');
 

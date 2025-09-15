@@ -10,7 +10,7 @@ import Facilities from "@/app/facilities";
 export default function Home() {
   return (
     <div className="bg-white dark:bg-stone-900 text-gray-900 dark:text-slate-200">
-      {/*<Welcome/>*/}
+      <Welcome/>
       <Header/>
       <Hero/>
       <History/>
