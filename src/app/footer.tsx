@@ -9,7 +9,7 @@ const Footer = () => {
     return (
         <>
             <hr className="border-top border-gray-500 dark:border-gray-300"/>
-            <footer className="body-font bg-white dark:bg-stone-950">
+            <footer className="body-font bg-white dark:bg-neutral-900">
                 <div className="container px-5 py-8 mx-auto flex items-center sm:flex-row flex-col">
                     <Link href={`/?guestId=${guest?.id}`} scroll={true}
                           className="flex title-font font-medium items-center md:justify-start justify-center text-gray-900">

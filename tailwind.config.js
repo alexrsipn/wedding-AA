@@ -11,6 +11,10 @@ module.exports = {
                 sans: ['var(--font-sans)'],
                 serif: ['var(--font-serif)'],
                 mono: ['var(--font-mono']
+            },
+            saturate: {
+                25: '.25',
+                75: '.75'
             }
         }
     },

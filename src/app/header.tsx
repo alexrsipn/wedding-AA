@@ -1,12 +1,13 @@
 "use client";
 
 import Image from "next/image";
-import {useState, useEffect, useRef} from "react";
+import {useState, useEffect, useRef, MouseEvent} from "react";
 import Link from 'next/link';
 import {useAudio} from "@/context/AudioContext";
 import {useGSAP} from "@gsap/react";
 import {gsap} from "gsap";
 import {ScrollTrigger} from "gsap/ScrollTrigger";
+import {useLenis} from "@/context/LenisContext";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -22,11 +23,12 @@ export default function Header() {
     const [isScrolled, setIsScrolled] = useState(false);
     const headerRef = useRef<HTMLElement>(null);
     const {isMuted, toggleMute} = useAudio();
+    const lenis = useLenis();
 
     useGSAP(() => {
         gsap.to(headerRef.current, {
             padding: '0.5rem 0',
-            backgroundColor: 'rgba(255, 255, 255, 0.8)',
+            /*backgroundColor: 'rgba(255, 255, 255, 0.8)',*/
             backdropFilter: 'blur(4px)',
             boxShadow: '0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1)',
             scrollTrigger: {
@@ -57,16 +59,24 @@ export default function Header() {
     }, []);
     const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
     const closeMenu = () => setIsMenuOpen(false);
+
+    const handleNavCLic = (e: MouseEvent<HTMLAnchorElement>, target: string) => {
+        e.preventDefault();
+        closeMenu();
+        if (lenis) {
+            lenis.scrollTo(target, {offset: -80})
+        }
+    }
     return (
         <header
             ref={headerRef}
-            className="sticky top-0 z-40 bg-white dark:bg-stone-950 p-4"
+            className="sticky top-0 z-40 p-4 bg-white dark:bg-neutral-900"
         >
             <div className="container mx-auto flex items-center justify-between">
                 {/*<Link href="#home" className={`flex-shrink-0 transition-all duration-300 ${isScrolled ? 'p-2' : 'p-4'}`} onClick={closeMenu}>*/}
                 <Image
                     src="/images/logo_AA_light.svg"
-                    alt="Logo boda Andrea y Alexis"
+                    alt="Logo_boda_Andrea_y_Alexis"
                     width={80}
                     height={80}
                     priority
@@ -78,6 +88,7 @@ export default function Header() {
                         <Link
                             key={link.name}
                             href={link.href}
+                            onClick={(e) => handleNavCLic(e, link.href)}
                             className="text-lg font-medium text-gray-600 transition-all duration-300 hover:text-gray-900 dark:text-gray-300 dark:hover:text-white hover:underline underline-offset-4 p-2 rounded-md"
                         >
                             {link.name}
@@ -136,7 +147,7 @@ export default function Header() {
                         <Link
                             key={link.name}
                             href={link.href}
-                            onClick={closeMenu} // Cierra el menú al hacer clic en un enlace
+                            onClick={(e) => handleNavCLic(e, link.href)}
                             className="block rounded-md px-3 py-2 text-base font-medium text-gray-600 transition-colors hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-gray-800 dark:hover:text-white"
                         >
                             {link.name}

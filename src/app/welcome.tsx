@@ -2,6 +2,8 @@
 import {useState, useEffect} from "react";
 import Image from "next/image";
 import {useGuest} from "@/context/GuestContext";
+import {Ticket} from "@/components/Ticket";
+import {QRCodeSVG} from "qrcode.react";
 
 export default function Welcome() {
     const [isOpen, setIsOpen] = useState(true);
@@ -41,31 +43,40 @@ export default function Welcome() {
                             </div>
                             <div className="absolute top-32 lg:top-48 w-full transition-all duration-500">
                                 <div className="relative w-4/6 lg:w-2/5 mx-auto px-2 bg-white dark:bg-white/80 shadow-xl rounded">
-                                    <p className="font-semibold py-2 lg:py-4 text-xl text-center font-serif text-black">Andrea & Alexis</p>
-                                    <p className="font-light py-1 lg:py-2 text-gray-900 dark:text-gray-800">Tenemos el honor de invitarte a la celebración de nuestro matrimonio</p>
-                                    <div className="flex flex-col font-serif italic font-medium py-2 text-left px-2 lg:py-2 text-gray-900">
+                                    <p className="font-semibold pt-2 text-xl text-center font-serif text-black">Andrea & Alexis</p>
+                                    <div className="flex flex-col font-serif italic font-medium text-left px-2 text-gray-900">
                                         {isLoading ? (
                                             <span className="text-center font-semibold">Cargando invitación...</span>
                                         ) : error ? (
                                             <span className="text-center font-medium">Invitación no encontrada</span>
                                         ) : guest ? (
                                             <>
-                                                <p className="text-center italic"><b>{guest.name}</b></p>
-                                                <p className="text-center">Pases asignados: <b>{guest.assignedTickets}</b></p>
-                                                {guest.guestListDetails && (
-                                                    <details className="group mt-2">
-                                                        <summary className="flex justify-around items-center font-medium cursor-pointer list-none text-sm text-gray-500 hover:text-gray-700">
-                                                            <span>Invitados: </span>
-                                                            <span className="transition-transform duration-300 group-open:rotate-180">
+                                                {guest.guestListDetails && !guest.confirmed ? (
+                                                    <>
+                                                        <p className="font-light text-gray-900 dark:text-gray-800 font-sans text-justify text-sm">Tenemos el honor de invitarte a la celebración de nuestro matrimonio</p>
+                                                        <p className="text-center italic"><b>{guest.name}</b></p>
+                                                        <p className="text-center">Pases asignados: <b>{guest.assignedTickets}</b></p>
+                                                        <details className="group mt-2">
+                                                            <summary className="flex justify-around items-center font-medium cursor-pointer list-none text-sm text-gray-500 hover:text-gray-700">
+                                                                <span>Invitados: </span>
+                                                                <span className="transition-transform duration-300 group-open:rotate-180">
                                                                 <svg fill="none" height="20" shapeRendering="geometricPrecision" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" viewBox="0 0 24 24" width="20"><path d="M6 9l6 6 6-6"></path></svg>
                                                             </span>
-                                                        </summary>
-                                                        <div className="text-gray-500 text-xs whitespace-pre-wrap bg-gray-50 p-2 text-center rounded max-h-16 lg:max-h-24 overflow-y-auto">
-                                                            {guest.guestDetails?.map((detail, index) => (
-                                                                <p key={index}>{detail}</p>
-                                                            ))}
+                                                            </summary>
+                                                            <div className="text-gray-500 text-xs whitespace-pre-wrap bg-gray-50 text-center rounded max-h-16 lg:max-h-24 overflow-y-auto">
+                                                                {guest.guestDetails?.map((detail, index) => (
+                                                                    <p key={index}>{detail}</p>
+                                                                ))}
+                                                            </div>
+                                                        </details>
+                                                    </>
+                                                ) : guest.confirmed && (
+                                                    <div className="font-sans not-italic">
+                                                        <p className="font-normal text-center"><b>{guest.name}</b> gracias por confirmar <b>{guest.confirmedTickets}</b> boletos, te esperamos en nuestra boda.</p>
+                                                        <div className="flex justify-center items-center my-2">
+                                                            <QRCodeSVG value={guest.id} size={96} />
                                                         </div>
-                                                    </details>
+                                                    </div>
                                                 )}
                                             </>
                                         ) : (
@@ -82,7 +93,7 @@ export default function Welcome() {
                                         <span className="font-serif font-normal">3:30 PM</span>
                                     </div>
                                     <div className="pb-1">
-                                        <button className="bg-sky-700 hover:bg-sky-800 dark:bg-sky-800 dark:hover:bg-sky-700 cursor-pointer text-white px-4 py-2 rounded-md disabled:bg-gray-300 disabled:cursor-not-allowed" onClick={handleClose} disabled={!guest}>Más información</button>
+                                        <button className="bg-sky-700 hover:bg-sky-800 dark:bg-sky-600 dark:hover:bg-sky-700 cursor-pointer text-white px-4 py-2 rounded-md font-medium transition-colors disabled:cursor-not-allowed" onClick={handleClose} disabled={!guest}>Más información</button>
                                     </div>
                                 </div>
                             </div>

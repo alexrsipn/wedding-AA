@@ -145,6 +145,9 @@ export default function History() {
     return (
         <>
             <section id="history" className="body-font">
+                <div className="relative">
+                    <Image src="/images/corner_flowers.png" alt="Flores en la esquina" width={150} height={150} className="absolute top-0 -left-1 md:left-0 m-0 p-0 rotate-90 w-1/4 md:w-1/12 md:scale-105 saturate-75" unoptimized={true}/>
+                </div>
                 <div className="container mx-auto p-4">
                     <div className="flex flex-col items-center justify-center text-center w-full">
                         {/*<h3 className="text-3xl lg:text-2xl text-center font-medium title-font mb-4 text-gray-900 dark:text-white">Nuestra historia</h3>*/}
@@ -154,7 +157,7 @@ export default function History() {
                             <p className="lg:w-2/3 mx-auto leading-relaxed text-base"><b>{guest.name}</b> nos gustaría que {guest.assignedTickets!>1 ? "conozcan" : "conozcas"} nuestra historia, otra hermosa historia de amor que solamente Dios pudo haber diseñado.</p>
                         )}
                         <div className="py-4">
-                            <button onClick={toggleMute} aria-label={isMuted ? "Activar sonido" : "Silenciar"} className="bg-sky-700 hover:bg-sky-800 dark:bg-sky-800 dark:hover:bg-sky-700 cursor-pointer text-white px-4 py-2 rounded-md font-medium transition-colors">
+                            <button onClick={toggleMute} aria-label={isMuted ? "Activar sonido" : "Silenciar"} className="bg-sky-700 hover:bg-sky-800 dark:bg-sky-600 dark:hover:bg-sky-700 cursor-pointer text-white px-4 py-2 rounded-md font-medium transition-colors">
                                 {isMuted ? (
                                     <span>Activar música</span>
                                 ) : (
@@ -165,12 +168,12 @@ export default function History() {
                     </div>
                     <div ref={containerRef} className="relative h-screen w-full overflow-hidden">
                         <div ref={horizontalWrapperRef} className="flex h-full" style={{width: `${historyItems.length * 100}vw`}}>
-                        {historyItems.map((item, index) => (
-                            <div key={item.id} className="history-card w-full h-full flex items-center justify-center relative p-8">
+                        {historyItems.map((item) => (
+                            <div key={item.id} className="history-card w-full h-full flex items-center justify-center relative p-12">
                                 <div className="absolute inset-0 overflow-hidden">
-                                    <Image src={item.imageUrl} alt={item.title} fill className="history-image object-cover"/>
+                                    <Image src={item.imageUrl} alt={item.title} fill className="history-image object-cover p-16"/>
                                 </div>
-                                <div className="history-text relative max-w-3xl w-full bg-white/70 dark:bg-slate-900/70 backdrop-blur-md p-6 md:p-10 rouded-xl shadow-2xl text-center">
+                                <div className="history-text relative max-w-3xl w-full bg-white/60 dark:bg-slate-900/60 backdrop-blur-lg p-6 md:p-10 rounded-xl shadow-2xl text-center">
                                     <h2 className="text-lg font-medium title-font text-neutral-800 dark:text-white mb-1">{item.subtitle}</h2>
                                     <h4 className="text-xl font-semibold text-neutral-900 dark:text-neutral-100 mb-4">{item.title}</h4>
                                     {/*<Typewriter text={item.title} finalBar={false} className="text-4xl lg:text-3xl font-bold title-font text-gray-900 dark:text-white mb-4" startAnimation={activeCard === index} />*/}
@@ -183,6 +186,9 @@ export default function History() {
                         ))}
                         </div>
                     </div>
+                </div>
+                <div className="relative">
+                    <Image src="/images/corner_flowers.png" alt="Flores en la esquina" width={150} height={150} className="absolute bottom-0 right-0 m-0 p-0 -rotate-90 w-1/4 md:w-1/12 md:scale-105 saturate-75" unoptimized={true}/>
                 </div>
             </section>
         </>
