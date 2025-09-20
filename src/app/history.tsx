@@ -78,16 +78,77 @@ export default function History() {
         });
     }, [activeCard, isMuted]);
 
-    useEffect(() => {
+/*    useEffect(() => {
         const timeout = setTimeout(() => {
             ScrollTrigger.refresh();
         }, 100);
 
         return () => clearTimeout(timeout);
-    }, [])
+    }, [])*/
 
     useGSAP(() => {
-        const horizontalSections = gsap.utils.toArray<HTMLDivElement>('.history-card');
+        ScrollTrigger.matchMedia({
+            "(min-width: 1px)": function() {
+                const horizontalSections = gsap.utils.toArray<HTMLDivElement>('.history-card');
+
+                const horizontalScrollTween = gsap.to(horizontalWrapperRef.current, {
+                    x: () => -(horizontalWrapperRef.current!.scrollWidth - window.innerWidth),
+                    ease: "none",
+                    scrollTrigger: {
+                        trigger: containerRef.current,
+                        pin: true,
+                        scrub: 1,
+                        start: "top top",
+                        end: () => "+=" + (horizontalWrapperRef.current!.scrollWidth - window.innerWidth),
+                        invalidateOnRefresh: true,
+                        onUpdate: (self) => {
+                            if(self.isActive) {
+                                const progress = self.progress;
+                                const newActiveCard = Math.min(horizontalSections.length - 1, Math.floor(progress * horizontalSections.length));
+                                if (newActiveCard !== activeCard) {
+                                    setActiveCard(newActiveCard);
+                                }
+                            }
+                        },
+                        onLeave: () => setActiveCard(-1),
+                        onLeaveBack: () => setActiveCard(-1),
+                    }
+                });
+
+                horizontalSections.forEach((section) => {
+                    const image = section.querySelector('.history-image');
+                    const text = section.querySelector('.history-text');
+
+                    gsap.from(image, {
+                        scale: 1.3,
+                        scrollTrigger: {
+                            trigger: section,
+                            containerAnimation: horizontalScrollTween,
+                            start: "left right",
+                            end: "left left",
+                            scrub: true,
+                        }
+                    });
+
+                    gsap.from(text, {
+                        y: 100,
+                        autoAlpha: 0,
+                        scrollTrigger: {
+                            trigger: section,
+                            containerAnimation: horizontalScrollTween,
+                            start: "left center",
+                            end: "left left",
+                            scrub: true
+                        }
+                    });
+                });
+
+                return () => {
+                    gsap.killTweensOf(horizontalWrapperRef.current);
+                };
+            }
+        });
+        /*const horizontalSections = gsap.utils.toArray<HTMLDivElement>('.history-card');
 
         const horizontalScrollTween = gsap.to(horizontalWrapperRef.current, {
             x: () => -(horizontalWrapperRef.current!.scrollWidth - window.innerWidth),
@@ -111,9 +172,10 @@ export default function History() {
                 onLeave: () => setActiveCard(-1),
                 onLeaveBack: () => setActiveCard(-1)
             }
-        })
+        })*/
 
-        horizontalSections.forEach((section, index) => {
+
+        /*horizontalSections.forEach((section, index) => {
             const image = section.querySelector('.history-image');
             const text = section.querySelector('.history-text');
 
@@ -139,7 +201,7 @@ export default function History() {
                     scrub: true
                 }
             });
-        });
+        });*/
     }, { scope: containerRef });
 
     return (
