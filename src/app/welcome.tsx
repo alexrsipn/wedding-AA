@@ -2,27 +2,33 @@
 import {useState, useEffect} from "react";
 import Image from "next/image";
 import {useGuest} from "@/context/GuestContext";
+import {useLenis} from "@/context/LenisContext";
 import {QRCodeSVG} from "qrcode.react";
 
 export default function Welcome() {
     const [isOpen, setIsOpen] = useState(true);
     const [isClosing, setIsClosing] = useState(false);
     const {guest, isLoading, error} = useGuest();
+    const lenis = useLenis();
+
     useEffect(() => {
         if (window.history.scrollRestoration) {
             window.history.scrollRestoration = "manual";
         }
         window.scrollTo(0,0);
 
-        if (isOpen) {
-            document.body.style.overflow = "hidden";
+        if (isOpen && lenis) {
+            /*document.body.style.overflow = "hidden";*/
+            lenis.stop();
         } else {
-            document.body.style.overflow = "auto";
+            /*document.body.style.overflow = "auto";*/
+            lenis?.start();
         }
         return () => {
-            document.body.style.overflow = "auto";
+            /*document.body.style.overflow = "auto";*/
+            lenis?.start();
         };
-    }, [isOpen]);
+    }, [isOpen, lenis]);
     const handleClose = () => {
         setIsClosing(true);
         setTimeout(() => {
@@ -92,7 +98,7 @@ export default function Welcome() {
                                         <span className="font-serif font-normal">3:30 PM</span>
                                     </div>
                                     <div className="pb-1">
-                                        <button className="bg-sky-700 hover:bg-sky-800 dark:bg-sky-600 dark:hover:bg-sky-700 cursor-pointer text-white px-4 py-2 rounded-md font-medium transition-colors disabled:bg-gray-300 disabled:cursor-not-allowed" onClick={handleClose} disabled={!guest}>Más información</button>
+                                        <button className="bg-sky-700 hover:bg-sky-800 dark:bg-sky-600 dark:hover:bg-sky-700 cursor-pointer text-white px-4 py-2 rounded-md font-medium transition-colors disabled:bg-gray-300 disabled:hover:bg-gray-400 disabled:cursor-not-allowed" onClick={handleClose} disabled={!guest}>Más información</button>
                                     </div>
                                 </div>
                             </div>

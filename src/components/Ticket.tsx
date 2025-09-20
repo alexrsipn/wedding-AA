@@ -18,7 +18,7 @@ export const Ticket = forwardRef<HTMLDivElement, TicketProps>(({guestName, confi
                 <Image src="/images/logo_AA_light.svg" alt="Logo" width={50} height={50} className="dark:invert" />
             </div>
             <div className="m-0 p-0 w-full h-36 flex flex-row justify-between items-center">
-                <Image src="/images/hero.jpg" alt="Foto_pass" width={100} height={50} className="w-1/2 h-full"/>
+                <Image src="/images/hero.jpg" alt="Foto_pass" width={100} height={50} className="w-1/2 h-full ticket-image"/>
                 <div className="w-1/2 h-full flex flex-col justify-center items-center bg-amber-100/50 dark:bg-neutral-700">
                     <p className="font-serif font-semibold">Andrea & Alexis</p>
                     <p className="font-light text-sm italic">28.03.2026</p>

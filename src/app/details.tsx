@@ -61,12 +61,12 @@ export default function Details() {
         <>
             <section id="details" className="body-font my-8">
                 <div className="relative">
-                    <Image src="/images/corner_flowers.png" alt="Flores en la esquina" width={150} height={150} className="absolute top-0 -left-1 md:left-0 m-0 p-0 rotate-90 w-1/4 md:w-1/12 md:scale-105 saturate-75" unoptimized={true}/>
+                    <Image src="/images/corner_flowers.png" alt="Flores en la esquina" width={150} height={150} className="absolute -top-4 lg:top-0 left-0 m-0 p-0 rotate-90 w-1/5 lg:w-1/12 saturate-75" unoptimized={true}/>
                 </div>
                 {/*<h3 className="text-3xl lg:text-2xl text-center font-medium title-font mb-4 text-gray-900 dark:text-white">Detalles del evento</h3>*/}
                 <HighlightedText className="text-3xl lg:text-2xl text-center font-medium title-font mb-4 text-gray-900 dark:text-white">Detalles del evento</HighlightedText>
                 {guest && (
-                    <p className="text-center py-2 text-base">{guest.name} {guest.assignedTickets!>1 ? "les" : "te"} recomendamos revisar todos los detalles de nuestro evento</p>
+                    <p className="text-center p-2 text-base">{guest.name} {guest.assignedTickets!>1 ? "les" : "te"} recomendamos revisar todos los detalles de nuestro evento</p>
                 )}
                 <div className="container px-4 mx-auto flex sm:flex-nowrap flex-wrap flex-col lg:flex-row justify-center items-center gap-4">
                     <div
@@ -104,7 +104,7 @@ export default function Details() {
                     </div>
                 </div>
                 <div className="relative">
-                    <Image src="/images/corner_flowers.png" alt="Flores en la esquina" width={150} height={150} className="absolute -bottom-12 right-0 m-0 p-0 -rotate-90 w-1/4 md:w-1/12 md:scale-105 saturate-75" unoptimized={true}/>
+                    <Image src="/images/corner_flowers.png" alt="Flores en la esquina" width={150} height={150} className="absolute -bottom-20 lg:-bottom-12 right-0 m-0 p-0 -rotate-90 w-1/5 lg:w-1/12 saturate-75" unoptimized={true}/>
                 </div>
             </section>
         </>

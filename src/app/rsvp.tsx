@@ -5,6 +5,7 @@ import HighlightedText from "@/components/HighlightedText";
 import {useGuest} from "@/context/GuestContext";
 import {toPng} from "html-to-image";
 import {Ticket} from "@/components/Ticket";
+import {toDataURL} from "@/lib/utils";
 import Image from "next/image";
 
 export default function Rsvp() {
@@ -12,14 +13,14 @@ export default function Rsvp() {
         <>
             <section id="rvsp" className= "body-font my-20">
                 <div className="relative">
-                    <Image src="/images/corner_flowers.png" alt="Flores en la esquina" width={150} height={150} className="absolute top-0 -left-1 md:left-0 m-0 p-0 rotate-90 w-1/4 md:w-1/12 md:scale-105 saturate-75" unoptimized={true}/>
+                    <Image src="/images/corner_flowers.png" alt="Flores en la esquina" width={150} height={150} className="absolute -top-2 lg:top-0 left-0 m-0 p-0 rotate-90 w-1/5 lg:w-1/12 saturate-75" unoptimized={true}/>
                 </div>
                 <div className="container px-4 mx-auto flex flex-col items-center">
                     <HighlightedText className="text-3xl lg:text-2xl text-center font-medium title-font mb-4 text-gray-900 dark:text-white">Asistencia</HighlightedText>
                     <RVSPForm/>
                 </div>
                 <div className="relative">
-                    <Image src="/images/corner_flowers.png" alt="Flores en la esquina" width={150} height={150} className="absolute -bottom-12 right-0 m-0 p-0 -rotate-90 w-1/4 md:w-1/12 md:scale-105 saturate-75" unoptimized={true}/>
+                    <Image src="/images/corner_flowers.png" alt="Flores en la esquina" width={150} height={150} className="absolute -bottom-12 lg:-bottom-12 right-0 m-0 p-0 -rotate-90 w-1/5 lg:w-1/12 saturate-75" unoptimized={true}/>
                 </div>
             </section>
         </>
@@ -114,16 +115,42 @@ function RVSPForm() {
             return;
         }
 
-        toPng(ticketRef.current, { cacheBust: true, pixelRatio: 2})
-            .then((dataUrl) => {
-                const link = document.createElement('a');
-                link.download = 'boleto-boda-andrea-alexis.png';
-                link.href = dataUrl;
-                link.click();
-            })
-            .catch((error) => {
-                console.error('Error al generar la imagen:', error)
-            });
+        const nodeToRender = ticketRef.current;
+        const image = ticketRef.current.querySelector('img.ticket-image') as HTMLImageElement;
+
+        if (!image) {
+            console.error("No se encontró la imagen del boleto.");
+            return;
+        }
+
+        const originalSrc = image.src;
+
+        const generateAndDownload = () => {
+            toPng(nodeToRender, {cacheBust: true, pixelRatio: 2})
+                .then((dataUrl) => {
+                    const link = document.createElement("a");
+                    link.download = "boleto-boda-andrea-alexis.png";
+                    link.href = dataUrl;
+                    link.click();
+                })
+                .catch((err) => console.error("Error al generar la imagen: ", err))
+                .finally(() => {
+                    image.src = originalSrc;
+                })
+        };
+
+        if (image.src.startsWith('data:')) {
+            generateAndDownload();
+        } else {
+            toDataURL(image.src)
+                .then(dataUrl => {
+                    image.src = dataUrl;
+                    generateAndDownload();
+                })
+                .catch((error) => {
+                    console.error("Error al generar la imagen: ", error);
+                })
+        }
     }, [ticketRef]);
 
     if (isLoading) {
