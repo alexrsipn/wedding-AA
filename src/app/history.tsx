@@ -86,9 +86,10 @@ export default function History() {
         return () => clearTimeout(timeout);
     }, [])*/
 
-    useGSAP(() => {
-        ScrollTrigger.matchMedia({
-            "(min-width: 1px)": function() {
+    /*useGSAP(() => {
+        const mm = gsap.matchMedia();
+        mm.add("(min-width: 1px)", () => {
+        /!*ScrollTrigger.matchMedia({"(min-width: 1px)": function() {*!/
                 const horizontalSections = gsap.utils.toArray<HTMLDivElement>('.history-card');
 
                 const horizontalScrollTween = gsap.to(horizontalWrapperRef.current, {
@@ -148,60 +149,74 @@ export default function History() {
                 };
             }
         });
-        /*const horizontalSections = gsap.utils.toArray<HTMLDivElement>('.history-card');
+    }, { scope: containerRef });*/
+    useGSAP(() => {
+        const mm = gsap.matchMedia(); // nuevo API
 
-        const horizontalScrollTween = gsap.to(horizontalWrapperRef.current, {
-            x: () => -(horizontalWrapperRef.current!.scrollWidth - window.innerWidth),
-            ease: "none",
-            scrollTrigger: {
-                trigger: containerRef.current,
-                pin: true,
-                scrub: 1,
-                start: "top top",
-                end: () => "+=" + (horizontalWrapperRef.current!.scrollWidth - window.innerWidth),
-                invalidateOnRefresh: true,
-                onUpdate: (self) => {
-                    if (self.isActive) {
-                        const progress = self.progress;
-                        const newActiveCard = Math.min(horizontalSections.length - 1, Math.floor(progress * horizontalSections.length));
-                        if (newActiveCard !== activeCard) {
-                            setActiveCard(newActiveCard);
+        mm.add("(min-width: 1px)", () => {
+            const horizontalSections = gsap.utils.toArray<HTMLDivElement>('.history-card');
+
+            const horizontalScrollTween = gsap.to(horizontalWrapperRef.current, {
+                x: () => -(horizontalWrapperRef.current!.scrollWidth - window.innerWidth),
+                ease: "none",
+                scrollTrigger: {
+                    trigger: containerRef.current,
+                    pin: true,
+                    scrub: 1,
+                    start: "top top",
+                    end: () => "+=" + (horizontalWrapperRef.current!.scrollWidth - window.innerWidth),
+                    invalidateOnRefresh: true,
+                    onUpdate: (self) => {
+                        if (self.isActive) {
+                            const progress = self.progress;
+                            const newActiveCard = Math.min(
+                                horizontalSections.length - 1,
+                                Math.floor(progress * horizontalSections.length)
+                            );
+                            if (newActiveCard !== activeCard) {
+                                setActiveCard(newActiveCard);
+                            }
                         }
-                    }
+                    },
+                    onLeave: () => setActiveCard(-1),
+                    onLeaveBack: () => setActiveCard(-1),
                 },
-                onLeave: () => setActiveCard(-1),
-                onLeaveBack: () => setActiveCard(-1)
-            }
-        })*/
-
-
-        /*horizontalSections.forEach((section, index) => {
-            const image = section.querySelector('.history-image');
-            const text = section.querySelector('.history-text');
-
-            gsap.from(image, {
-                scale: 1.3,
-                scrollTrigger: {
-                    trigger: section,
-                    containerAnimation: horizontalScrollTween,
-                    start: "left right",
-                    end: "left left",
-                    scrub: true,
-                }
             });
 
-            gsap.from(text, {
-                y: 100,
-                autoAlpha: 0,
-                scrollTrigger: {
-                    trigger: section,
-                    containerAnimation: horizontalScrollTween,
-                    start: "left center",
-                    end: "left left",
-                    scrub: true
-                }
+            horizontalSections.forEach((section) => {
+                const image = section.querySelector('.history-image');
+                const text = section.querySelector('.history-text');
+
+                gsap.from(image, {
+                    scale: 1.3,
+                    scrollTrigger: {
+                        trigger: section,
+                        containerAnimation: horizontalScrollTween,
+                        start: "left right",
+                        end: "left left",
+                        scrub: true,
+                    },
+                });
+
+                gsap.from(text, {
+                    y: 100,
+                    autoAlpha: 0,
+                    scrollTrigger: {
+                        trigger: section,
+                        containerAnimation: horizontalScrollTween,
+                        start: "left center",
+                        end: "left left",
+                        scrub: true,
+                    },
+                });
             });
-        });*/
+
+            return () => {
+                gsap.killTweensOf(horizontalWrapperRef.current);
+            };
+        });
+
+        return () => mm.revert();
     }, { scope: containerRef });
 
     return (

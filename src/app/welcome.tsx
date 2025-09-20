@@ -2,7 +2,6 @@
 import {useState, useEffect} from "react";
 import Image from "next/image";
 import {useGuest} from "@/context/GuestContext";
-import {Ticket} from "@/components/Ticket";
 import {QRCodeSVG} from "qrcode.react";
 
 export default function Welcome() {
@@ -93,7 +92,7 @@ export default function Welcome() {
                                         <span className="font-serif font-normal">3:30 PM</span>
                                     </div>
                                     <div className="pb-1">
-                                        <button className="bg-sky-700 hover:bg-sky-800 dark:bg-sky-600 dark:hover:bg-sky-700 cursor-pointer text-white px-4 py-2 rounded-md font-medium transition-colors disabled:cursor-not-allowed" onClick={handleClose} disabled={!guest}>Más información</button>
+                                        <button className="bg-sky-700 hover:bg-sky-800 dark:bg-sky-600 dark:hover:bg-sky-700 cursor-pointer text-white px-4 py-2 rounded-md font-medium transition-colors disabled:bg-gray-300 disabled:cursor-not-allowed" onClick={handleClose} disabled={!guest}>Más información</button>
                                     </div>
                                 </div>
                             </div>
