@@ -11,12 +11,12 @@ import Image from "next/image";
 export default function Rsvp() {
     return (
         <>
-            <section id="rvsp" className= "body-font my-20">
+            <section id="rvsp" className= "body-font my-6">
                 <div className="relative">
                     <Image src="/images/corner_flowers.png" alt="Flores en la esquina" width={150} height={150} className="absolute -top-2 lg:top-0 left-0 m-0 p-0 rotate-90 w-1/5 lg:w-1/12 saturate-75" unoptimized={true}/>
                 </div>
                 <div className="container px-4 mx-auto flex flex-col items-center">
-                    <HighlightedText className="text-3xl lg:text-2xl text-center font-medium title-font mb-4 text-gray-900 dark:text-white">Asistencia</HighlightedText>
+                    <HighlightedText className="text-3xl font-bold mb-6 text-center">Asistencia</HighlightedText>
                     <RVSPForm/>
                 </div>
                 {/*<div className="relative">
@@ -168,7 +168,7 @@ function RVSPForm() {
 
     if (status === 'success' || guest.invitationStatus === "Confirmed") {
         return (
-            <div className="w-full flex flex-col justify-center items-center text-center mt-8">
+            <div className="w-full flex flex-col justify-center items-center text-center">
                 <h3 className="text-2xl lg:text-3xl font-serif font-semibold title-font mb-4 text-gray-900 dark:text-white">¡Gracias por confirmar!</h3>
                 <p className="text-xl lg:text-lg font-normal text-gray-900 dark:text-white pb-4">Tu respuesta ha sido guardada. ¡Nos llena de alegría saber que nos acompañarás!</p>
                 <Ticket ref={ticketRef} guestName={guest.name} confirmedGuests={guest.guestDetails || []} guestId={guest.id} />

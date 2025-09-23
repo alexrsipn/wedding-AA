@@ -42,37 +42,49 @@ export default function Hero() {
     const imageRef = useRef<HTMLImageElement>(null);
 
     useGSAP(() => {
-        gsap.to(imageRef.current, {
-            y: "-50%",
-            ease: "none",
-            scrollTrigger: {
-                trigger: heroRef.current,
-                start: "top top",
-                end: "bottom top",
-                scrub: true
-            }
-        });
+        gsap.fromTo(imageRef.current,
+            {
+                y: 0,
+                /*ease: "sine.in",*/
+    /*            scrollTrigger: {
+                    trigger: heroRef.current,
+                    start: "top 50%",
+                    end: "bottom top",
+                    scrub: true,
+                    markers: true
+                }*/
+            },
+            {
+                y: "-50%",
+                ease: "sine.out",
+                scrollTrigger: {
+                    trigger: heroRef.current,
+                    start: "top",
+                    end: "bottom center",
+                    scrub: true,
+                }
+            });
     }, {scope: heroRef});
     return (
         <>
             <section ref={heroRef} id="home" className="body-font">
                 <div className="min-h-screen mx-auto flex px-4 py-4 lg:py-0 lg:-mt-24 items-center justify-center flex-col lg:flex-row gap-4">
-                    <div className="lg:w-1/2 w-full rounded-sm">
-                        <Image ref={imageRef} className="w-full object-cover object-center rounded" alt="hero"
-                               src="/images/hero.jpg" width={700} height={600}/>
+                    <div className="lg:w-1/2 w-full">
+                        <Image ref={imageRef} className="w-4/5 mx-auto object-cover object-center shadow-2xl" alt="hero"
+                               src="/images/hero.jpg" width={600} height={700} priority={true} unoptimized={false}/>
                     </div>
                     <div className="lg:w-1/2 w-full text-center">
                         <div className="flex items-center justify-center m-0 p-0">
-                            <Image src="/images/hero_flowers.png" alt="Flores" className="w-1/4 h-1/4 scale-x-110" width={300} height={400}/>
+                            <Image src="/images/hero_flowers.png" alt="Flores" className="w-1/4 h-1/4 scale-x-130" width={300} height={400}/>
                         </div>
-                        <div className="lg:mb-6 mb-4">
-                            <Typewriter text="¡Nos casamos!" finalBar={false} className="text-4xl lg:text-3xl font-medium mb-4"/>
-                            {/*<HighlightedText className="text-center text-4xl lg:text-3xl font-medium text-gray-900 dark:text-gray-100 mb-4">¡ N o s  c a s a m o s !</HighlightedText>*/}
+                        <div className="py-2 lg:py-4 w-full lg:w-4/5 mx-auto">
+                            {/*<Typewriter text={"¡Nos casamos!"} finalBar={true} className="text-4xl font-medium py-2" startAnimation={true}/>*/}
+                            <HighlightedText className="text-4xl font-medium py-2">¡Nos casamos!</HighlightedText>
                             <p className="font-light italic text-justify px-4">&quot;Y a Aquel que es poderoso para hacer todas las cosas mucho más abundantemente de lo que pedimos o entendemos, según el poder que actúa en nosotros, a él sea gloria en la iglesia en Cristo Jesús por todas las edades, por los siglos de los siglos. Amén.&quot;</p>
-                            <span className="font-normal block text-right italic text-sm">Efesios 3:20-21</span>
+                            <span className="font-light block text-right italic text-sm">Efesios 3:20-21</span>
                         </div>
-                        <div className="lg:mb-6 mb-4">
-                            <h4 className="text-2xl lg:text-xl font-medium">Nuestros padres</h4>
+                        <div className="py-2 lg:py-4">
+                            <h4 className="text-2xl font-medium">Nuestros padres</h4>
                             <div className="flex justify-evenly items-center flex-col lg:flex-row gap-2">
                                 <div className="text-right">
                                     <p>Martín Salvador Lugo Aquino</p>
@@ -84,10 +96,10 @@ export default function Hero() {
                                 </div>
                             </div>
                         </div>
-                        <div className="lg:mb-6 mb-4">
-                            <h2 className="title-font sm:text-2xl text-xl font-medium">Nos vemos en</h2>
+                        <div className="py-2 lg:py-4">
+                            <h4 className="text-2xl font-medium">Nos vemos en</h4>
                             {Object.keys(timeLeft).length > 0 ? (
-                                <div className="flex justify-center items-baseline space-x-2 md:space-x-4">
+                                <div className="flex justify-center items-baseline space-x-2 lg:space-x-4">
                                     <div className="flex flex-col items-center">
                                         <span className="text-2xl lg:text-4xl font-semibold">{timeLeft.dias}</span>
                                         <span className="text-xs uppercase tracking-widest">Días</span>
@@ -113,7 +125,7 @@ export default function Hero() {
                             )}
                         </div>
                         <div className="flex items-center justify-center m-0 p-0">
-                            <Image src="/images/hero_flowers.png" alt="Flores" className="w-1/4 h-1/4 scale-x-110 rotate-180" width={300} height={400}/>
+                            <Image src="/images/hero_flowers.png" alt="Flores" className="w-1/4 h-1/4 scale-x-130 rotate-180" width={300} height={400}/>
                         </div>
                     </div>
                 </div>

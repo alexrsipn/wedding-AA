@@ -13,7 +13,7 @@ interface TicketProps {
 export const Ticket = forwardRef<HTMLDivElement, TicketProps>(({guestName, confirmedGuests, guestId}, ref) => {
     /*const qrUrl = `${window.location.origin}/?guestId=${guestId}`;*/
     return (
-        <div ref={ref} className="w-full max-w-sm bg-slate-50 dark:bg-slate-800 rounded-lg shadow-2xl font-sans text-slate-800 dark:text-slate-200 border border-slate-50">
+        <div ref={ref} className="w-full max-w-sm bg-slate-50 dark:bg-slate-800 rounded-lg shadow-2xl font-sans text-slate-800 dark:text-slate-200 border border-slate-300 dark:border-slate-50">
             <div className="flex justify-center items-center px-4 py-2">
                 <Image src="/images/logo_AA_light.svg" alt="Logo" width={50} height={50} className="dark:invert" />
             </div>

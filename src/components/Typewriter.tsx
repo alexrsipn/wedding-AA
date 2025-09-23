@@ -1,6 +1,10 @@
 "use client";
-import {useState, useEffect} from "react";
-import {motion, animate, useMotionValue, useTransform} from "framer-motion";
+import { useRef } from "react";
+import { gsap } from "gsap";
+import { TextPlugin } from "gsap/TextPlugin";
+import { useGSAP } from "@gsap/react";
+
+gsap.registerPlugin(TextPlugin);
 
 interface TypewriterProps {
     text: string;
@@ -10,43 +14,52 @@ interface TypewriterProps {
 }
 
 const Typewriter = ({text, finalBar, className, startAnimation = true}: TypewriterProps) => {
-    const count = useMotionValue(0);
-    const rounded = useTransform(count, (latest) => Math.round(latest));
-    const displayedText = useTransform(rounded, (latest) => text.slice(0, latest));
+    const textRef = useRef<HTMLSpanElement>(null);
+    const cursorRef = useRef<HTMLSpanElement>(null);
+    const containerRef = useRef<HTMLHeadingElement>(null);
 
-    const [animationComplete, setAnimationComplete] = useState(false);
+    useGSAP(() => {
+        if (!startAnimation || !textRef.current) return;
 
-/*    useEffect(() => {
-        const controls = animate(count, text.length, {
-            type: "tween",
-            duration: text.length * 0.05,
-            ease: "linear",
-            onComplete: () => setAnimationComplete(true),
-        });
-        return controls.stop;
-    }, [text, count]);*/
-    useEffect(() => {
-        if (startAnimation) {
-            setAnimationComplete(false);
-            const controls = animate(count, text.length, {
-                type: "tween",
-                duration: text.length * 0.05,
-                ease: "linear",
-                onComplete: () => setAnimationComplete(true)
-            });
-            return controls.stop;
+        const masterTl = gsap.timeline({ repeat: -1, defaults: {ease: "none"}});
+
+        if (finalBar && cursorRef.current) {
+            gsap.to(cursorRef.current, { opacity: 0, repeat: -1, yoyo: true, duration: 0.4 });
         }
-    }, [text, count, startAnimation]);
+
+        const tl = gsap.timeline();
+        tl.to(textRef.current, {
+            duration: text.length * 0.05 + 0.25,
+            text: text,
+            ease: "sine.in",
+            onComplete: () => {
+                if (finalBar && cursorRef.current) {
+                    gsap.to(cursorRef.current, {
+                        opacity: 0,
+                        ease: "power2.inOut",
+                        repeat: -1,
+                        yoyo: true,
+                        duration: 0.4
+                    });
+                }
+            }
+        });
+        tl.to({}, {duration: 3});
+        tl.to(textRef.current, {
+            text: text,
+            reversed: true,
+            ease: "sine.out"
+        });
+        tl.to({}, {duration: 1});
+        masterTl.add(tl);
+        return () => masterTl.kill();
+    }, {dependencies: [startAnimation, text], scope: containerRef, revertOnUpdate: true});
 
     return (
-        <motion.h1 className={className}>
-            <motion.span>{displayedText}</motion.span>
-            {animationComplete && finalBar && (
-                <motion.span animate={{opacity: [0,1,0]}} transition={{repeat: Infinity, duration: 0.8, ease: "linear"}}>
-                    &nbsp;|
-                </motion.span>
-            )}
-        </motion.h1>
+        <h1 className={className} ref={containerRef}>
+            <span ref={textRef}></span>
+            {finalBar && <span ref={cursorRef}>|</span>}
+        </h1>
     );
 };
 

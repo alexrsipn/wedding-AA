@@ -1,10 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import {useState} from "react";
-import {motion} from "framer-motion";
 import Image from "next/image";
-import {Modal} from "@/components/Modal";
 import {useGuest} from "@/context/GuestContext";
 import HighlightedText from "@/components/HighlightedText";
 
@@ -55,16 +52,16 @@ const detailsItems = [
 
 export default function Details() {
     const {guest} = useGuest();
-    const [selectedId, setSelectedId] = useState<string | null>(null);
-    const selectedItem = selectedId ? detailsItems.find(item => item.id === selectedId) : null;
+    /*const [selectedId, setSelectedId] = useState<string | null>(null);
+    const selectedItem = selectedId ? detailsItems.find(item => item.id === selectedId) : null;*/
     return (
         <>
-            <section id="details" className="body-font my-8">
+            <section id="details" className="body-font my-6">
                 <div className="relative">
                     <Image src="/images/corner_flowers.png" alt="Flores en la esquina" width={150} height={150} className="absolute -top-4 lg:top-0 left-0 m-0 p-0 rotate-90 w-1/5 lg:w-1/12 saturate-75" unoptimized={true}/>
                 </div>
                 {/*<h3 className="text-3xl lg:text-2xl text-center font-medium title-font mb-4 text-gray-900 dark:text-white">Detalles del evento</h3>*/}
-                <HighlightedText className="text-3xl lg:text-2xl text-center font-medium title-font mb-4 text-gray-900 dark:text-white">Detalles del evento</HighlightedText>
+                <HighlightedText className="text-3xl font-bold mb-6 text-center">Detalles del evento</HighlightedText>
                 {guest && (
                     <p className="text-center p-2 text-base">{guest.name} {guest.assignedTickets!>1 ? "les" : "te"} recomendamos revisar todos los detalles de nuestro evento</p>
                 )}

@@ -26,9 +26,9 @@ const historyItems: HistoryItem[] = [
     {
         id: 1,
         subtitle: "2014 - 2019",
-        title: "Título 1",
-        descriptionAndy: "Nos conocimos en el patio de amistad y desde el primer momento me pareció una persona diferente, inteligente y con un corazón bello. Compartimos bastantes momentos de alegría, éramos muy jovenes. Pese a las circunstancias nuestra amistad no dejo de ser, aunque nos frecuentábamos menos, seguimos unidos. \nEn 2019 salimos, como solíamos hacerlo cada año, fue la primera vez que sentí que queria ser yo la persona con la cual compartiera su vida.",
-        descriptionAlexis: "Ese día me dijo que se iría a Chile y algo dentro de mí no quería que se fuera, porque realmente me agradaba estar con Andy.",
+        title: "El inicio de nuestra historia",
+        descriptionAndy: "Nos conocimos en el patio de Amistad y desde el primer momento me pareció una persona diferente, inteligente y con un corazón bello. Compartimos bastantes momentos de alegría, éramos muy jovenes. Pese a las circunstancias nuestra amistad no dejo de ser, aunque nos frecuentábamos menos, seguimos unidos. \nEn 2019 salimos, como solíamos hacerlo cada año, fue la primera vez que sentí que queria ser yo la persona con la cual compartiera su vida.",
+        descriptionAlexis: "Nos conocimos en el patio de Amistad y desde el primer momento me pareció una persona diferente, inteligente y con un corazón bello. Compartimos bastantes momentos de alegría, éramos muy jovenes. Pese a las circunstancias nuestra amistad no dejo de ser, aunque nos frecuentábamos menos, seguimos unidos. \nEn 2019 salimos, como solíamos hacerlo cada año, fue la primera vez que sentí que queria ser yo la persona con la cual compartiera su vida.",
         imageUrl: "/images/history_1.jpg",
         audioUrl: "/audio/track_1.ogg"
     },
@@ -37,7 +37,7 @@ const historyItems: HistoryItem[] = [
         subtitle: "2021 - 2022",
         title: "Título 2",
         descriptionAndy: "Durante la pandemia, cuando ya estaba un poco mejor todo, volvimos a reconectar. No importo el pasar de los años porque en el minuto 1 se sintió la familiaridad de siempre. Alexis siempre había sido (y sigue) mi persona favorita, con quien podia ser yo misma y quien me aplaudía cualquier cosa que hacía. En aquella ocasión volví a sentir el querer SER su persona, sin embargo, volvimos a separarnos…",
-        descriptionAlexis: "Ese día me dijo que se iría a Chile y algo dentro de mí no quería que se fuera, porque realmente me agradaba estar con Andy.",
+        descriptionAlexis: "Durante la pandemia, cuando ya estaba un poco mejor todo, volvimos a reconectar. No importo el pasar de los años porque en el minuto 1 se sintió la familiaridad de siempre. Alexis siempre había sido (y sigue) mi persona favorita, con quien podia ser yo misma y quien me aplaudía cualquier cosa que hacía. En aquella ocasión volví a sentir el querer SER su persona, sin embargo, volvimos a separarnos…",
         imageUrl: "/images/hero.jpg",
         audioUrl: "/audio/track_2.ogg"
     },
@@ -45,8 +45,8 @@ const historyItems: HistoryItem[] = [
         id: 3,
         subtitle: "2024",
         title: "Título 3",
-        descriptionAndy: "Era 31 de diciembre, cumpleaños de Alexis, llevábamos mas de 2 años sin hablar. Algo en mi me dijo que le escribiera para felicitar y, por consecuencia, reconectar nuevamente, parecía que habíamos vivido situaciones similares y probablemente nos podríamos entender. Y no les voy a mentir, una parte de mi si quería saber si había posibilidad de algo mas. Ahora se que fue Dios quien me guió, pues en el minuto 1 que nos volvimos a ver la conexión estaba intacta, la misma desde que teníamos solo 17. Alexis es mi hogar.",
-        descriptionAlexis: "Ese día me dijo que se iría a Chile y algo dentro de mí no quería que se fuera, porque realmente me agradaba estar con Andy.",
+        descriptionAndy: "Era 31 de diciembre, cumpleaños de Alexis, llevábamos mas de 2 años sin hablar. Algo en mi me dijo que le escribiera para felicitar y, por consecuencia, reconectar nuevamente, parecía que habíamos vivido situaciones similares y probablemente nos podríamos entender. Y no les voy a mentir, una parte de mi si quería saber si había posibilidad de algo mas. Ahora sé que fue Dios quien me guió, pues en el minuto 1 que nos volvimos a ver la conexión estaba intacta, la misma desde que teníamos solo 17. Alexis es mi hogar.",
+        descriptionAlexis: "Me emocioné por volvernos a ver.",
         imageUrl: "/images/hero.jpg",
         audioUrl: "/audio/track_3.ogg"
     }
@@ -88,7 +88,7 @@ export default function History() {
             gsap.set(imageEl, { scale: 0.8, transformOrigin: "bottom center" });
             gsap.set(textBox, { autoAlpha: 0 });
 
-            const tl = gsap.timeline({
+            gsap.timeline({
                 scrollTrigger: {
                     trigger: section,
                     start: "top 50%",
@@ -106,7 +106,7 @@ export default function History() {
                     trigger: section,
                     start: "top 80%",
                     end: "bottom 50%",
-                    scrub: true,
+                    scrub: true
                 }
             });
             imageTl.to(imageEl, {scale: 1, autoAlpha: 1, ease: "power2.out"})
@@ -115,7 +115,7 @@ export default function History() {
             const textTl = gsap.timeline({
                 scrollTrigger: {
                     trigger: section,
-                    start: "top 40%",
+                    start: "top 30%",
                     end: "bottom 60%",
                     scrub: true
                 }
@@ -167,9 +167,10 @@ export default function History() {
                                     />
                                 </div>
                                 <div className="w-full flex justify-center items-center p-4">
-                                    <div className="history-text max-w-3xl mt-0 py-4 bg-gray-50/80 dark:bg-slate-800/90 backdrop-blur-xl rounded-lg shadow-xl p-6">
+                                    <div className="history-text max-w-3xl mt-0 py-4 bg-gray-50 dark:bg-slate-800 backdrop-blur-xl rounded-lg shadow-xl p-6">
                                         <h2 className="text-base md:text-lg text-right italic font-medium">{item.subtitle}</h2>
-                                        <h4 className="text-lg md:text-xl text-center font-semibold">{item.title}</h4>
+                                        {/*<h4 className="text-lg md:text-xl text-center font-semibold">{item.title}</h4>*/}
+                                        <Typewriter text={item.title} finalBar={true} className="text-lg md:text-xl text-center font-semibold" startAnimation={true}></Typewriter>
                                         <div className="flex flex-col gap-3 text-justify text-sm md:text-base">
                                             <p>Ella: {item.descriptionAndy}</p>
                                             <p>Él: {item.descriptionAlexis}</p>
