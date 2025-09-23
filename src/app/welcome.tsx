@@ -48,7 +48,7 @@ export default function Welcome() {
                             </div>
                             <div className="absolute top-32 lg:top-48 w-full transition-all duration-500">
                                 <div className="relative w-4/6 lg:w-2/5 mx-auto px-2 bg-white dark:bg-white/80 shadow-xl rounded">
-                                    <p className="font-semibold pt-2 text-xl text-center font-serif text-black">Andrea & Alexis</p>
+                                    <p className="font-semibold py-2 text-xl text-center font-serif text-black">Andrea & Alexis</p>
                                     <div className="flex flex-col font-serif italic font-medium text-left px-2 text-gray-900">
                                         {isLoading ? (
                                             <span className="text-center font-semibold">Cargando invitación...</span>
@@ -76,7 +76,7 @@ export default function Welcome() {
                                                         </details>
                                                     </>
                                                 ) : guest.confirmed && (
-                                                    <div className="font-sans not-italic">
+                                                    <div className="font-sans not-italic text-justify text-sm">
                                                         <p className="font-normal text-center"><b>{guest.name}</b> gracias por confirmar <b>{guest.confirmedTickets}</b> boletos, te esperamos en nuestra boda.</p>
                                                         <div className="flex justify-center items-center my-2">
                                                             <QRCodeSVG value={guest.id} size={96} />

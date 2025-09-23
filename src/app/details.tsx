@@ -45,13 +45,13 @@ const detailsItems = [
         ]
     },
     {
-        id: "moneygifts",
-        title: "Apoyo económico",
-        subtitle: "Tu presencia es nuestro mejor regalo",
+        id: "considerations",
+        title: "Consideraciones importantes",
+        subtitle: "Costo de estacionamiento $70 MXN",
         imageUrl: "/images/envelope.png",
-        description: "Si además deseas obsequiarnos algo, te compartimos nuestra mesa de regalos.",
+        description: "El evento es un día antes de semana santa, por lo cual, te recomendamos reservar con anticipación en caso de hospedarte cerca.",
     }
-]
+];
 
 export default function Details() {
     const {guest} = useGuest();
@@ -86,16 +86,18 @@ export default function Details() {
                             </div>
                         </div>
                     </div>
-                    <div className="w-full lg:w-1/2 p-4 flex flex-col justify-center items-center bg-slate-100 dark:bg-slate-800 order-1 lg:order-2 rounded-lg shadow border border-neutral-100">
+                    <div className="w-full lg:w-1/2 p-4 flex flex-col justify-center items-center bg-slate-100/80 dark:bg-slate-800/90 order-1 lg:order-2 rounded shadow border border-neutral-50 dark:border-neutral-700">
                         {detailsItems.map((item, index) => (
-                            <div key={index} className="w-full">
-                                <h2 className="text-xl font-medium text-left">{item.title}</h2>
-                                <p className="text-base font-normal text-center">{item.subtitle}</p>
-                                <p className="text-base text-center">{item.description}</p>
+                            <div key={index} className="w-full py-2">
+                                <h2 className="text-2xl font-semibold text-left italic">{item.title}</h2>
+                                <div className="text-lg py-1 lg:py-2 text-center font-normal leading-relaxed">
+                                    <p className="">{item.subtitle}</p>
+                                    <p className="">{item.description}</p>
+                                </div>
                                 <div className="w-full flex justify-around items-center">
                                 {item.urlList && item.urlList.length > 0 && item.urlList.map(({url, name}, index) => (
-                                    <button key={index} className="bg-sky-700 hover:bg-sky-800 dark:bg-sky-600 dark:hover:bg-sky-700 cursor-pointer text-white px-4 py-2 rounded-md font-medium transition-colors">
-                                        <Link href={url}>{name}</Link>
+                                    <button key={index} className="py-4">
+                                        <Link href={url} target="_blank" className="bg-sky-700 hover:bg-sky-800 dark:bg-sky-600 dark:hover:bg-sky-700 cursor-pointer text-white px-4 py-2 rounded-md font-medium transition-colors">{name}</Link>
                                     </button>
                                 ))}
                                 </div>
@@ -103,9 +105,9 @@ export default function Details() {
                         ))}
                     </div>
                 </div>
-                <div className="relative">
+{/*                <div className="relative">
                     <Image src="/images/corner_flowers.png" alt="Flores en la esquina" width={150} height={150} className="absolute -bottom-20 lg:-bottom-12 right-0 m-0 p-0 -rotate-90 w-1/5 lg:w-1/12 saturate-75" unoptimized={true}/>
-                </div>
+                </div>*/}
             </section>
         </>
     );

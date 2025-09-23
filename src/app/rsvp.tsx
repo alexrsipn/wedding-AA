@@ -19,9 +19,9 @@ export default function Rsvp() {
                     <HighlightedText className="text-3xl lg:text-2xl text-center font-medium title-font mb-4 text-gray-900 dark:text-white">Asistencia</HighlightedText>
                     <RVSPForm/>
                 </div>
-                <div className="relative">
+                {/*<div className="relative">
                     <Image src="/images/corner_flowers.png" alt="Flores en la esquina" width={150} height={150} className="absolute -bottom-12 lg:-bottom-12 right-0 m-0 p-0 -rotate-90 w-1/5 lg:w-1/12 saturate-75" unoptimized={true}/>
-                </div>
+                </div>*/}
             </section>
         </>
     );
@@ -78,7 +78,7 @@ function RVSPForm() {
             location: "Jardín de Eventos 'El Encanto', Carr. Cuautla-el Hospital 45, 10 de abril, 62744 Cuautla, Mor.",
             startTime: "20260328T150000",
             endTime: "20260329T000000",
-            url: "https://maps.app.goo.gl/vtFdFTuVoi4tbGLq5"
+            url: window.location.href,
         };
         const icsContent = [
             'BEGIN:VCALENDAR',

@@ -55,21 +55,21 @@ export default function Hero() {
     }, {scope: heroRef});
     return (
         <>
-            <section ref={heroRef} id="home" className="text-gray-900 dark:text-slate-200 body-font overflow-hidden">
-                <div className="container mx-auto flex px-5 py-8 items-center justify-center flex-col lg:flex-row gap-4">
-                    <div className="lg:w-1/2 w-full mb-4 rounded overflow-hidden">
-                        <Image ref={imageRef} className="w-full mb-4 object-cover object-center rounded" alt="hero"
+            <section ref={heroRef} id="home" className="body-font">
+                <div className="min-h-screen mx-auto flex px-4 py-4 lg:py-0 lg:-mt-24 items-center justify-center flex-col lg:flex-row gap-4">
+                    <div className="lg:w-1/2 w-full rounded-sm">
+                        <Image ref={imageRef} className="w-full object-cover object-center rounded" alt="hero"
                                src="/images/hero.jpg" width={700} height={600}/>
                     </div>
-                    <div className="text-center lg:w-2/3 w-full">
+                    <div className="lg:w-1/2 w-full text-center">
                         <div className="flex items-center justify-center m-0 p-0">
                             <Image src="/images/hero_flowers.png" alt="Flores" className="w-1/4 h-1/4 scale-x-110" width={300} height={400}/>
                         </div>
                         <div className="lg:mb-6 mb-4">
                             <Typewriter text="¡Nos casamos!" finalBar={false} className="text-4xl lg:text-3xl font-medium mb-4"/>
                             {/*<HighlightedText className="text-center text-4xl lg:text-3xl font-medium text-gray-900 dark:text-gray-100 mb-4">¡ N o s  c a s a m o s !</HighlightedText>*/}
-                            <p className="font-light italic text-center px-4">&quot;Y a Aquel que es poderoso para hacer todas las cosas mucho más abundantemente de lo que pedimos o entendemos, según el poder que actúa en nosotros, a él sea gloria en la iglesia en Cristo Jesús por todas las edades, por los siglos de los siglos. Amén.&quot;</p>
-                            <span className="font-normal block">Efesios 3:20-21</span>
+                            <p className="font-light italic text-justify px-4">&quot;Y a Aquel que es poderoso para hacer todas las cosas mucho más abundantemente de lo que pedimos o entendemos, según el poder que actúa en nosotros, a él sea gloria en la iglesia en Cristo Jesús por todas las edades, por los siglos de los siglos. Amén.&quot;</p>
+                            <span className="font-normal block text-right italic text-sm">Efesios 3:20-21</span>
                         </div>
                         <div className="lg:mb-6 mb-4">
                             <h4 className="text-2xl lg:text-xl font-medium">Nuestros padres</h4>

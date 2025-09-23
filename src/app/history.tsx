@@ -82,126 +82,108 @@ export default function History() {
         const sections = gsap.utils.toArray<HTMLDivElement>('.history-item');
 
         sections.forEach((section, index) => {
-            const imageWrap = section.querySelector('.history-image-wrap') as HTMLDivElement;
             const imageEl = section.querySelector('.history-image') as HTMLImageElement;
             const textBox = section.querySelector('.history-text') as HTMLDivElement;
 
-            gsap.set(imageEl, {
-                scale: 0.8,
-                transformOrigin: "bottom center",
-            });
+            gsap.set(imageEl, { scale: 0.8, transformOrigin: "bottom center" });
+            gsap.set(textBox, { autoAlpha: 0 });
 
             const tl = gsap.timeline({
                 scrollTrigger: {
                     trigger: section,
-                    start: "top 40%",
+                    start: "top 50%",
                     scrub: true,
-                    end: "bottom 60%",
-                    /*snap: {
-                        snapTo: 1 / sections.length,
-                        inertia: false,
-                        ease: "sine.in",
-                        /!*duration: 0.8,*!/
-                        onComplete: () => setActiveCard(index),
-                    },*/
-                    /*markers: true,*/
+                    end: "bottom 50%",
                     onEnter: () => setActiveCard(index),
                     onEnterBack: () => setActiveCard(index),
-/*                    onUpdate: (self) => {
-                        if (self.isActive) {
-                            const progress = self.progress;
-                            const newActiveCard = Math.min(
-                                sections.length - 1,
-                                Math.floor(progress * sections.length)
-                            );
-                            if (newActiveCard !== activeCard) {
-                                setActiveCard(newActiveCard);
-                            }
-                        }
-                    },*/
-                    onToggle: (self) => {
-                        if (!self.isActive) setActiveCard(-1);
-                    },
                     onLeave: () => setActiveCard(-1),
                     onLeaveBack: () => setActiveCard(-1)
                 }
             });
 
-            tl.to(imageEl, {
-                scale: 1,
-                ease: "power3.inOut",
-            }, 0);
-
-            gsap.fromTo(textBox,
-                {
-                    autoAlpha: 0,
-                    opacity: 0
-                },
-                {
-                    autoAlpha: 1,
-                    ease: "power3.out",
-                    opacity: 1,
-                    scrollTrigger: {
-                        trigger: section,
-                        start: "top 80%",
-                        end: "bottom 70%",
-                        scrub: true,
-                        /*markers: true,*/
-                        /*snap: {
-                            snapTo: 1 / sections.length,
-                            ease: "sine.in",
-                            inertia: false,
-                            /!*duration: 0.8*!/
-                        }*/
-                    }
+            const imageTl = gsap.timeline({
+                scrollTrigger: {
+                    trigger: section,
+                    start: "top 80%",
+                    end: "bottom 50%",
+                    scrub: true,
                 }
-                );
+            });
+            imageTl.to(imageEl, {scale: 1, autoAlpha: 1, ease: "power2.out"})
+                .to(imageEl, {autoAlpha: 0, ease: "power2.in"});
+
+            const textTl = gsap.timeline({
+                scrollTrigger: {
+                    trigger: section,
+                    start: "top 40%",
+                    end: "bottom 60%",
+                    scrub: true
+                }
+            });
+            textTl.to(textBox, {autoAlpha: 1, y: 0, ease: "power2.out"})
+                .to(textBox, {autoAlpha: 0, y: 0, ease: "power2.in"});
         });
     }, { scope: containerRef });
 
     return (
         <>
             <section id="history" className="body-font">
+                <div className="relative">
+                    <Image src="/images/corner_flowers.png" alt="Flores en la esquina" width={150} height={150} className="absolute -top-2 lg:top-0 left-0 m-0 p-0 rotate-90 w-1/5 lg:w-1/12 saturate-75" unoptimized={true}/>
+                </div>
                 <div className="mx-auto" ref={containerRef}>
                     <HighlightedText className="text-3xl font-bold mb-6 text-center">
                         Nuestra historia
                     </HighlightedText>
+                    <div className="flex flex-col items-center justify-center p-4">
+                        {guest && (
+                            <p className="lg:w-2/3 mx-auto leading-relaxed text-base text-justify"><b>{guest.name}</b> nos gustaría que {guest.assignedTickets!>1 ? "conozcan" : "conozcas"} nuestra historia, otra hermosa historia de amor que solamente Dios pudo haber diseñado.</p>
+                        )}
+                        <div className="w-full lg:max-w-1/5 py-2">
+                            <button onClick={toggleMute} aria-label={isMuted ? "Activar sonido" : "Silenciar"} className="bg-sky-700 hover:bg-sky-800 dark:bg-sky-600 dark:hover:bg-sky-700 cursor-pointer text-white px-4 py-2 rounded-md font-medium transition-colors w-full">
+                                {isMuted ? (
+                                    <span>Activar música</span>
+                                ) : (
+                                    <span>Silenciar</span>
+                                )}
+                            </button>
+                        </div>
+                    </div>
                     <div className="flex flex-col">
                         {historyItems.map((item, idx) => (
                             <div
                                 key={item.id}
                                 className="history-item relative min-h-[100vh]"
                             >
-                                <div className="history-image-wrap sticky top-20 z-0 w-full h-[65vh] md:h-[75vh] bg-white/0">
+                                <div className="sticky top-20 z-0 w-full h-[65vh] md:h-[75vh] bg-white/0">
                                     <Image
                                         src={item.imageUrl}
                                         alt={item.title}
                                         fill
                                         priority={idx === 0}
                                         sizes="100vw"
-                                        className="history-image object-cover"
+                                        className="history-image object-cover rounded-sm"
                                         style={{ width: "100%", height: "100%" }}
                                     />
                                 </div>
-
-                                {/* Texto centrado durante el tramo medio */}
-                                <div className="w-full flex justify-center items-center">
-                                    <div className="history-text max-w-3xl -mt-16 bg-white/70 dark:bg-slate-900/60 backdrop-blur-xl rounded-lg shadow-xl p-6">
-                                        <h2 className="text-base md:text-lg font-medium mb-1">{item.subtitle}</h2>
-                                        <h4 className="text-lg md:text-xl font-semibold mb-4">{item.title}</h4>
+                                <div className="w-full flex justify-center items-center p-4">
+                                    <div className="history-text max-w-3xl mt-0 py-4 bg-gray-50/80 dark:bg-slate-800/90 backdrop-blur-xl rounded-lg shadow-xl p-6">
+                                        <h2 className="text-base md:text-lg text-right italic font-medium">{item.subtitle}</h2>
+                                        <h4 className="text-lg md:text-xl text-center font-semibold">{item.title}</h4>
                                         <div className="flex flex-col gap-3 text-justify text-sm md:text-base">
-                                            <p>{item.descriptionAndy}</p>
-                                            <p>{item.descriptionAlexis}</p>
+                                            <p>Ella: {item.descriptionAndy}</p>
+                                            <p>Él: {item.descriptionAlexis}</p>
                                         </div>
                                     </div>
                                 </div>
-
-                                {/* Espacio inferior para que al seguir el scroll se revele la siguiente imagen */}
                                 <div className="h-[60vh]" />
                             </div>
                         ))}
                     </div>
                 </div>
+{/*                <div className="relative">
+                    <Image src="/images/corner_flowers.png" alt="Flores en la esquina" width={150} height={150} className="absolute bottom-0 lg:-bottom-12 right-0 m-0 p-0 -rotate-90 w-1/5 lg:w-1/12 saturate-75" unoptimized={true}/>
+                </div>*/}
             </section>
         </>
     )

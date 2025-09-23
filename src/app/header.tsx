@@ -16,6 +16,7 @@ const navLinks = [
     { name: 'Nuestra historia', href: '#history' },
     { name: 'Detalles', href: '#details' },
     { name: 'Asistencia', href: '#rvsp' },
+    { name: 'Recomendaciones', href: '#facilities' }
 ];
 
 export default function Header() {
@@ -50,21 +51,21 @@ export default function Header() {
         });
     }, {scope: headerRef});
 
-    useEffect(() => {
+/*    useEffect(() => {
         const handleScroll = () => {
             setIsScrolled(window.scrollY > 10);
         };
         window.addEventListener('scroll', handleScroll);
         return () => window.removeEventListener('scroll', handleScroll);
-    }, []);
+    }, []);*/
     const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
     const closeMenu = () => setIsMenuOpen(false);
 
     const handleNavCLic = (e: MouseEvent<HTMLAnchorElement>, target: string) => {
         e.preventDefault();
         closeMenu();
-        if (lenis) {
-            lenis.scrollTo(target, {offset: -80})
+        if (lenis && headerRef.current) {
+            lenis.scrollTo(target, {offset: -headerRef.current.offsetHeight})
         }
     }
     return (
@@ -72,7 +73,7 @@ export default function Header() {
             ref={headerRef}
             className="sticky top-0 z-40 p-4 bg-white dark:bg-neutral-900"
         >
-            <div className="container mx-auto flex items-center justify-between">
+            <div className="container mx-auto flex items-center justify-between px-2">
                 {/*<Link href="#home" className={`flex-shrink-0 transition-all duration-300 ${isScrolled ? 'p-2' : 'p-4'}`} onClick={closeMenu}>*/}
                 <Image
                     src="/images/logo_AA_light.svg"
