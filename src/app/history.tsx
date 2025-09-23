@@ -49,24 +49,6 @@ const historyItems: HistoryItem[] = [
         descriptionAlexis: "Ese día me dijo que se iría a Chile y algo dentro de mí no quería que se fuera, porque realmente me agradaba estar con Andy.",
         imageUrl: "/images/hero.jpg",
         audioUrl: "/audio/track_3.ogg"
-    },
-    {
-        id: 4,
-        subtitle: "2024",
-        title: "Título 3",
-        descriptionAndy: "Era 31 de diciembre, cumpleaños de Alexis, llevábamos mas de 2 años sin hablar. Algo en mi me dijo que le escribiera para felicitar y, por consecuencia, reconectar nuevamente, parecía que habíamos vivido situaciones similares y probablemente nos podríamos entender. Y no les voy a mentir, una parte de mi si quería saber si había posibilidad de algo mas. Ahora se que fue Dios quien me guió, pues en el minuto 1 que nos volvimos a ver la conexión estaba intacta, la misma desde que teníamos solo 17. Alexis es mi hogar.",
-        descriptionAlexis: "Ese día me dijo que se iría a Chile y algo dentro de mí no quería que se fuera, porque realmente me agradaba estar con Andy.",
-        imageUrl: "/images/hero.jpg",
-        audioUrl: "/audio/track_3.ogg"
-    },
-    {
-        id: 5,
-        subtitle: "2024",
-        title: "Título 3",
-        descriptionAndy: "Era 31 de diciembre, cumpleaños de Alexis, llevábamos mas de 2 años sin hablar. Algo en mi me dijo que le escribiera para felicitar y, por consecuencia, reconectar nuevamente, parecía que habíamos vivido situaciones similares y probablemente nos podríamos entender. Y no les voy a mentir, una parte de mi si quería saber si había posibilidad de algo mas. Ahora se que fue Dios quien me guió, pues en el minuto 1 que nos volvimos a ver la conexión estaba intacta, la misma desde que teníamos solo 17. Alexis es mi hogar.",
-        descriptionAlexis: "Ese día me dijo que se iría a Chile y algo dentro de mí no quería que se fuera, porque realmente me agradaba estar con Andy.",
-        imageUrl: "/images/hero.jpg",
-        audioUrl: "/audio/track_3.ogg"
     }
 ];
 
@@ -74,9 +56,9 @@ export default function History() {
     const {guest} = useGuest();
     const {isMuted, toggleMute} = useAudio();
     const containerRef = useRef<HTMLDivElement>(null);
-    const horizontalWrapperRef = useRef<HTMLDivElement>(null);
     const [activeCard, setActiveCard] = useState(-1);
     const audioRefs = useRef<(HTMLAudioElement | null)[]>([]);
+
     useEffect(() => {
         audioRefs.current = historyItems.map(item => item.audioUrl ? new Audio(item.audioUrl) : null);
         return () => {
@@ -97,160 +79,118 @@ export default function History() {
     }, [activeCard, isMuted]);
 
     useGSAP(() => {
-        const mm = gsap.matchMedia();
+        const sections = gsap.utils.toArray<HTMLDivElement>('.history-item');
 
-        mm.add("(min-width: 1024px)", () => {
-            const horizontalSections = gsap.utils.toArray<HTMLDivElement>('.history-card');
+        sections.forEach((section, index) => {
+            const imageWrap = section.querySelector('.history-image-wrap') as HTMLDivElement;
+            const imageEl = section.querySelector('.history-image') as HTMLImageElement;
+            const textBox = section.querySelector('.history-text') as HTMLDivElement;
 
-            const horizontalScrollTween = gsap.to(horizontalWrapperRef.current, {
-                x: () => -(horizontalWrapperRef.current!.scrollWidth - window.innerWidth),
-                ease: "none",
+            gsap.set(imageEl, {
+                scale: 0.8,
+                transformOrigin: "bottom center",
+            });
+
+            const tl = gsap.timeline({
                 scrollTrigger: {
-                    trigger: containerRef.current,
-                    pin: true,
-                    scrub: 1,
-                    start: "top top",
+                    trigger: section,
+                    start: "top 80%",
+                    scrub: true,
+                    pin: false,
+                    end: "bottom 60%",
                     snap: {
-                        snapTo: 1 / (horizontalSections.length - 1),
-                        duration: 0.3
+                        snapTo: 1 / sections.length,
+                        onComplete: () => setActiveCard(index)
                     },
-                    end: () => "+=" + (horizontalWrapperRef.current!.scrollWidth - window.innerWidth),
-                    invalidateOnRefresh: true,
-                    onUpdate: (self) => {
+                    /*markers: true,*/
+/*                    onEnter: () => setActiveCard(index),
+                    onEnterBack: () => setActiveCard(index),*/
+/*                    onUpdate: (self) => {
                         if (self.isActive) {
                             const progress = self.progress;
                             const newActiveCard = Math.min(
-                                horizontalSections.length - 1,
-                                Math.floor(progress * horizontalSections.length)
+                                sections.length - 1,
+                                Math.floor(progress * sections.length)
                             );
                             if (newActiveCard !== activeCard) {
                                 setActiveCard(newActiveCard);
                             }
                         }
-                    },
-                    /*onLeave: () => setActiveCard(-1),
-                    onLeaveBack: () => setActiveCard(-1),*/
-                    onToggle: (self) => {
+                    },*/
+/*                    onToggle: (self) => {
+                        console.log("onToggle", self);
                         if (!self.isActive) setActiveCard(-1);
+                    },*/
+/*                    onLeave: () => setActiveCard(-1),
+                    onLeaveBack: () => setActiveCard(-1)*/
+                }
+            });
+
+            tl.to(imageEl, {
+                scale: 1,
+                ease: "power3.out",
+            }, 0);
+
+            gsap.fromTo(textBox,
+                {y: 0, autoAlpha: 0},
+                {
+                    y: 80,
+                    autoAlpha: 1,
+                    ease: "power3.out",
+                    opacity: "0",
+                    scrollTrigger: {
+                        trigger: section,
+                        start: "top 80%",
+                        end: "bottom 70%",
+                        scrub: true,
+                        markers: true,
                     }
-                },
-            });
-
-            horizontalSections.forEach((section) => {
-                const image = section.querySelector('.history-image');
-                const text = section.querySelector('.history-text');
-
-                gsap.from(image, {
-                    scale: 1.3,
-                    scrollTrigger: {
-                        trigger: section,
-                        containerAnimation: horizontalScrollTween,
-                        start: "left right",
-                        end: "left left",
-                        scrub: true,
-                    },
                 });
-
-                gsap.from(text, {
-                    y: 100,
-                    autoAlpha: 0,
-                    scrollTrigger: {
-                        trigger: section,
-                        containerAnimation: horizontalScrollTween,
-                        start: "left center",
-                        end: "left left",
-                        scrub: true,
-                    },
-                });
-            });
-
-            return () => {
-                gsap.killTweensOf(horizontalWrapperRef.current);
-            };
         });
-
-        mm.add("(max-width: 1023x)", () => {
-            const verticalSections = gsap.utils.toArray<HTMLDivElement>('.history-card');
-
-            verticalSections.forEach((section) => {
-                const image = section.querySelector('.history-image');
-                const text = section.querySelector('.history-text');
-
-                gsap.from(image, {
-                    y: 50,
-                    autoAlpha: 0,
-                    duration: 0.8,
-                    scrollTrigger: {
-                        trigger: section,
-                        start: "top 80%",
-                        toggleActions: "play none none reverse",
-                    },
-                });
-
-                gsap.from(text, {
-                    y: 30,
-                    autoAlpha: 0,
-                    duration: 0.8,
-                    delay: 0.2,
-                    scrollTrigger: {
-                        trigger: section,
-                        start: "top 80%",
-                        toggleActions: "play none none reverse",
-                    },
-                });
-            });
-        });
-
-        return () => mm.revert();
     }, { scope: containerRef });
 
     return (
         <>
             <section id="history" className="body-font">
-                <div className="relative">
-                    <Image src="/images/corner_flowers.png" alt="Flores en la esquina" width={150} height={150} className="absolute -top-2 lg:top-0 left-0 m-0 p-0 rotate-90 w-1/5 lg:w-1/12 saturate-75" unoptimized={true}/>
-                </div>
-                <div className="container mx-auto p-4">
-                    <div className="flex flex-col items-center justify-center text-center w-full">
-                        {/*<h3 className="text-3xl lg:text-2xl text-center font-medium title-font mb-4 text-gray-900 dark:text-white">Nuestra historia</h3>*/}
-                        <HighlightedText className="text-3xl lg:text-2xl text-center font-medium title-font mb-4 text-gray-900 dark:text-white">Nuestra historia</HighlightedText>
-                        <Image src="/images/flowers_growing.gif" alt="Flores creciendo" className="py-4" unoptimized width={100} height={100}/>
-                        {guest && (
-                            <p className="lg:w-2/3 mx-auto leading-relaxed text-base"><b>{guest.name}</b> nos gustaría que {guest.assignedTickets!>1 ? "conozcan" : "conozcas"} nuestra historia, otra hermosa historia de amor que solamente Dios pudo haber diseñado.</p>
-                        )}
-                        <div className="py-4">
-                            <button onClick={toggleMute} aria-label={isMuted ? "Activar sonido" : "Silenciar"} className="bg-sky-700 hover:bg-sky-800 dark:bg-sky-600 dark:hover:bg-sky-700 cursor-pointer text-white px-4 py-2 rounded-md font-medium transition-colors">
-                                {isMuted ? (
-                                    <span>Activar música</span>
-                                ) : (
-                                    <span>Silenciar</span>
-                                )}
-                            </button>
-                        </div>
-                    </div>
-                    <div ref={containerRef} className="relative lg:h-screen w-full lg:overflow-hidden">
-                        <div ref={horizontalWrapperRef} className="lg:flex lg:h-full" style={{width: `calc(100vw * ${historyItems.length}`}}>
-                        {historyItems.map((item, index) => (
-                            <div key={item.id} className="history-card w-full lg:w-screen h-auto lg:h-full flex items-center justify-center relative p-4 md:p-12 mb-16 lg:mb-0">
-                                <div className="absolute inset-0 overflow-hidden">
-                                    <Image src={item.imageUrl} alt={item.title} fill className="history-image object-cover lg:p-16 w-full h-auto"/>
+                <div className="mx-auto" ref={containerRef}>
+                    <HighlightedText className="text-3xl font-bold mb-6 text-center">
+                        Nuestra historia
+                    </HighlightedText>
+                    <div className="flex flex-col">
+                        {historyItems.map((item, idx) => (
+                            <div
+                                key={item.id}
+                                className="history-item relative min-h-[100vh]"
+                            >
+                                <div className="history-image-wrap sticky top-20 z-0 w-full h-[65vh] md:h-[75vh] bg-white/0">
+                                    <Image
+                                        src={item.imageUrl}
+                                        alt={item.title}
+                                        fill
+                                        priority={idx === 0}
+                                        sizes="100vw"
+                                        className="history-image object-cover"
+                                        style={{ width: "100%", height: "100%" }}
+                                    />
                                 </div>
-                                <div className="history-text relative max-w-3xl w-full bg-white/60 dark:bg-slate-900/60 backdrop-blur-lg p-6 md:p-10 rounded-xl shadow-2xl text-center">
-                                    <h2 className="text-lg font-medium title-font text-neutral-800 dark:text-white mb-1">{item.subtitle}</h2>
-                                    <h4 className="text-xl font-semibold text-neutral-900 dark:text-neutral-100 mb-4">{item.title}</h4>
-                                    {/*<Typewriter text={item.title} finalBar={false} className="text-4xl lg:text-3xl font-bold title-font text-gray-900 dark:text-white mb-4" startAnimation={activeCard === index} />*/}
-                                    <div className="flex flex-col md:flex-row gap-4 text-justify text-sm md:text-base">
-                                        <p className="leading-relaxed">{item.descriptionAndy}</p>
-                                        <p className="leading-relaxed">{item.descriptionAlexis}</p>
+
+                                {/* Texto centrado durante el tramo medio */}
+                                <div className="w-full flex justify-center items-center">
+                                    <div className="history-text max-w-3xl -mt-16 bg-white/70 dark:bg-slate-900/60 backdrop-blur-xl rounded-lg shadow-xl p-6">
+                                        <h2 className="text-base md:text-lg font-medium mb-1">{item.subtitle}</h2>
+                                        <h4 className="text-lg md:text-xl font-semibold mb-4">{item.title}</h4>
+                                        <div className="flex flex-col gap-3 text-justify text-sm md:text-base">
+                                            <p>{item.descriptionAndy}</p>
+                                            <p>{item.descriptionAlexis}</p>
+                                        </div>
                                     </div>
                                 </div>
+
+                                {/* Espacio inferior para que al seguir el scroll se revele la siguiente imagen */}
+                                <div className="h-[60vh]" />
                             </div>
                         ))}
-                        </div>
                     </div>
-                </div>
-                <div className="relative">
-                    <Image src="/images/corner_flowers.png" alt="Flores en la esquina" width={150} height={150} className="absolute -bottom-0 lg:-bottom-12 right-0 m-0 p-0 -rotate-90 w-1/5 lg:w-1/12 saturate-75" unoptimized={true}/>
                 </div>
             </section>
         </>

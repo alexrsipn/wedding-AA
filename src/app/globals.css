@@ -30,3 +30,12 @@ body {
     --color-dusty-green: #e1e1d7;
     --color-dusty-white: #faf5f5;
 }
+
+/*
+.history-item .sticky {
+    position: sticky;
+    top: 80px;
+    width: 100%;
+    z-index: 0;
+    background: #fff;
+}*/
