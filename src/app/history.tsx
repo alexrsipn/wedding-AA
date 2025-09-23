@@ -94,17 +94,19 @@ export default function History() {
             const tl = gsap.timeline({
                 scrollTrigger: {
                     trigger: section,
-                    start: "top 80%",
+                    start: "top 40%",
                     scrub: true,
-                    pin: false,
                     end: "bottom 60%",
-                    snap: {
+                    /*snap: {
                         snapTo: 1 / sections.length,
-                        onComplete: () => setActiveCard(index)
-                    },
+                        inertia: false,
+                        ease: "sine.in",
+                        /!*duration: 0.8,*!/
+                        onComplete: () => setActiveCard(index),
+                    },*/
                     /*markers: true,*/
-/*                    onEnter: () => setActiveCard(index),
-                    onEnterBack: () => setActiveCard(index),*/
+                    onEnter: () => setActiveCard(index),
+                    onEnterBack: () => setActiveCard(index),
 /*                    onUpdate: (self) => {
                         if (self.isActive) {
                             const progress = self.progress;
@@ -117,35 +119,43 @@ export default function History() {
                             }
                         }
                     },*/
-/*                    onToggle: (self) => {
-                        console.log("onToggle", self);
+                    onToggle: (self) => {
                         if (!self.isActive) setActiveCard(-1);
-                    },*/
-/*                    onLeave: () => setActiveCard(-1),
-                    onLeaveBack: () => setActiveCard(-1)*/
+                    },
+                    onLeave: () => setActiveCard(-1),
+                    onLeaveBack: () => setActiveCard(-1)
                 }
             });
 
             tl.to(imageEl, {
                 scale: 1,
-                ease: "power3.out",
+                ease: "power3.inOut",
             }, 0);
 
             gsap.fromTo(textBox,
-                {y: 0, autoAlpha: 0},
                 {
-                    y: 80,
+                    autoAlpha: 0,
+                    opacity: 0
+                },
+                {
                     autoAlpha: 1,
                     ease: "power3.out",
-                    opacity: "0",
+                    opacity: 1,
                     scrollTrigger: {
                         trigger: section,
                         start: "top 80%",
                         end: "bottom 70%",
                         scrub: true,
-                        markers: true,
+                        /*markers: true,*/
+                        /*snap: {
+                            snapTo: 1 / sections.length,
+                            ease: "sine.in",
+                            inertia: false,
+                            /!*duration: 0.8*!/
+                        }*/
                     }
-                });
+                }
+                );
         });
     }, { scope: containerRef });
 
