@@ -14,15 +14,20 @@ gsap.registerPlugin(ScrollTrigger);
 
 type HistoryItem = {
     id: number;
-    subtitle: string;
+    subtitle?: string;
     title: string;
-    descriptionAndy: string;
-    descriptionAlexis: string;
+    descriptionAndy?: string;
+    descriptionAlexis?: string;
     imageUrl: string;
     audioUrl?: string;
 }
 
 const historyItems: HistoryItem[] = [
+    {
+        id: 0,
+        title: "El inicio de nuestra historia",
+        imageUrl: "/images/std_history_0.jpg",
+    },
     {
         id: 1,
         subtitle: "2014 - 2019",
@@ -49,7 +54,12 @@ const historyItems: HistoryItem[] = [
         descriptionAlexis: "Me emocioné por volvernos a ver.",
         imageUrl: "/images/std_history_3.jpg",
         audioUrl: "/audio/track_3.ogg"
-    }
+    },
+    {
+        id: 4,
+        title: "El inicio de nuestra historia",
+        imageUrl: "/images/std_history_4.jpg",
+    },
 ];
 
 export default function History() {
@@ -166,17 +176,19 @@ export default function History() {
                                         style={{ width: "100%", height: "100%" }}
                                     />
                                 </div>
-                                <div className="w-full flex justify-center items-center p-4">
-                                    <div className="history-text max-w-3xl mt-0 py-4 bg-gray-50 dark:bg-slate-800 backdrop-blur-xl rounded-lg shadow-xl p-6">
-                                        <h2 className="text-base md:text-lg text-right italic font-medium">{item.subtitle}</h2>
-                                        {/*<h4 className="text-lg md:text-xl text-center font-semibold">{item.title}</h4>*/}
-                                        <Typewriter text={item.title} finalBar={true} className="text-lg md:text-xl text-center font-semibold" startAnimation={true}></Typewriter>
-                                        <div className="flex flex-col gap-3 text-justify text-sm md:text-base">
-                                            <p>Ella: {item.descriptionAndy}</p>
-                                            <p>Él: {item.descriptionAlexis}</p>
+                                {item.subtitle && (
+                                    <div className="w-full flex justify-center items-center p-4">
+                                        <div className="history-text max-w-3xl mt-0 py-4 bg-gray-50 dark:bg-slate-800 backdrop-blur-xl rounded-lg shadow-xl p-6">
+                                            <h2 className="text-base md:text-lg text-right italic font-medium">{item.subtitle}</h2>
+                                            {/*<h4 className="text-lg md:text-xl text-center font-semibold">{item.title}</h4>*/}
+                                            <Typewriter text={item.title} finalBar={true} className="text-lg md:text-xl text-center font-semibold" startAnimation={true}></Typewriter>
+                                            <div className="flex flex-col gap-3 text-justify text-sm md:text-base">
+                                                <p>Ella: {item.descriptionAndy}</p>
+                                                <p>Él: {item.descriptionAlexis}</p>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
+                                )}
                                 <div className="h-[60vh]" />
                             </div>
                         ))}

@@ -28,16 +28,19 @@ const detailsItems = [
         description: "Si además deseas obsequiarnos algo, te compartimos nuestra mesa de regalos.",
         urlList: [
             {
-                url: "https://www.liverpool.com.mx/tienda/home",
-                name: "Liverpool"
+                url: "https://www.amazon.com.mx/wedding/share/andreayalexis",
+                name: "Amazon",
+                className: "bg-white text-black font-bold py-2 px-4 rounded border border-[#FF9900]"
             },
             {
-                url: "https://www.sears.com.mx",
-                name: "Sears"
+                url: "https://mesaderegalos.liverpool.com.mx/milistaderegalos/51774312",
+                name: "Liverpool",
+                className: "bg-[#e10098] text-white font-bold py-2 px-4 rounded border border-white"
             },
             {
-                url: "https://www.amazon.com.mx",
-                name: "Amazon"
+                url: "https://www.elpalaciodehierro.com/buscar?eventId=401292",
+                name: "Palacio de Hierro",
+                className: "bg-[#f4b900] text-black font-bold py-2 px-4 rounded border border-white"
             }
         ]
     },
@@ -92,9 +95,9 @@ export default function Details() {
                                     <p className="">{item.description}</p>
                                 </div>
                                 <div className="w-full flex justify-around items-center">
-                                {item.urlList && item.urlList.length > 0 && item.urlList.map(({url, name}, index) => (
+                                {item.urlList && item.urlList.length > 0 && item.urlList.map(({url, name, className}, index) => (
                                     <button key={index} className="py-4">
-                                        <Link href={url} target="_blank" className="bg-sky-700 hover:bg-sky-800 dark:bg-sky-600 dark:hover:bg-sky-700 cursor-pointer text-white px-4 py-2 rounded-md font-medium transition-colors">{name}</Link>
+                                        <Link href={url} target="_blank" className={className}>{name}</Link>
                                     </button>
                                 ))}
                                 </div>
