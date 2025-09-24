@@ -8,6 +8,9 @@ const Footer = () => {
     const {guest} = useGuest();
     return (
         <>
+            <div className="py-4">
+                <Image src="/images/std_footer.jpg" alt="Foto footer" width={960} height={540} className="w-full max-h-[50%] object-contain" unoptimized={true}/>
+            </div>
             <hr className="border-top border-gray-500 dark:border-gray-300"/>
             <footer className="body-font bg-white dark:bg-neutral-900 my-6">
                 <div className="container px-5 py-8 mx-auto flex items-center sm:flex-row flex-col">
@@ -19,7 +22,7 @@ const Footer = () => {
                     <p className="text-sm sm:ml-4 sm:pl-4 sm:border-l-2 sm:border-gray-200 sm:py-2 sm:mt-0 mt-4">©
                         2025 Alexis Ruiz —
                         <Link href="https://github.com/alexrsipn" className="ml-1" rel="noopener noreferrer"
-                              target="_blank">@alexrsmx</Link>
+                              target="_blank">@alexrsipn</Link>
                     </p>
                     {/*<span className="inline-flex sm:ml-auto sm:mt-0 mt-4 justify-center sm:justify-start gap-4">
                       <Link href="https://www.facebook.com/andrea.lugillo" target="_blank">
