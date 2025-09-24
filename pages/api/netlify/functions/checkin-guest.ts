@@ -1,4 +1,4 @@
-import type {NextApiRequest, NextApiResponse} from 'next';
+import type { NextApiRequest, NextApiResponse } from 'next';
 import Airtable, {FieldSet, Record} from "airtable";
 
 interface AirtableGuestFields extends FieldSet {
@@ -29,7 +29,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         const record: Record<AirtableGuestFields> = await base(tableName).find(guestId);
 
         if (record.fields.CheckedIn) {
-            return res.status(200).json({status: 'already_checked_in', message: 'Este invitado ya ingresó', guest: record.fields});
+            return res.status(200).json({status: 'already_checked_in', message: 'Invitado registrado previamente', guest: record.fields});
         }
 
         await base(tableName).update([

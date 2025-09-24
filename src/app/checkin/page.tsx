@@ -23,16 +23,18 @@ export default function CheckinPage() {
     const [isAuthenticated, setIsAuthenticated] = useState(false);
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
-    const [scanResult, setScanResult] = useState<ScanResult>({ status: 'idle', message: 'Apunta la cámara al código QR del boleto.'});
+    const [scanResult, setScanResult] = useState<ScanResult>({ status: 'idle', message: 'Escanea el código QR del boleto con la cámara de tu teléfono.'});
     const [isProcessing, setIsProcessing] = useState(false);
-    const [checkedInGuests, setCheckedInGuests] = useState<CheckedInGuest[]>([])
+    const [checkedInGuests, setCheckedInGuests] = useState<CheckedInGuest[]>([]);
     const [isListLoading, setIsListLoading] = useState(true);
+    const [isScannerActive, setIsScannerActive] = useState(false);
+    const [totalGuests, setTotalGuests] = useState(0);
 
     const fetchCheckedInGuests = async () => {
         try {
-            const response = await fetch('/api/netlify/functions/get-checkedin-guests');
-            const data = await response.json();
-            setCheckedInGuests(data);
+            const data = await fetch('/api/netlify/functions/get-checkedin-guests').then((response) => response.json());
+            setCheckedInGuests(data.checkedInGuests);
+            setTotalGuests(data.totalGuests);
         } catch (error) {
             console.error("Error fetching checked-in list: ", error);
         } finally {
@@ -44,7 +46,8 @@ export default function CheckinPage() {
         const isAuthenticatedInSession = sessionStorage.getItem('checkin_authenticated') === 'true';
         if (isAuthenticatedInSession) {
             setIsAuthenticated(true);
-            fetchCheckedInGuests();
+            const guests = fetchCheckedInGuests();
+            console.log(guests);
         }
     }, []);
 
@@ -87,7 +90,8 @@ export default function CheckinPage() {
                         guestName: data.guest?.FullName,
                         tickets: data.guest?.ConfirmedTickets
                     }));
-                    fetchCheckedInGuests();
+                    const guests = fetchCheckedInGuests();
+                    console.log(guests);
                 }
 
             } catch (error) {
@@ -101,15 +105,19 @@ export default function CheckinPage() {
 
     if (!isAuthenticated) {
         return (
-            <div className="flex items-center justify-center min-h-screen bg-slate-100">
-                <form onSubmit={handlePasswordSubmit} className="p-8 bg-white rounded-lg shadow-md w-full max-w-sm">
-                    <h2 className="text-2xl font-bold mb-4 text-center">Acceso Check-in</h2>
-                    <div className="mb-4">
-                        <label htmlFor="password" className="block text-slate-700 mb-2">Contraseña</label>
-                        <input type="password" id="password" value={password} onChange={(e) => setPassword(e.target.value)} className="w-full px-3 py-2 border border-slate-300 rounded-md focus:outline-none focus:ring-2 focus:ring-sky-500"/>
+            <div className="flex items-center justify-center min-h-screen bg-gradient-to-r from-blue-200 to-cyan-200">
+                <form onSubmit={handlePasswordSubmit} className="bg-gray-50 dark:bg-slate-800 p-8 rounded-lg shadow-md w-full max-w-sm h-[40vh]">
+                    <div className="flex flex-col justify-evenly items-center h-full">
+                        <h2 className="text-3xl font-bold p-4 text-center">Boda A&A</h2>
+                        <div className="w-full flex flex-col items-center justify-between gap-4">
+                            <div className="w-full">
+                                <label htmlFor="password" className="block text-slate-700 dark:text-slate-100">Contraseña:</label>
+                                <input type="password" pattern="[0-9]*" inputMode="numeric" id="password" value={password} onChange={(e) => setPassword(e.target.value)} className="w-full text-center py-2 border border-slate-300 rounded-md focus:outline-none focus:ring-2 focus:ring-sky-200"/>
+                            </div>
+                            {error && <p className="text-red-500 text-base m-0 p-0">{error}</p>}
+                            <button type="submit" className="w-1/2 font-semibold bg-sky-600 text-white py-2 rounded-md hover:bg-sky-700 transition-colors">Entrar</button>
+                        </div>
                     </div>
-                    {error && <p className="text-red-500 text-sm mb-4">{error}</p>}
-                    <button type="submit" className="w-full bg-sky-600 text-white py-2 rounded-md hover:bg-sky-700 transition-colors">Entrar</button>
                 </form>
             </div>
         )
@@ -118,43 +126,61 @@ export default function CheckinPage() {
     const resultColors = {
         success: 'bg-green-500',
         error: 'bg-red-500',
-        already_checked_in: 'bg-yellow-500',
+        already_checked_in: 'bg-yellow-500 text-slate-800',
         not_found: 'bg-red-500',
-        idle: 'bg-slate-700'
+        idle: 'bg-slate-500 text-slate-100'
     };
 
     return (
-        <div className="min-h-screen bg-black flex flex-col items-center justify-center text-white p-4">
+        <div className="min-h-screen flex flex-col items-center justify-center p-4 text-gray-900  dark:text-slate-200">
             <div className="w-full lg:flex lg:gap-8 lg:items-start">
                 <div className="lg:w-1/2 flex flex-col items-center">
-                    <h1 className="text-3xl font-bold mb-4">Check-in del evento</h1>
-                    <div className="w-full max-w-sm aspect-square overflow-hidden rounded-lg shadow-lg mb-4 bg-gray-800 border border-red-500">
-                        <Scanner
-                            onScan={(result) => handleScan(result[0].rawValue)}
-                            onError={(error) => console.error(error)}
-                            constraints={{facingMode: 'environment'}}
-                            scanDelay={300} />
+                    <h1 className="text-3xl font-bold leading-relaxed">Check-in boda A&A</h1>
+                    <h4 className="text-xl font-semibold">28/03/2026</h4>
+                    <div className="w-full max-w-sm aspect-square overflow-hidden rounded-lg shadow-lg mb-4 bg-gray-800">
+                        {isScannerActive ? (
+                            <Scanner
+                                onScan={(result) => handleScan(result[0].rawValue)}
+                                onError={(error) => console.error(error)}
+                                constraints={{facingMode: 'environment'}}
+                                scanDelay={100}
+                                paused={!isScannerActive}
+                                sound={isScannerActive}
+                            />
+                        ) : (
+                            <div className="w-full h-full flex items-center justify-center text-slate-100">
+                                <p className="font-semibold text-xl text-center">Active el escaner para registrar a invitado</p>
+                            </div>
+                        )}
+                    </div>
+                    <div className="flex justify-center items-center w-full py-2">
+                        {isScannerActive ? (
+                            <button className="min-w-1/2 bg-sky-700 hover:bg-sky-800 dark:bg-sky-600 dark:hover:bg-sky-700 cursor-pointer text-white px-4 py-2 rounded-md font-medium transition-colors" onClick={() => setIsScannerActive(false)}>Desactivar escaner</button>
+                        ) : (
+                            <button className="min-w-1/2 bg-sky-700 hover:bg-sky-800 dark:bg-sky-600 dark:hover:bg-sky-700 cursor-pointer text-white px-4 py-2 rounded-md font-medium transition-colors" onClick={() => setIsScannerActive(true)}>Activar escaner</button>
+                        )}
                     </div>
                     <div className={`w-full max-w-md p-4 rounded-lg text-center transition-colors duration-300 ${resultColors[scanResult.status]}`}>
                         <p className="text-lg font-semibold">{scanResult.message}</p>
                         {scanResult.guestName && (
-                            <div className="mt-2">
-                                <p className="text-2xl font-bold">{scanResult.guestName}</p>
-                                <p className="text-md">{scanResult.tickets} pases</p>
+                            <div className="">
+                                <p className="text-xl font-bold">{scanResult.guestName}</p>
+                                <p className="text-lg">{scanResult.tickets} pases</p>
                             </div>
                         )}
                     </div>
                 </div>
-                <div className="lg:w-1/2 mt-8 lg:mt-0">
-                    <h2 className="text-2xl font-bold mb-4 text-center">Invitados registrados ({checkedInGuests.length})</h2>
-                    <div className="bg-slate-800 rounded-lg shadow-lg p-4 max-h-[60vh] overflow-y-auto">
+                <hr className="w-full lg:hidden my-4 border-t border-slate-700 dark:border-slate-300" />
+                <div className="lg:w-1/2 flex flex-col items-center justify-center">
+                    <h2 className="text-2xl font-bold mb-4 text-center">Invitados registrados ({checkedInGuests.length}) de ({totalGuests})</h2>
+                    <div className="bg-slate-800 text-slate-100 rounded-lg shadow-lg p-4 max-h-[60vh] overflow-y-auto w-full">
                         {isListLoading ? <p>Cargando lista...</p> : (
                             <table className="w-full text-left">
                                 <thead>
                                     <tr className="border-b border-slate-600">
-                                        <th className="p-2">Nombre</th>
-                                        <th className="p-2">Pases</th>
-                                        <th className="p-2">Hora</th>
+                                        <th className="px-2">Invitado</th>
+                                        <th className="px-2">Boletos confirmados</th>
+                                        <th className="px-2">Fecha y hora de check-in</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -162,7 +188,7 @@ export default function CheckinPage() {
                                         <tr key={index} className="border-b border-slate-700">
                                             <td className="p-2">{guest.name}</td>
                                             <td className="p-2 text-center">{guest.tickets}</td>
-                                            <td className="p-2 text-center">{guest.time ? new Date(guest.time).toLocaleTimeString('es-MX') : '-'}</td>
+                                            <td className="p-2 text-center">{guest.time ? new Date(guest.time).toLocaleDateString() + " " + new Date(guest.time).toLocaleTimeString() : '-'}</td>
                                         </tr>
                                     ))}
                                 </tbody>

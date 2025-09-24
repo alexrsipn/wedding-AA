@@ -24,13 +24,16 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
             sort: [{field: "CheckedInTime", direction: "desc"}]
         }).all();
 
+        const guests = await  base(tableName).select({fields: ["FullName"]}).all();
+        const totalGuests = guests.length;
+
         const checkedInGuests = records.map(record => ({
             name: record.fields.FullName,
             tickets: record.fields.ConfirmedTickets,
             time: record.fields.CheckedInTime
         }));
 
-        return res.status(200).json(checkedInGuests);
+        return res.status(200).json({checkedInGuests, totalGuests});
     } catch (error) {
         console.error(error);
         return res.status(500).json({error: 'Failed to fetch checkin guests'})
