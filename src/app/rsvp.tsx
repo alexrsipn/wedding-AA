@@ -17,7 +17,7 @@ export default function Rsvp() {
                 </div>
                 <div className="container px-4 mx-auto flex flex-col items-center">
                     <HighlightedText className="text-3xl font-bold mb-6 text-center">Asistencia</HighlightedText>
-                    <RVSPForm/>
+                    <RSVPForm/>
                 </div>
                 {/*<div className="relative">
                     <Image src="/images/corner_flowers.png" alt="Flores en la esquina" width={150} height={150} className="absolute -bottom-12 lg:-bottom-12 right-0 m-0 p-0 -rotate-90 w-1/5 lg:w-1/12 saturate-75" unoptimized={true}/>
@@ -27,7 +27,7 @@ export default function Rsvp() {
     );
 }
 
-function RVSPForm() {
+function RSVPForm() {
     const {guest, isLoading, error} = useGuest();
     const [selectedGuests, setSelectedGuests] = useState<string[]>([]);
     const [status, setStatus] = useState<'idle' | 'submitting' | 'success' | 'error'>('idle');

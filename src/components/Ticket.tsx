@@ -14,11 +14,13 @@ export const Ticket = forwardRef<HTMLDivElement, TicketProps>(({guestName, confi
     /*const qrUrl = `${window.location.origin}/?guestId=${guestId}`;*/
     return (
         <div ref={ref} className="w-full max-w-sm bg-slate-50 dark:bg-slate-800 rounded-lg shadow-2xl font-sans text-slate-800 dark:text-slate-200 border border-slate-300 dark:border-slate-50">
-            <div className="flex justify-center items-center px-4 py-2">
+            <div className="flex justify-center items-center p-2">
                 <Image src="/images/logo_AA_light.svg" alt="Logo" width={50} height={50} className="dark:invert" />
             </div>
-            <div className="m-0 p-0 w-full h-36 flex flex-row justify-between items-center">
-                <Image src="/images/hero.jpg" alt="Foto_pass" width={100} height={50} className="w-1/2 h-full ticket-image"/>
+            <div className="m-0 p-0 w-full h-40 flex flex-row justify-between items-center">
+                <div className="w-1/2">
+                    <Image src="/images/std_ticket_banner.svg" alt="Foto_pass" width={100} height={50} className="w-full h-full ticket-image"/>
+                </div>
                 <div className="w-1/2 h-full flex flex-col justify-center items-center bg-amber-100/50 dark:bg-neutral-700">
                     <p className="font-serif font-semibold">Andrea & Alexis</p>
                     <p className="font-light text-sm italic">28.03.2026</p>

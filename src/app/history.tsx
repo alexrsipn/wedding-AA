@@ -29,7 +29,7 @@ const historyItems: HistoryItem[] = [
         title: "El inicio de nuestra historia",
         descriptionAndy: "Nos conocimos en el patio de Amistad y desde el primer momento me pareció una persona diferente, inteligente y con un corazón bello. Compartimos bastantes momentos de alegría, éramos muy jovenes. Pese a las circunstancias nuestra amistad no dejo de ser, aunque nos frecuentábamos menos, seguimos unidos. \nEn 2019 salimos, como solíamos hacerlo cada año, fue la primera vez que sentí que queria ser yo la persona con la cual compartiera su vida.",
         descriptionAlexis: "Nos conocimos en el patio de Amistad y desde el primer momento me pareció una persona diferente, inteligente y con un corazón bello. Compartimos bastantes momentos de alegría, éramos muy jovenes. Pese a las circunstancias nuestra amistad no dejo de ser, aunque nos frecuentábamos menos, seguimos unidos. \nEn 2019 salimos, como solíamos hacerlo cada año, fue la primera vez que sentí que queria ser yo la persona con la cual compartiera su vida.",
-        imageUrl: "/images/history_1.jpg",
+        imageUrl: "/images/std_history_1.jpg",
         audioUrl: "/audio/track_1.ogg"
     },
     {
@@ -38,7 +38,7 @@ const historyItems: HistoryItem[] = [
         title: "Título 2",
         descriptionAndy: "Durante la pandemia, cuando ya estaba un poco mejor todo, volvimos a reconectar. No importo el pasar de los años porque en el minuto 1 se sintió la familiaridad de siempre. Alexis siempre había sido (y sigue) mi persona favorita, con quien podia ser yo misma y quien me aplaudía cualquier cosa que hacía. En aquella ocasión volví a sentir el querer SER su persona, sin embargo, volvimos a separarnos…",
         descriptionAlexis: "Durante la pandemia, cuando ya estaba un poco mejor todo, volvimos a reconectar. No importo el pasar de los años porque en el minuto 1 se sintió la familiaridad de siempre. Alexis siempre había sido (y sigue) mi persona favorita, con quien podia ser yo misma y quien me aplaudía cualquier cosa que hacía. En aquella ocasión volví a sentir el querer SER su persona, sin embargo, volvimos a separarnos…",
-        imageUrl: "/images/hero.jpg",
+        imageUrl: "/images/std_history_2.jpg",
         audioUrl: "/audio/track_2.ogg"
     },
     {
@@ -47,7 +47,7 @@ const historyItems: HistoryItem[] = [
         title: "Título 3",
         descriptionAndy: "Era 31 de diciembre, cumpleaños de Alexis, llevábamos mas de 2 años sin hablar. Algo en mi me dijo que le escribiera para felicitar y, por consecuencia, reconectar nuevamente, parecía que habíamos vivido situaciones similares y probablemente nos podríamos entender. Y no les voy a mentir, una parte de mi si quería saber si había posibilidad de algo mas. Ahora sé que fue Dios quien me guió, pues en el minuto 1 que nos volvimos a ver la conexión estaba intacta, la misma desde que teníamos solo 17. Alexis es mi hogar.",
         descriptionAlexis: "Me emocioné por volvernos a ver.",
-        imageUrl: "/images/hero.jpg",
+        imageUrl: "/images/std_history_3.jpg",
         audioUrl: "/audio/track_3.ogg"
     }
 ];

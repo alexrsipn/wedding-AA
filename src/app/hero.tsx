@@ -71,7 +71,7 @@ export default function Hero() {
                 <div className="min-h-screen mx-auto flex px-4 py-4 lg:py-0 lg:-mt-24 items-center justify-center flex-col lg:flex-row gap-4">
                     <div className="lg:w-1/2 w-full">
                         <Image ref={imageRef} className="w-4/5 mx-auto object-cover object-center shadow-2xl" alt="hero"
-                               src="/images/hero.jpg" width={600} height={700} priority={true} unoptimized={false}/>
+                               src="/images/std_hero.jpg" width={600} height={700} priority={true} unoptimized={false}/>
                     </div>
                     <div className="lg:w-1/2 w-full text-center">
                         <div className="flex items-center justify-center m-0 p-0">
