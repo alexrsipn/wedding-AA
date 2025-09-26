@@ -51,26 +51,26 @@ export default function Welcome() {
                                     <p className="font-semibold py-2 text-xl text-center font-serif text-black">Andrea & Alexis</p>
                                     <div className="flex flex-col font-serif italic font-medium text-left px-2 text-gray-900">
                                         {isLoading ? (
-                                            <span className="text-center font-semibold">Cargando invitación...</span>
+                                            <span className="text-center font-medium font-sans">Cargando invitación...</span>
                                         ) : error ? (
                                             <span className="text-center font-medium">Invitación no encontrada</span>
                                         ) : guest ? (
                                             <>
                                                 {guest.guestListDetails && !guest.confirmed ? (
                                                     <>
-                                                        <p className="font-light text-gray-900 dark:text-gray-800 font-sans text-justify text-sm">Tenemos el honor de invitarte a la celebración de nuestro matrimonio</p>
+                                                        <p className="font-light text-gray-900 dark:text-gray-800 font-sans text-justify text-sm pb-2">Tenemos el honor de invitarte a la celebración de nuestro matrimonio.</p>
                                                         <p className="text-center italic"><b>{guest.name}</b></p>
-                                                        <p className="text-center">Pases asignados: <b>{guest.assignedTickets}</b></p>
-                                                        <details className="group mt-2">
-                                                            <summary className="flex justify-around items-center font-medium cursor-pointer list-none text-sm text-gray-500 hover:text-gray-700">
+                                                        <p className="text-center font-normal font-sans">Pases asignados: <b>{guest.assignedTickets}</b></p>
+                                                        <details className="group mt-2" open>
+                                                            <summary className="flex justify-around items-center font-medium font-sans cursor-pointer list-none text-sm text-gray-500 hover:text-gray-700">
                                                                 <span>Invitados: </span>
                                                                 <span className="transition-transform duration-300 group-open:rotate-180">
                                                                 <svg fill="none" height="20" shapeRendering="geometricPrecision" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" viewBox="0 0 24 24" width="20"><path d="M6 9l6 6 6-6"></path></svg>
                                                             </span>
                                                             </summary>
-                                                            <div className="text-gray-500 text-xs whitespace-pre-wrap bg-gray-50 text-center rounded max-h-16 lg:max-h-24 overflow-y-auto">
+                                                            <div className="text-slate-800 text-xs whitespace-pre-wrap bg-gray-50 text-center rounded max-h-24 lg:max-h-24">
                                                                 {guest.guestDetails?.map((detail, index) => (
-                                                                    <p key={index}>{detail}</p>
+                                                                    <p key={index} className="font-sans">{detail}</p>
                                                                 ))}
                                                             </div>
                                                         </details>
@@ -97,8 +97,14 @@ export default function Welcome() {
                                         </div>
                                         <span className="font-serif font-normal">3:30 PM</span>
                                     </div>
-                                    <div className="pb-1">
-                                        <button className="bg-sky-700 hover:bg-sky-800 dark:bg-sky-600 dark:hover:bg-sky-700 cursor-pointer text-white px-4 py-2 rounded-md font-medium transition-colors disabled:bg-gray-300 disabled:hover:bg-gray-400 disabled:cursor-not-allowed" onClick={handleClose} disabled={!guest}>Más información</button>
+                                    <div className="py-1 ">
+                                        <button
+                                            className="w-full bg-sky-700 hover:bg-sky-800 dark:bg-sky-600 dark:hover:bg-sky-700 cursor-pointer text-white px-4 py-2 rounded-md font-medium transition-all duration-500 disabled:bg-gray-400 disabled:cursor-not-allowed disabled:animate-none animate-pulse flex items-center justify-center gap-2"
+                                            onClick={handleClose}
+                                            disabled={!guest}
+                                        >
+                                            Continuar
+                                        </button>
                                     </div>
                                 </div>
                             </div>

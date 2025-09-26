@@ -16,7 +16,8 @@ const navLinks = [
     { name: 'Nuestra historia', href: '#history' },
     { name: 'Detalles', href: '#details' },
     { name: 'Asistencia', href: '#rvsp' },
-    { name: 'Recomendaciones', href: '#facilities' }
+    { name: 'Recomendaciones', href: '#facilities' },
+    { name: 'Galería', href: '#gallery' }
 ];
 
 export default function Header() {
@@ -51,13 +52,6 @@ export default function Header() {
         });
     }, {scope: headerRef});
 
-/*    useEffect(() => {
-        const handleScroll = () => {
-            setIsScrolled(window.scrollY > 10);
-        };
-        window.addEventListener('scroll', handleScroll);
-        return () => window.removeEventListener('scroll', handleScroll);
-    }, []);*/
     const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
     const closeMenu = () => setIsMenuOpen(false);
 

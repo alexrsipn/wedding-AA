@@ -6,6 +6,7 @@ import Footer from "@/app/footer";
 import Rsvp from "@/app/rsvp";
 import Details from "@/app/details";
 import Facilities from "@/app/facilities";
+import Gallery from "@/app/gallery";
 
 export default function Home() {
   return (
@@ -17,6 +18,7 @@ export default function Home() {
       <Details/>
       <Rsvp/>
       <Facilities/>
+        <Gallery/>
       <Footer/>
     </div>
   );

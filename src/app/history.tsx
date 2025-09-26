@@ -173,8 +173,8 @@ export default function History() {
                                     <div className="w-full flex justify-center items-center p-4">
                                         <div className="history-text max-w-3xl mt-0 py-4 bg-gray-50 dark:bg-slate-800 backdrop-blur-xl rounded-lg shadow-xl p-6">
                                             <h2 className="text-sm text-right font-medium leading-relaxed">{item.subtitle}</h2>
-                                            {/*<h4 className="text-lg md:text-xl text-center font-semibold">{item.title}</h4>*/}
-                                            <Typewriter text={item.title} finalBar={true} className="text-lg md:text-xl text-center font-semibold italic" startAnimation={true}></Typewriter>
+                                            <h4 className="text-lg md:text-xl text-center font-semibold italic">{item.title}</h4>
+                                            {/*<Typewriter text={item.title} finalBar={true} className="text-lg md:text-xl text-center font-semibold italic" startAnimation={true}></Typewriter>*/}
                                             <div className="flex flex-col gap-3 text-justify text-sm md:text-base">
                                                 <p className="py-2">{item.descriptionAndy}</p>
                                             </div>

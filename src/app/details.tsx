@@ -74,7 +74,7 @@ export default function Details() {
                 {/*<h3 className="text-3xl lg:text-2xl text-center font-medium title-font mb-4 text-gray-900 dark:text-white">Detalles del evento</h3>*/}
                 <HighlightedText className="text-3xl font-bold mb-6 text-center">Detalles del evento</HighlightedText>
                 {guest && (
-                    <p className="text-center p-2 text-base">{guest.name} {guest.assignedTickets!>1 ? "les" : "te"} recomendamos revisar todos los detalles de nuestro evento</p>
+                    <p className="text-center p-2 text-base">{guest.name} {guest.assignedTickets!>1 ? "les" : "te"} recomendamos revisar todos los detalles de nuestro evento.</p>
                 )}
                 <div className="container px-4 mx-auto flex sm:flex-nowrap flex-wrap flex-col lg:flex-row justify-center items-center gap-4">
                     <div
@@ -105,7 +105,7 @@ export default function Details() {
                                 </div>
                                 <div className="w-full flex flex-col justify-around items-center">
                                 {item.urlList && item.urlList.length > 0 && item.urlList.map(({url, name, className}, index) => (
-                                    <button key={index} className="lg:py-3">
+                                    <button key={index} className="py-3">
                                         <Link href={url} target="_blank" className={className}>{name}</Link>
                                     </button>
                                 ))}
