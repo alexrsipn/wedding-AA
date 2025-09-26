@@ -27,6 +27,7 @@ const historyItems: HistoryItem[] = [
         id: 0,
         title: "El inicio de nuestra historia",
         imageUrl: "/images/std_history_0.jpg",
+        audioUrl: "/audio/track_1.ogg"
     },
     {
         id: 1,
@@ -59,6 +60,7 @@ const historyItems: HistoryItem[] = [
         id: 4,
         title: "El inicio de nuestra historia",
         imageUrl: "/images/std_history_4.jpg",
+        audioUrl: "/audio/track_1.ogg"
     },
 ];
 

@@ -94,7 +94,7 @@ export default function Details() {
                                     <p className="">{item.subtitle}</p>
                                     <p className="">{item.description}</p>
                                 </div>
-                                <div className="w-full flex justify-around items-center">
+                                <div className="w-full flex sm:flex-col md:flex-row justify-around items-center">
                                 {item.urlList && item.urlList.length > 0 && item.urlList.map(({url, name, className}, index) => (
                                     <button key={index} className="py-4">
                                         <Link href={url} target="_blank" className={className}>{name}</Link>
