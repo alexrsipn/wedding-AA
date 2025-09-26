@@ -24,35 +24,26 @@ type HistoryItem = {
 
 const historyItems: HistoryItem[] = [
     {
-        id: 0,
-        title: "El inicio de nuestra historia",
-        imageUrl: "/images/std_history_0.jpg",
-        audioUrl: "/audio/track_1.ogg"
-    },
-    {
         id: 1,
         subtitle: "2014 - 2019",
-        title: "El inicio de nuestra historia",
-        descriptionAndy: "Nos conocimos en el patio de Amistad y desde el primer momento me pareció una persona diferente, inteligente y con un corazón bello. Compartimos bastantes momentos de alegría, éramos muy jovenes. Pese a las circunstancias nuestra amistad no dejo de ser, aunque nos frecuentábamos menos, seguimos unidos. \nEn 2019 salimos, como solíamos hacerlo cada año, fue la primera vez que sentí que queria ser yo la persona con la cual compartiera su vida.",
-        descriptionAlexis: "Nos conocimos en el patio de Amistad y desde el primer momento me pareció una persona diferente, inteligente y con un corazón bello. Compartimos bastantes momentos de alegría, éramos muy jovenes. Pese a las circunstancias nuestra amistad no dejo de ser, aunque nos frecuentábamos menos, seguimos unidos. \nEn 2019 salimos, como solíamos hacerlo cada año, fue la primera vez que sentí que queria ser yo la persona con la cual compartiera su vida.",
+        title: "It's nice to have a friend",
+        descriptionAndy: "Nos conocimos en el patio de amistad cristiana y desde el primer momento sentimos una conexión especial. Compartimos bastantes momentos de alegría, comenzamos a contarnos nuestras historias de vida y a ser muy buenos amigos. Visitamos algunos parques, fuimos a algunas bodas y éramos nuestro gran apoyo ante las dificultades de la vida, la difícil vida de dos adolescentes - jóvenes",
         imageUrl: "/images/std_history_1.jpg",
         audioUrl: "/audio/track_1.ogg"
     },
     {
         id: 2,
         subtitle: "2021 - 2022",
-        title: "Título 2",
-        descriptionAndy: "Durante la pandemia, cuando ya estaba un poco mejor todo, volvimos a reconectar. No importo el pasar de los años porque en el minuto 1 se sintió la familiaridad de siempre. Alexis siempre había sido (y sigue) mi persona favorita, con quien podia ser yo misma y quien me aplaudía cualquier cosa que hacía. En aquella ocasión volví a sentir el querer SER su persona, sin embargo, volvimos a separarnos…",
-        descriptionAlexis: "Durante la pandemia, cuando ya estaba un poco mejor todo, volvimos a reconectar. No importo el pasar de los años porque en el minuto 1 se sintió la familiaridad de siempre. Alexis siempre había sido (y sigue) mi persona favorita, con quien podia ser yo misma y quien me aplaudía cualquier cosa que hacía. En aquella ocasión volví a sentir el querer SER su persona, sin embargo, volvimos a separarnos…",
+        title: "All along there was some invisible string",
+        descriptionAndy: "Como todas las relaciones personales, hubieron momentos de separación pero durante la pandemia volvimos a reconectar. No importo el pasar de los años, la familiaridad entre nosotros seguía intacta. Estábamos viviendo nuevas etapas y el apoyo seguía existiendo, de hecho, por primera vez sentimos algo mutuamente pero jamás nos lo dijimos y eventualmente, volvimos a separarnos…",
         imageUrl: "/images/std_history_2.jpg",
         audioUrl: "/audio/track_2.ogg"
     },
     {
         id: 3,
-        subtitle: "2024",
-        title: "Título 3",
-        descriptionAndy: "Era 31 de diciembre, cumpleaños de Alexis, llevábamos mas de 2 años sin hablar. Algo en mi me dijo que le escribiera para felicitar y, por consecuencia, reconectar nuevamente, parecía que habíamos vivido situaciones similares y probablemente nos podríamos entender. Y no les voy a mentir, una parte de mi si quería saber si había posibilidad de algo mas. Ahora sé que fue Dios quien me guió, pues en el minuto 1 que nos volvimos a ver la conexión estaba intacta, la misma desde que teníamos solo 17. Alexis es mi hogar.",
-        descriptionAlexis: "Me emocioné por volvernos a ver.",
+        subtitle: "2025 - till the end",
+        title: "I only see daylight",
+        descriptionAndy: "El 31 de diciembre un mensaje cambió todo, llevábamos 2 años sin comunicación y juntarnos nuevamente se sintió como si no hubiera pasado el tiempo, platicamos de todo lo vivido en dicho tiempo, errores, aciertos, aventuras y demás. Algo cambió ese día, aquello que alguna vez sentimos seguía intacto, se sentía como volver a casa. Solo una salida bastó para saber que jamás nos volveríamos a separar…",
         imageUrl: "/images/std_history_3.jpg",
         audioUrl: "/audio/track_3.ogg"
     },
@@ -151,7 +142,7 @@ export default function History() {
                         {guest && (
                             <p className="lg:w-2/3 mx-auto leading-relaxed text-base text-justify"><b>{guest.name}</b> nos gustaría que {guest.assignedTickets!>1 ? "conozcan" : "conozcas"} nuestra historia, otra hermosa historia de amor que solamente Dios pudo haber diseñado.</p>
                         )}
-                        <div className="w-full lg:max-w-1/5 py-2">
+{/*                        <div className="w-full lg:max-w-1/5 py-2">
                             <button onClick={toggleMute} aria-label={isMuted ? "Activar sonido" : "Silenciar"} className="bg-sky-700 hover:bg-sky-800 dark:bg-sky-600 dark:hover:bg-sky-700 cursor-pointer text-white px-4 py-2 rounded-md font-medium transition-colors w-full">
                                 {isMuted ? (
                                     <span>Activar música</span>
@@ -159,7 +150,7 @@ export default function History() {
                                     <span>Silenciar</span>
                                 )}
                             </button>
-                        </div>
+                        </div>*/}
                     </div>
                     <div className="flex flex-col">
                         {historyItems.map((item, idx) => (
@@ -181,12 +172,11 @@ export default function History() {
                                 {item.subtitle && (
                                     <div className="w-full flex justify-center items-center p-4">
                                         <div className="history-text max-w-3xl mt-0 py-4 bg-gray-50 dark:bg-slate-800 backdrop-blur-xl rounded-lg shadow-xl p-6">
-                                            <h2 className="text-base md:text-lg text-right italic font-medium">{item.subtitle}</h2>
+                                            <h2 className="text-sm text-right font-medium leading-relaxed">{item.subtitle}</h2>
                                             {/*<h4 className="text-lg md:text-xl text-center font-semibold">{item.title}</h4>*/}
-                                            <Typewriter text={item.title} finalBar={true} className="text-lg md:text-xl text-center font-semibold" startAnimation={true}></Typewriter>
+                                            <Typewriter text={item.title} finalBar={true} className="text-lg md:text-xl text-center font-semibold italic" startAnimation={true}></Typewriter>
                                             <div className="flex flex-col gap-3 text-justify text-sm md:text-base">
-                                                <p>Ella: {item.descriptionAndy}</p>
-                                                <p>Él: {item.descriptionAlexis}</p>
+                                                <p className="py-2">{item.descriptionAndy}</p>
                                             </div>
                                         </div>
                                     </div>

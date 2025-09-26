@@ -9,24 +9,24 @@ const facilitiesItems = [
     {
         id: 1,
         icon: "/images/icon_ubication.svg",
-        title: "Título 1",
-        description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed euismod, nisl eget aliquet tincidunt, nisl nisl tincidunt nisl, eget aliquet nisl nisl eget aliquet nisl.",
-        url: "https://www.google.com",
-        urlName: "Google"
+        title: "Hotel de Cuautla",
+        description: "Batalla 19 de Febrero de 1812 No. 114, Centro, 62740 Cuautla, Mor.",
+        url: "https://www.hoteldecuautla.com.mx",
+        urlName: "Ver página del hotel"
     },
     {
         id: 2,
         icon: "/images/icon_ubication.svg",
-        title: "Título 2",
-        description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed euismod, nisl eget aliquet tincidunt, nisl nisl tincidunt nisl, eget aliquet nisl nisl eget aliquet nisl.",
-        url: "https://www.google.com",
-        urlName: "Google"
+        title: "Hotel Hacienda Cocoyoc",
+        description: "Carretera Federal, Cuernavaca-Cuautla Km 32.5, Centro Cocoyoc, 62736 Cocoyoc, Mor.",
+        url: "https://hcocoyoc.com",
+        urlName: "Ver página del hotel"
     },
     {
         id: 3,
         icon: "/images/icon_ubication.svg",
-        title: "Título 3",
-        description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed euismod, nisl eget aliquet tincidunt, nisl nisl tincidunt nisl, eget aliquet nisl nisl eget aliquet nisl.",
+        title: "Airbnb",
+        description: "Te recomendamos buscar hospedaje en plataformas como Airbnb en las zonas de Cuautla, Cocoyoc o Oaxtepec.",
         url: "https://www.google.com",
         urlName: "Google"
     }

@@ -19,7 +19,7 @@ export const Ticket = forwardRef<HTMLDivElement, TicketProps>(({guestName, confi
             </div>
             <div className="m-0 p-0 w-full h-40 flex flex-row justify-between items-center">
                 <div className="w-1/2">
-                    <Image src="/images/std_ticket_banner.svg" alt="Foto_pass" width={100} height={50} className="w-full h-full ticket-image"/>
+                    <Image src="/images/std_ticket_banner.svg" alt="Foto_pass" width={80} height={40} className="w-full h-full ticket-image"/>
                 </div>
                 <div className="w-1/2 h-full flex flex-col justify-center items-center bg-amber-100/50 dark:bg-neutral-700">
                     <p className="font-serif font-semibold">Andrea & Alexis</p>
@@ -38,6 +38,9 @@ export const Ticket = forwardRef<HTMLDivElement, TicketProps>(({guestName, confi
                         <div className="bg-white p-2 rounded-md">
                             <QRCodeSVG value={guestId} size={96} />
                         </div>
+                    </div>
+                    <div className="flex justify-center items-center">
+                        <p className="border-b border-dashed border-slate-600 font-semibold w-1/4">NO NIÑOS</p>
                     </div>
                 </div>
             </div>

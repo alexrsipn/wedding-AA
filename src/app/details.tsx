@@ -11,12 +11,12 @@ const detailsItems = [
         title: "Fecha y horario",
         subtitle: "Sábado 28.03.2026",
         imageUrl: "/images/envelope.png",
-        description: "El evento inicia a las 4:00 pm",
+        description: "La ceremonia inicia a las 4:00 pm",
     },
     {
         id: "dresscode",
         title: "Código de vestimenta",
-        subtitle: "Etiqueta formal jardín",
+        subtitle: "Vestimenta formal",
         imageUrl: "/images/envelope.png",
         description: "Para que luzcas increíble, te sugerimos evitar los colores blanco y negro. ¡Elige tu mejor atuendo y prepárate para celebrar!",
     },
@@ -50,6 +50,14 @@ const detailsItems = [
         subtitle: "Costo de estacionamiento $70 MXN",
         imageUrl: "/images/envelope.png",
         description: "El evento es un día antes de semana santa, por lo cual, te recomendamos reservar con anticipación en caso de hospedarte cerca.",
+        important: "NO NIÑOS (mayores de 3 años)"
+    },
+    {
+        id: "location",
+        title: "Lugar del evento",
+        subtitle: "Jardín El Encanto",
+        imageUrl: "/images/envelope.png",
+        description: "Carr. Cuautla-el Hospital 45, 10 de Abril, 62744 Cuautla, Mor.",
     }
 ];
 
@@ -92,11 +100,12 @@ export default function Details() {
                                 <h2 className="text-2xl font-semibold text-left italic">{item.title}</h2>
                                 <div className="text-lg py-1 lg:py-2 text-center font-normal leading-relaxed">
                                     <p className="">{item.subtitle}</p>
-                                    <p className="">{item.description}</p>
+                                    <p className="text-justify">{item.description}</p>
+                                    <p className="font-medium italic">{item.important}</p>
                                 </div>
-                                <div className="w-full flex sm:flex-col md:flex-row justify-around items-center">
+                                <div className="w-full flex flex-col justify-around items-center">
                                 {item.urlList && item.urlList.length > 0 && item.urlList.map(({url, name, className}, index) => (
-                                    <button key={index} className="py-4">
+                                    <button key={index} className="lg:py-3">
                                         <Link href={url} target="_blank" className={className}>{name}</Link>
                                     </button>
                                 ))}
