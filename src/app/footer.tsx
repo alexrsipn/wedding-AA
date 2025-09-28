@@ -9,7 +9,7 @@ const Footer = () => {
     return (
         <>
             <div className="py-4">
-                <Image src="/images/std_footer.jpg" alt="Foto footer" width={960} height={540} className="w-full max-h-[50%] object-contain" unoptimized={true}/>
+                <Image src="/images/std_footer.webp" alt="Foto footer" width={960} height={540} className="w-full max-h-[50%] object-contain" unoptimized={true}/>
             </div>
             <hr className="border-top border-gray-500 dark:border-gray-300"/>
             <footer className="body-font bg-white dark:bg-neutral-900 my-6">

@@ -7,62 +7,62 @@ import HighlightedText from "@/components/HighlightedText";
 const imagesGallery = [
     {
         id: 1,
-        imageUrl: '/images/std_gallery_1.jpg',
+        imageUrl: '/images/std_gallery_1.webp',
         alt: 'Foto de la galería 1'
     },
     {
         id: 2,
-        imageUrl: '/images/std_gallery_2.jpg',
+        imageUrl: '/images/std_gallery_2.webp',
         alt: 'Foto de la galería 2'
     },
     {
         id: 3,
-        imageUrl: '/images/std_gallery_3.jpg',
+        imageUrl: '/images/std_gallery_3.webp',
         alt: 'Foto de la galería 3'
     },
     {
         id: 4,
-        imageUrl: '/images/std_gallery_4.jpg',
+        imageUrl: '/images/std_gallery_4.webp',
         alt: 'Foto de la galería 4'
     },
     {
         id: 5,
-        imageUrl: '/images/std_gallery_5.jpg',
+        imageUrl: '/images/std_gallery_5.webp',
         alt: 'Foto de la galería 5'
     },
     {
         id: 6,
-        imageUrl: '/images/std_gallery_6.jpg',
+        imageUrl: '/images/std_gallery_6.webp',
         alt: 'Foto de la galería 6'
     },
     {
         id: 7,
-        imageUrl: '/images/std_gallery_7.jpg',
+        imageUrl: '/images/std_gallery_7.webp',
         alt: 'Foto de la galería 7'
     },
     {
         id: 8,
-        imageUrl: '/images/std_gallery_8.jpg',
+        imageUrl: '/images/std_gallery_8.webp',
         alt: 'Foto de la galería 8'
     },
     {
         id: 9,
-        imageUrl: '/images/std_gallery_9.jpg',
+        imageUrl: '/images/std_gallery_9.webp',
         alt: 'Foto de la galería 9'
     },
     {
         id: 10,
-        imageUrl: '/images/std_gallery_10.jpg',
+        imageUrl: '/images/std_gallery_10.webp',
         alt: 'Foto de la galería 10'
     },
     {
         id: 11,
-        imageUrl: '/images/std_gallery_11.jpg',
+        imageUrl: '/images/std_gallery_11.webp',
         alt: 'Foto de la galería 11'
     },
     {
         id: 12,
-        imageUrl: '/images/std_gallery_12.jpg',
+        imageUrl: '/images/std_gallery_12.webp',
         alt: 'Foto de la galería 12'
     }
 ];

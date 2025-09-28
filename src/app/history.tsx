@@ -28,7 +28,7 @@ const historyItems: HistoryItem[] = [
         subtitle: "2014 - 2019",
         title: "It's nice to have a friend",
         descriptionAndy: "Nos conocimos en el patio de amistad cristiana y desde el primer momento sentimos una conexión especial. Compartimos bastantes momentos de alegría, comenzamos a contarnos nuestras historias de vida y a ser muy buenos amigos. Visitamos algunos parques, fuimos a algunas bodas y éramos nuestro gran apoyo ante las dificultades de la vida, la difícil vida de dos adolescentes - jóvenes",
-        imageUrl: "/images/std_history_1.jpg",
+        imageUrl: "/images/std_history_1.webp",
         audioUrl: "/audio/track_1.ogg"
     },
     {
@@ -36,7 +36,7 @@ const historyItems: HistoryItem[] = [
         subtitle: "2021 - 2022",
         title: "All along there was some invisible string",
         descriptionAndy: "Como todas las relaciones personales, hubieron momentos de separación pero durante la pandemia volvimos a reconectar. No importo el pasar de los años, la familiaridad entre nosotros seguía intacta. Estábamos viviendo nuevas etapas y el apoyo seguía existiendo, de hecho, por primera vez sentimos algo mutuamente pero jamás nos lo dijimos y eventualmente, volvimos a separarnos…",
-        imageUrl: "/images/std_history_2.jpg",
+        imageUrl: "/images/std_history_2.webp",
         audioUrl: "/audio/track_2.ogg"
     },
     {
@@ -44,13 +44,13 @@ const historyItems: HistoryItem[] = [
         subtitle: "2025 - till the end",
         title: "I only see daylight",
         descriptionAndy: "El 31 de diciembre un mensaje cambió todo, llevábamos 2 años sin comunicación y juntarnos nuevamente se sintió como si no hubiera pasado el tiempo, platicamos de todo lo vivido en dicho tiempo, errores, aciertos, aventuras y demás. Algo cambió ese día, aquello que alguna vez sentimos seguía intacto, se sentía como volver a casa. Solo una salida bastó para saber que jamás nos volveríamos a separar…",
-        imageUrl: "/images/std_history_3.jpg",
+        imageUrl: "/images/std_history_3.webp",
         audioUrl: "/audio/track_3.ogg"
     },
     {
         id: 4,
         title: "El inicio de nuestra historia",
-        imageUrl: "/images/std_history_4.jpg",
+        imageUrl: "/images/std_history_4.webp",
         audioUrl: "/audio/track_1.ogg"
     },
 ];

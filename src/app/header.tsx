@@ -78,7 +78,7 @@ export default function Header() {
                     className="header-logo dark:invert"
                 />
                 {/*</Link>*/}
-                <nav className="hidden md:flex md:items-center md:justify-center md:gap-x-6 lg:gap-x-8">
+                <nav className="hidden md:flex md:items-center md:justify-center gap-x-4">
                     {navLinks.map((link) => (
                         <Link
                             key={link.name}

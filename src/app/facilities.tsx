@@ -59,9 +59,9 @@ export default function Facilities() {
                     {/*<div className="flex flex-wrap justify-evenly items-center gap-2">*/}
                         {facilitiesItems.map((item) => (
                             <div key={item.id}>
-                                <div className="flex rounded-lg h-full bg-slate-50 p-8 flex-col">
+                                <div className="flex rounded-lg h-full bg-slate-50 p-8 flex-col text-gray-900">
                                     <div className="flex items-center">
-                                        <h2 className="text-gray-900 text-lg title-font font-medium">{item.title}</h2>
+                                        <h2 className="text-lg title-font font-medium">{item.title}</h2>
                                     </div>
                                     <div className="flex-grow">
                                         <p className="leading-relaxed text-base">{item.description}</p>

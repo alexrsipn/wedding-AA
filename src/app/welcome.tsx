@@ -99,7 +99,7 @@ export default function Welcome() {
                                     </div>
                                     <div className="py-1 ">
                                         <button
-                                            className="w-full bg-sky-700 hover:bg-sky-800 dark:bg-sky-600 dark:hover:bg-sky-700 cursor-pointer text-white px-4 py-2 rounded-md font-medium transition-all duration-500 disabled:bg-gray-400 disabled:cursor-not-allowed disabled:animate-none animate-pulse flex items-center justify-center gap-2"
+                                            className="w-full bg-sky-700 hover:bg-sky-800 dark:bg-sky-600 dark:hover:bg-sky-700 cursor-pointer text-white px-4 py-2 rounded-md font-medium transition-all duration-500 disabled:bg-gray-400 disabled:hover:bg-gray-500 disabled:cursor-not-allowed disabled:animate-none animate-pulse flex items-center justify-center gap-2"
                                             onClick={handleClose}
                                             disabled={!guest}
                                         >
