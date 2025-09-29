@@ -47,12 +47,12 @@ const historyItems: HistoryItem[] = [
         imageUrl: "/images/std_history_3.webp",
         audioUrl: "/audio/track_3.ogg"
     },
-    {
+/*    {
         id: 4,
         title: "El inicio de nuestra historia",
         imageUrl: "/images/std_history_4.webp",
         audioUrl: "/audio/track_1.ogg"
-    },
+    },*/
 ];
 
 export default function History() {

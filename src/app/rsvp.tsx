@@ -242,7 +242,7 @@ function RSVPForm() {
                     <button onClick={() => setSelectedGuests([])} className="text-sm text-gray-500 hover:underline">Deseleccionar</button>
                 </div>
             </div>
-            <button onClick={handleSubmit} disabled={status === 'submitting'} className="w-full bg-sky-700 hover:bg-sky-800 dark:bg-sky-600 dark:hover:bg-sky-700 cursor-pointer text-white px-4 py-2 rounded-md font-medium transition-colors disabled:cursor-not-allowed">
+            <button onClick={handleSubmit} disabled={status === 'submitting'} className="w-full bg-sky-700 hover:bg-sky-800 dark:bg-sky-600 dark:hover:bg-sky-700 cursor-pointer text-white px-4 py-2 rounded-md font-medium transition-all duration-500 disabled:bg-gray-400 disabled:hover:bg-gray-500 disabled:cursor-not-allowed disabled:animate-none animate-pulse flex items-center justify-center gap-2">
                 {status === 'submitting' ? 'Confirmando...' : 'Confirmar asistencia'}
             </button>
             {status === 'error' && <p className="text-red-500 text-center mt-4">Hubo un error al enviar tu respuesta. Por favor, inténtalo de nuevo.</p>}
