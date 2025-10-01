@@ -218,8 +218,10 @@ function RSVPForm() {
     return (
         <div
             className="mt-8 w-full max-w-2xl p-6 bg-white dark:bg-neutral-700 rounded-lg shadow-xl border border-gray-200 dark:border-neutral-600">
-            <p className="text-center text-lg mb-4">Hola <b>{guest.name}</b>, por favor, selecciona quiénes de tu grupo
-                asistirán.</p>
+            <div className="py-4">
+                <p className="text-center text-lg"><b>{guest.name}</b> selecciona quiénes de los adultos asistirán.</p>
+                <p className="text-justify py-2">Se generará un boleto QR con las personas que asistirán, al presionar el botón <i>Confirmar asistencia</i>.</p>
+            </div>
             <div className="space-y-3 mb-6">
                 {guest.guestDetails?.map((guest, index) => (
                     <label key={index} htmlFor={`guest-${index}`}
@@ -237,9 +239,9 @@ function RSVPForm() {
             </div>
             <div className="flex justify-between items-center mb-6">
                 <p className="font-semibold text-lg">{selectedGuests.length} de {guest.assignedTickets} asistirán</p>
-                <div className="flex gap-2">
-                    <button onClick={() => setSelectedGuests(guest?.guestDetails || [])} className="text-sm text-paynesgray dark:text-skyblue hover:underline">Seleccionar todos</button>
-                    <button onClick={() => setSelectedGuests([])} className="text-sm text-gray-500 hover:underline">Deseleccionar</button>
+                <div className="flex flex-col lg:flex-row gap-4">
+                    <button onClick={() => setSelectedGuests(guest?.guestDetails || [])} className="text-sm text-indigo-400 hover:underline cursor-pointer">Seleccionar todos</button>
+                    <button onClick={() => setSelectedGuests([])} className="text-sm text-indigo-400 hover:underline cursor-pointer">Deseleccionar todos</button>
                 </div>
             </div>
             <button onClick={handleSubmit} disabled={status === 'submitting'} className="w-full bg-sky-700 hover:bg-sky-800 dark:bg-sky-600 dark:hover:bg-sky-700 cursor-pointer text-white px-4 py-2 rounded-md font-medium transition-all duration-500 disabled:bg-gray-400 disabled:hover:bg-gray-500 disabled:cursor-not-allowed disabled:animate-none animate-pulse flex items-center justify-center gap-2">

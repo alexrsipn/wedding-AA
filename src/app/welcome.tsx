@@ -77,7 +77,7 @@ export default function Welcome() {
                                                     </>
                                                 ) : guest.confirmed && (
                                                     <div className="font-sans not-italic text-justify text-sm">
-                                                        <p className="font-normal text-center"><b>{guest.name}</b> gracias por confirmar <b>{guest.confirmedTickets}</b> boletos, te esperamos en nuestra boda.</p>
+                                                        <p className="font-normal text-center"><b>{guest.name}</b> gracias por confirmar <b>{guest.confirmedTickets}</b> adultos, te esperamos en nuestra boda.</p>
                                                         <div className="flex justify-center items-center my-2">
                                                             <QRCodeSVG value={guest.id} size={96} />
                                                         </div>
