@@ -35,6 +35,7 @@ export default function Welcome() {
             setIsOpen(false);
         }, 500)
     };
+    console.log("Running in: ", process.env.NEXT_PUBLIC_ENV);
     return isOpen ? (
         <>
             <section className={`w-screen h-screen z-50 absolute top-0 left-0 bg-black/50 flex items-center justify-center backdrop-blur-sm transition-opacity duration-500 ${isClosing ? "opacity-0" : "opacity-100"}`}>
