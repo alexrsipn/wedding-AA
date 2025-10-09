@@ -6,6 +6,7 @@ import {useGuest} from "@/context/GuestContext";
 import {toPng} from "html-to-image";
 import {Ticket} from "@/components/Ticket";
 import Image from "next/image";
+import {Modal} from "@/components/Modal";
 
 export default function Rsvp() {
     return (
@@ -32,6 +33,8 @@ function RSVPForm() {
     const [status, setStatus] = useState<'idle' | 'submitting' | 'success' | 'declined' | 'error'>('idle');
     const [isDownloading, setIsDownloading] = useState(false);
     const ticketRef = useRef<HTMLDivElement>(null);
+    const [isDeclineModalOpen, setIsDeclineModalOpen] = useState(false);
+    const [declineReason, setDeclineReason] = useState("");
 
     useEffect(() => {
         if (guest?.guestDetails) {
@@ -71,7 +74,7 @@ function RSVPForm() {
         }
     };
 
-    const handleDecline = async () => {
+    const handleDecline = async (reason: string) => {
         if (!guest) return;
         setStatus('submitting');
         try {
@@ -80,10 +83,11 @@ function RSVPForm() {
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
                     GuestId: guest.id,
-                    Confirmed: false,
+                    Confirmed: true,
                     ConfirmedTickets: 0,
                     ConfirmedAttendees: [],
-                    InvitationStatus: "Declined"
+                    InvitationStatus: "Declined",
+                    DeclineReason: reason
                 }),
             });
 
@@ -92,7 +96,9 @@ function RSVPForm() {
                 return;
             }
             setStatus('declined');
-        } catch (e) {
+            setIsDeclineModalOpen(false);
+        } catch (e: unknown) {
+            console.log("Error: ", e)
             setStatus('error');
         }
     };
@@ -244,12 +250,31 @@ function RSVPForm() {
                 </div>
             </div>
             <div className="flex flex-col sm:flex-row gap-4">
-                <button onClick={handleDecline} disabled={status === 'submitting'} className="w-full bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-md transition-colors disabled:bg-gray-400 disabled:cursor-not-allowed">No podremos asistir</button>
-                <button onClick={handleSubmit} disabled={status === 'submitting'} className="w-full bg-sky-700 hover:bg-sky-800 dark:bg-sky-600 dark:hover:bg-sky-700 cursor-pointer text-white px-4 py-2 rounded-md font-medium transition-all duration-500 disabled:bg-gray-400 disabled:hover:bg-gray-500 disabled:cursor-not-allowed disabled:animate-none animate-pulse flex items-center justify-center gap-2">
+                <button onClick={() => setIsDeclineModalOpen(true)} disabled={status === 'submitting'} className="w-full bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-md transition-colors disabled:bg-gray-400 disabled:cursor-not-allowed">{guest.assignedTickets! > 1 ? "No podremos asistir" : "No podré asistir"}</button>
+                <button onClick={handleSubmit} disabled={status === 'submitting' || selectedGuests.length === 0} className="w-full bg-sky-700 hover:bg-sky-800 dark:bg-sky-600 dark:hover:bg-sky-700 cursor-pointer text-white px-4 py-2 rounded-md font-medium transition-all duration-500 disabled:bg-gray-400 disabled:hover:bg-gray-500 disabled:cursor-not-allowed disabled:animate-none animate-pulse flex items-center justify-center gap-2">
                     {status === 'submitting' ? 'Confirmando...' : 'Confirmar asistencia'}
                 </button>
             </div>
             {status === 'error' && <p className="text-red-500 text-center mt-4">Hubo un error al enviar tu respuesta. Por favor, inténtalo de nuevo.</p>}
+            <Modal isOpen={isDeclineModalOpen} onClose={() => setIsDeclineModalOpen(false)} layoutId="decline-modal">
+                <div className="text-center">
+                    <h3 className="text-2xl font-semibold text-gray-800 dark:text-white">Lamentamos que no puedas asistir</h3>
+                    <p className="mt-2 text-gray-600 dark:text-gray-300">Si lo deseas, puedes dejarnos un mensaje.</p>
+                    <textarea
+                        value={declineReason}
+                        onChange={(e) => setDeclineReason(e.target.value)}
+                        placeholder="Ej: ¡Les deseamos lo mejor en su gran día!..."
+                        className="w-full p-4 border border-gray-300 dark:border-neutral-600 rounded-md bg-white dark:bg-neutral-700 text-gray-800 dark:text-gray-200 focus:ring-sky-500"
+                        rows={3}
+                    />
+                    <div className="mt-6 flex flex-col sm:flex-row gap-4">
+                        <button onClick={() => setIsDeclineModalOpen(false)} className="w-full px-4 py-2 bg-gray-200 dark:bg-neutral-400 text-gray-800 dark:text-gray-200 rounded-md  hover:bg-gray-300 dark:hover:bg-neutral-500 font-medium transition-colors">Regresar</button>
+                        <button onClick={() => handleDecline(declineReason)} disabled={status === 'submitting'} className="w-full px-4 py-2 bg-red-600 hover:bg-red-700 text-white rounded-md font-medium transition-colors disabled:bg-gray-400 disabled:cursor-not-allowed">
+                            {status === 'submitting' ? 'Enviando...' : 'Confirmar no asistencia'}
+                        </button>
+                    </div>
+                </div>
+            </Modal>
         </div>
     );
 }

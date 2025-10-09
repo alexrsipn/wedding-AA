@@ -1,5 +1,4 @@
 import type {NextApiRequest, NextApiResponse} from "next";
-import Airtable from "airtable";
 import { base, tableName} from "../utils/airtable";
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
@@ -7,12 +6,9 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         return res.status(405).json({message: 'Method Not Allowed'});
     }
     try {
-        const {GuestId, Confirmed, ConfirmedTickets, ConfirmedAttendees, InvitationStatus} = req.body;
-        /*if (!GuestId) {
-            return res.status(400).json({error: 'El ID del invitado es requerido'})
-        }
+        const {GuestId, Confirmed, ConfirmedTickets, ConfirmedAttendees, InvitationStatus, DeclineReason} = req.body;
 
-        const apiKey = process.env.AIRTABLE_API_KEY;
+        /*const apiKey = process.env.AIRTABLE_API_KEY;
         const baseId = process.env.AIRTABLE_BASE;
         const tableName = "Invitados";
 
@@ -27,7 +23,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
                 "Confirmed": Confirmed,
                 "ConfirmedTickets": ConfirmedTickets,
                 "ConfirmedAttendees": ConfirmedAttendees.join(";"),
-                "InvitationStatus": InvitationStatus
+                "InvitationStatus": InvitationStatus,
+                "DeclineReason": DeclineReason
             }
         }
         console.log(body);
