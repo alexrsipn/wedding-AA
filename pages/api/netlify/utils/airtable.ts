@@ -1,23 +1,13 @@
 import Airtable from "airtable";
 
-const isProduction = process.env.NODE_ENV === 'production';
-
-console.log("Production enviroment: ", isProduction)
-
-const apiKey = isProduction
-    ? process.env.AIRTABLE_API_KEY_PROD
-    : process.env.AIRTABLE_API_KEY_DEV;
-const baseId = isProduction
-    ? process.env.AIRTABLE_BASE_ID_PROD
-    : process.env.AIRTABLE_BASE_ID_DEV;
+const apiKey = process.env.AIRTABLE_API_KEY;
+const baseId = process.env.AIRTABLE_BASE;
 
 const tableName = {
-    invitados: isProduction
-        ? process.env.AIRTABLE_TABLE_NAME_PROD
-        : process.env.AIRTABLE_TABLE_NAME_DEV,
+    invitados: process.env.AIRTABLE_TABLE_NAME
 };
 
-if (!apiKey || !baseId || !tableName) {
+if (!apiKey || !baseId || !tableName.invitados) {
     throw new Error('Airtable enviroment variables are not properly configured.');
 }
 
