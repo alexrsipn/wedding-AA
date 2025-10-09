@@ -1,5 +1,6 @@
 import type {NextApiRequest, NextApiResponse} from "next";
 import Airtable from "airtable";
+import { base, tableName} from "../utils/airtable";
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
     if (req.method !== 'POST') {
@@ -7,7 +8,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     }
     try {
         const {GuestId, Confirmed, ConfirmedTickets, ConfirmedAttendees, InvitationStatus} = req.body;
-        if (!GuestId) {
+        /*if (!GuestId) {
             return res.status(400).json({error: 'El ID del invitado es requerido'})
         }
 
@@ -15,7 +16,10 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         const baseId = process.env.AIRTABLE_BASE;
         const tableName = "Invitados";
 
-        const base = new Airtable({apiKey}).base(baseId!);
+        const base = new Airtable({apiKey}).base(baseId!);*/
+        if (!GuestId) {
+            return res.status(400).json({error: 'El ID del invitado es requerido'});
+        }
 
         const body = {
             "id": GuestId,
@@ -27,7 +31,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
             }
         }
         console.log(body);
-        await base (tableName).update([body]);
+        /*await base (tableName).update([body]);*/
 
 /*        await base (tableName).update([
             {
@@ -38,6 +42,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
                 }
             }
         ]);*/
+        await base(tableName.invitados!).update([body]);
 
         return res.status(200).json({message: "Confirmación exitosa"});
     } catch (error) {

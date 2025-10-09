@@ -29,7 +29,7 @@ export default function Rsvp() {
 function RSVPForm() {
     const {guest, isLoading, error} = useGuest();
     const [selectedGuests, setSelectedGuests] = useState<string[]>([]);
-    const [status, setStatus] = useState<'idle' | 'submitting' | 'success' | 'error'>('idle');
+    const [status, setStatus] = useState<'idle' | 'submitting' | 'success' | 'declined' | 'error'>('idle');
     const [isDownloading, setIsDownloading] = useState(false);
     const ticketRef = useRef<HTMLDivElement>(null);
 
@@ -68,6 +68,32 @@ function RSVPForm() {
         } catch (e) {
             setStatus('error');
             console.log(e)
+        }
+    };
+
+    const handleDecline = async () => {
+        if (!guest) return;
+        setStatus('submitting');
+        try {
+            const response = await fetch('/api/netlify/functions/confirm-guest', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    GuestId: guest.id,
+                    Confirmed: false,
+                    ConfirmedTickets: 0,
+                    ConfirmedAttendees: [],
+                    InvitationStatus: "Declined"
+                }),
+            });
+
+            if (!response.ok) {
+                setStatus('error');
+                return;
+            }
+            setStatus('declined');
+        } catch (e) {
+            setStatus('error');
         }
     };
 
@@ -125,43 +151,6 @@ function RSVPForm() {
             })
             .catch((err) => console.error("Ocurrió un error al generar la imagen del boleto: ", err))
             .finally(() => setIsDownloading(false));
-        /*const nodeToRender = ticketRef.current;
-        const image = ticketRef.current.querySelector('img.ticket-image') as HTMLImageElement;
-
-        if (!image) {
-            console.error("No se encontró la imagen del boleto.");
-            return;
-        }
-
-        const originalSrc = image.src;
-
-        const generateAndDownload = () => {
-            toPng(nodeToRender, {cacheBust: true, pixelRatio: 2})
-                .then((dataUrl) => {
-                    const link = document.createElement("a");
-                    link.download = "boleto-boda-andrea-alexis.png";
-                    link.href = dataUrl;
-                    link.click();
-                })
-                .catch((err) => console.error("Error al generar la imagen: ", err))
-                .finally(() => {
-                    image.src = originalSrc;
-                })
-        };
-
-        if (image.src.startsWith('data:')) {
-            generateAndDownload();
-        } else {
-            toDataURL(image.src)
-                .then(dataUrl => {
-                    image.src = dataUrl;
-                    generateAndDownload();
-                })
-                .catch((error) => {
-                    console.error("Error al generar la imagen: ", error);
-                })
-        }
-    }, [ticketRef]);*/
     }, [ticketRef, isDownloading]);
 
     if (isLoading) {
@@ -215,6 +204,16 @@ function RSVPForm() {
         );
     }
 
+    if (status === 'declined' || guest.invitationStatus === 'Declined') {
+        return (
+            <div className="w-full flex flex-col justify-center items-center text-center">
+                <h3 className="text-2xl lg:text-3xl font-serif font-semibold title-font mb-4 text-gray-900 dark:text-white">Confirmación recibida</h3>
+                <p>Lamentamos que no puedan acompañarnos, pero agradecemos mucho que nos hayan avisado.</p>
+                <p>Les enviamos nuestros mejores deseos.</p>
+            </div>
+        )
+    }
+
     return (
         <div
             className="mt-8 w-full max-w-2xl p-6 bg-white dark:bg-neutral-700 rounded-lg shadow-xl border border-gray-200 dark:border-neutral-600">
@@ -244,9 +243,12 @@ function RSVPForm() {
                     <button onClick={() => setSelectedGuests([])} className="text-sm text-indigo-400 hover:underline cursor-pointer">Deseleccionar todos</button>
                 </div>
             </div>
-            <button onClick={handleSubmit} disabled={status === 'submitting'} className="w-full bg-sky-700 hover:bg-sky-800 dark:bg-sky-600 dark:hover:bg-sky-700 cursor-pointer text-white px-4 py-2 rounded-md font-medium transition-all duration-500 disabled:bg-gray-400 disabled:hover:bg-gray-500 disabled:cursor-not-allowed disabled:animate-none animate-pulse flex items-center justify-center gap-2">
-                {status === 'submitting' ? 'Confirmando...' : 'Confirmar asistencia'}
-            </button>
+            <div className="flex flex-col sm:flex-row gap-4">
+                <button onClick={handleDecline} disabled={status === 'submitting'} className="w-full bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-md transition-colors disabled:bg-gray-400 disabled:cursor-not-allowed">No podremos asistir</button>
+                <button onClick={handleSubmit} disabled={status === 'submitting'} className="w-full bg-sky-700 hover:bg-sky-800 dark:bg-sky-600 dark:hover:bg-sky-700 cursor-pointer text-white px-4 py-2 rounded-md font-medium transition-all duration-500 disabled:bg-gray-400 disabled:hover:bg-gray-500 disabled:cursor-not-allowed disabled:animate-none animate-pulse flex items-center justify-center gap-2">
+                    {status === 'submitting' ? 'Confirmando...' : 'Confirmar asistencia'}
+                </button>
+            </div>
             {status === 'error' && <p className="text-red-500 text-center mt-4">Hubo un error al enviar tu respuesta. Por favor, inténtalo de nuevo.</p>}
         </div>
     );
