@@ -18,14 +18,11 @@ export default function Welcome() {
         window.scrollTo(0,0);
 
         if (isOpen && lenis) {
-            /*document.body.style.overflow = "hidden";*/
             lenis.stop();
         } else {
-            /*document.body.style.overflow = "auto";*/
             lenis?.start();
         }
         return () => {
-            /*document.body.style.overflow = "auto";*/
             lenis?.start();
         };
     }, [isOpen, lenis]);
@@ -35,16 +32,17 @@ export default function Welcome() {
             setIsOpen(false);
         }, 500)
     };
+    console.log("Running in: ", process.env.NEXT_PUBLIC_ENV);
     return isOpen ? (
         <>
             <section className={`w-screen h-screen z-50 absolute top-0 left-0 bg-black/50 flex items-center justify-center backdrop-blur-sm transition-opacity duration-500 ${isClosing ? "opacity-0" : "opacity-100"}`}>
                 <div className={`bg-gray-50 dark:bg-slate-800 rounded-xl shadow-xl text-center flex flex-col gap-2 h-4/5 w-full lg:w-1/2 mx-4 -mt-20 lg:mt-0 transition-all duration-500 ${isClosing ? "scale-95 opacity-0" : "scale-100 opacity-100"}`}>
                     <div className="relative lg:min-w-xl h-full">
-                        <Image className="absolute -top-24 lg:-top-31 left-4 w-11/12 lg:w-3/5 lg:left-1/5" src="/images/envelope.png" alt="Sobre de invitación" width={500} height={325}/>
+                        <Image className="absolute -top-24 lg:-top-31 left-4 w-11/12 lg:w-3/5 lg:left-1/5" src="/images/envelope.png" alt="Sobre de invitación" width={500} height={325} priority/>
                         <div className="overflow-hidden h-full">
                             <div className="relative w-full h-full">
-                                <Image className="absolute top-16 lg:top-38 left-0 w-full h-full px-6 transform scale-200 lg:scale-125" src="/images/arc.svg" alt="Arco" width={1000} height={100}/>
-                                <Image className="absolute bottom-0 left-8/12" src="/images/logo_arc.svg" alt="Logo arco" width={80} height={80}/>
+                                <Image className="absolute top-16 lg:top-38 left-0 w-full h-full px-6 transform scale-200 lg:scale-125" src="/images/arc.svg" alt="Arco" width={1000} height={100} priority/>
+                                <Image className="absolute bottom-0 left-8/12" src="/images/logo_arc.svg" alt="Logo arco" width={80} height={80} priority/>
                             </div>
                             <div className="absolute top-32 lg:top-48 w-full transition-all duration-500">
                                 <div className="relative w-4/6 lg:w-2/5 mx-auto px-2 bg-white dark:bg-white/80 shadow-xl rounded">
@@ -75,12 +73,16 @@ export default function Welcome() {
                                                             </div>
                                                         </details>
                                                     </>
-                                                ) : guest.confirmed && (
+                                                ) : guest.confirmed && guest.invitationStatus === "Confirmed" ? (
                                                     <div className="font-sans not-italic text-justify text-sm">
                                                         <p className="font-normal text-center"><b>{guest.name}</b> gracias por confirmar <b>{guest.confirmedTickets}</b> adultos, te esperamos en nuestra boda.</p>
                                                         <div className="flex justify-center items-center my-2">
                                                             <QRCodeSVG value={guest.id} size={96} />
                                                         </div>
+                                                    </div>
+                                                ) : guest.confirmed && guest.invitationStatus === "Declined" && (
+                                                    <div className="font-sans not-italic text-center text-sm px-2">
+                                                        <p className="font-normal py-2"><b>{guest.name}</b> lamentamos que no {guest.assignedTickets! > 1 ? "puedan" : "puedas"} acompañarnos durante nuestra boda, seguro habrán más momentos que podamos compartir.</p>
                                                     </div>
                                                 )}
                                             </>

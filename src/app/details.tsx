@@ -85,38 +85,44 @@ export default function Details() {
                     </div>
                     <div className="w-full lg:w-1/2 bg-slate-100/80 dark:bg-slate-800/90 order-1 lg:order-2 rounded shadow border border-neutral-50 dark:border-neutral-700 overflow-hidden">
                         {detailsItems.map((item) => (
-                            <AccordionItem
-                                key={item.id}
-                                title={item.title}
-                                isOpen={openAccordion === item.id}
-                                onClick={() => setOpenAccordion(openAccordion === item.id ? null : item.id)}
-                            >
-                                <div className="text-lg text-center font-normal leading-relaxed space-y-3">
+                            item.id !== "gifts" && (
+                                <AccordionItem
+                                    key={item.id}
+                                    title={item.title}
+                                    isOpen={openAccordion === item.id}
+                                    onClick={() => setOpenAccordion(openAccordion === item.id ? null : item.id)}
+                                >
+                                    <div className="text-lg text-center font-normal leading-relaxed space-y-3">
+                                        <p className="font-semibold">{item.subtitle}</p>
+                                        <p className="text-justify">{item.description}</p>
+                                        {item.important && <p className="font-semibold italic">{item.important}</p>}
+                                        <div
+                                            className="w-full flex flex-col sm:flex-row justify-center items-center gap-4 pt-2">
+                                            {item.urlList?.map(({url, name, className}, index) => (
+                                                <Link key={index} href={url} target="_blank"
+                                                      className={`${className} w-full sm:w-auto text-center`}>{name}</Link>
+                                            ))}
+                                        </div>
+                                    </div>
+                                </AccordionItem>
+                            )
+                        ))}
+                        {detailsItems.map((item) => (
+                            item.id === "gifts" && (
+                                <div key={item.id} className="text-lg text-center font-normal leading-relaxed space-y-3 p-4">
+                                    <h3 className="font-bold">{item.title}</h3>
                                     <p className="font-semibold">{item.subtitle}</p>
                                     <p className="text-justify">{item.description}</p>
                                     {item.important && <p className="font-semibold italic">{item.important}</p>}
-                                    <div className="w-full flex flex-col sm:flex-row justify-center items-center gap-4 pt-2">
+                                    <div
+                                        className="w-full flex flex-col sm:flex-row justify-center items-center gap-4 pt-2">
                                         {item.urlList?.map(({url, name, className}, index) => (
-                                            <Link key={index} href={url} target="_blank" className={`${className} w-full sm:w-auto text-center`}>{name}</Link>
+                                            <Link key={index} href={url} target="_blank"
+                                                  className={`${className} w-full sm:w-auto text-center`}>{name}</Link>
                                         ))}
                                     </div>
                                 </div>
-                            </AccordionItem>
-/*                            <div key={index} className="w-full py-2">
-                                <h2 className="text-2xl font-semibold text-left italic">{item.title}</h2>
-                                <div className="text-lg py-1 lg:py-2 text-center font-normal leading-relaxed">
-                                    <p className="">{item.subtitle}</p>
-                                    <p className="text-justify">{item.description}</p>
-                                    <p className="font-medium italic">{item.important}</p>
-                                </div>
-                                <div className="w-full flex flex-col justify-around items-center">
-                                {item.urlList && item.urlList.length > 0 && item.urlList.map(({url, name, className}, index) => (
-                                    <button key={index} className="py-3">
-                                        <Link href={url} target="_blank" className={className}>{name}</Link>
-                                    </button>
-                                ))}
-                                </div>
-                            </div>*/
+                            )
                         ))}
                     </div>
                 </div>

@@ -3,7 +3,6 @@
 import {useState, useEffect} from "react";
 import {Scanner} from "@yudiel/react-qr-scanner";
 
-/*const CHECKIN_PASSWORD = process.env.NEXT_PUBLIC_CHECKIN_PASS;*/
 const CHECKIN_PASSWORD = "1234";
 
 interface ScanResult {

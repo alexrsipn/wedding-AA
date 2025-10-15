@@ -1,5 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
-import Airtable, {FieldSet, Record} from "airtable";
+import {FieldSet, Record} from "airtable";
+import {base, tableName} from "../utils/airtable";
 
 interface AirtableGuestFields extends FieldSet {
     FullName?: string;
@@ -18,21 +19,21 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         return res.status(400).json({status: 'error', message: 'El ID del invitado es requerido'});
     }
 
-    const apiKey = process.env.AIRTABLE_API_KEY;
+/*    const apiKey = process.env.AIRTABLE_API_KEY;
     const baseId = process.env.AIRTABLE_BASE;
     const tableName = "Invitados";
 
-    const base = new Airtable({apiKey}).base(baseId!);
+    const base = new Airtable({apiKey}).base(baseId!);*/
 
     try {
         const date = new Date();
-        const record: Record<AirtableGuestFields> = await base(tableName).find(guestId);
+        const record: Record<AirtableGuestFields> = await base(tableName.invitados!).find(guestId);
 
         if (record.fields.CheckedIn) {
             return res.status(200).json({status: 'already_checked_in', message: 'Invitado registrado previamente', guest: record.fields});
         }
 
-        await base(tableName).update([
+        await base(tableName.invitados!).update([
             {
                 "id": guestId,
                 "fields": {
