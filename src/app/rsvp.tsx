@@ -212,7 +212,7 @@ function RSVPForm() {
 
     if (status === 'declined' || guest.invitationStatus === 'Declined') {
         return (
-            <div className="w-full flex flex-col justify-center items-center text-center">
+            <div className="w-full min-h-96 flex flex-col justify-center items-center text-center">
                 <h3 className="text-2xl lg:text-3xl font-serif font-semibold title-font mb-4 text-gray-900 dark:text-white">Confirmación recibida</h3>
                 <p>Lamentamos que no puedan acompañarnos, pero agradecemos mucho que nos hayan avisado.</p>
                 <p>Les enviamos nuestros mejores deseos.</p>
@@ -250,7 +250,7 @@ function RSVPForm() {
                 </div>
             </div>
             <div className="flex flex-col sm:flex-row gap-4">
-                <button onClick={() => setIsDeclineModalOpen(true)} disabled={status === 'submitting'} className="w-full bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-md transition-colors disabled:bg-gray-400 disabled:cursor-not-allowed">{guest.assignedTickets! > 1 ? "No podremos asistir" : "No podré asistir"}</button>
+                <button onClick={() => setIsDeclineModalOpen(true)} disabled={status === 'submitting'} className="w-full bg-red-600 hover:bg-red-700 cursor-pointer text-white px-4 py-2 rounded-md transition-colors disabled:bg-gray-400 disabled:cursor-not-allowed">{guest.assignedTickets! > 1 ? "No podremos asistir" : "No podré asistir"}</button>
                 <button onClick={handleSubmit} disabled={status === 'submitting' || selectedGuests.length === 0} className="w-full bg-sky-700 hover:bg-sky-800 dark:bg-sky-600 dark:hover:bg-sky-700 cursor-pointer text-white px-4 py-2 rounded-md font-medium transition-all duration-500 disabled:bg-gray-400 disabled:hover:bg-gray-500 disabled:cursor-not-allowed disabled:animate-none animate-pulse flex items-center justify-center gap-2">
                     {status === 'submitting' ? 'Confirmando...' : 'Confirmar asistencia'}
                 </button>
@@ -268,8 +268,8 @@ function RSVPForm() {
                         rows={3}
                     />
                     <div className="mt-6 flex flex-col sm:flex-row gap-4">
-                        <button onClick={() => setIsDeclineModalOpen(false)} className="w-full px-4 py-2 bg-gray-200 dark:bg-neutral-400 text-gray-800 dark:text-gray-200 rounded-md  hover:bg-gray-300 dark:hover:bg-neutral-500 font-medium transition-colors">Regresar</button>
-                        <button onClick={() => handleDecline(declineReason)} disabled={status === 'submitting'} className="w-full px-4 py-2 bg-red-600 hover:bg-red-700 text-white rounded-md font-medium transition-colors disabled:bg-gray-400 disabled:cursor-not-allowed">
+                        <button onClick={() => setIsDeclineModalOpen(false)} className="w-full px-4 py-2 bg-gray-200 dark:bg-neutral-400 text-gray-800 cursor-pointer dark:text-gray-200 rounded-md  hover:bg-gray-300 dark:hover:bg-neutral-500 font-medium transition-colors">Regresar</button>
+                        <button onClick={() => handleDecline(declineReason)} disabled={status === 'submitting'} className="w-full px-4 py-2 bg-red-600 hover:bg-red-700 cursor-pointer text-white rounded-md font-medium transition-colors disabled:bg-gray-400 disabled:cursor-not-allowed">
                             {status === 'submitting' ? 'Enviando...' : 'Confirmar no asistencia'}
                         </button>
                     </div>

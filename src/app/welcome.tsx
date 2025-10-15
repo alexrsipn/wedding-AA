@@ -81,9 +81,8 @@ export default function Welcome() {
                                                         </div>
                                                     </div>
                                                 ) : guest.confirmed && guest.invitationStatus === "Declined" && (
-                                                    <div className="font-sans not-italic text-justify text-sm">
-                                                        <p className="font-normal text-center py-2"><b>{guest.name}</b> lamentamos que no puedas acompañarnos durante nuestra boda, seguro habrán más momentos que podamos compartir más adelante.</p>
-                                                        <p className="text-sm font-normal text-center italic">Aún puedes visitar nuestro sitio web para más información.</p>
+                                                    <div className="font-sans not-italic text-center text-sm px-2">
+                                                        <p className="font-normal py-2"><b>{guest.name}</b> lamentamos que no {guest.assignedTickets! > 1 ? "puedan" : "puedas"} acompañarnos durante nuestra boda, seguro habrán más momentos que podamos compartir.</p>
                                                     </div>
                                                 )}
                                             </>
