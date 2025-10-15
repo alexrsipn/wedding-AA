@@ -215,7 +215,7 @@ function RSVPForm() {
             <div className="w-full min-h-96 flex flex-col justify-center items-center text-center">
                 <h3 className="text-2xl lg:text-3xl font-serif font-semibold title-font mb-4 text-gray-900 dark:text-white">Confirmación recibida</h3>
                 <p>Lamentamos que no puedan acompañarnos, pero agradecemos mucho que nos hayan avisado.</p>
-                <p>Les enviamos nuestros mejores deseos.</p>
+                <p>{guest.assignedTickets && guest.assignedTickets > 1 ? "Les" : "Te"} enviamos nuestros mejores deseos.</p>
             </div>
         )
     }
@@ -264,8 +264,9 @@ function RSVPForm() {
                         value={declineReason}
                         onChange={(e) => setDeclineReason(e.target.value)}
                         placeholder="Ej: ¡Les deseamos lo mejor en su gran día!..."
-                        className="w-full p-4 border border-gray-300 dark:border-neutral-600 rounded-md bg-white dark:bg-neutral-700 text-gray-800 dark:text-gray-200 focus:ring-sky-500"
+                        className="w-full p-4 border border-gray-300 dark:border-neutral-600 rounded-md bg-white dark:bg-neutral-700 text-gray-800 dark:text-gray-200 focus:ring-sky-500 resize-none"
                         rows={3}
+                        maxLength={255}
                     />
                     <div className="mt-6 flex flex-col sm:flex-row gap-4">
                         <button onClick={() => setIsDeclineModalOpen(false)} className="w-full px-4 py-2 bg-gray-200 dark:bg-neutral-400 text-gray-800 cursor-pointer dark:text-gray-200 rounded-md  hover:bg-gray-300 dark:hover:bg-neutral-500 font-medium transition-colors">Regresar</button>
