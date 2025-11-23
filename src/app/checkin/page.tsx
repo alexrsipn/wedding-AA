@@ -10,6 +10,7 @@ interface ScanResult {
     message: string;
     guestName?: string;
     tickets?: number;
+    isException?: boolean;
 }
 
 interface CheckedInGuest {
@@ -42,13 +43,13 @@ export default function CheckinPage() {
     }
 
     useEffect(() => {
-        const isAuthenticatedInSession = sessionStorage.getItem('checkin_authenticated') === 'true';
-        if (isAuthenticatedInSession) {
+        if (sessionStorage.getItem('checkin_authenticated') === 'true') {
             setIsAuthenticated(true);
-            const guests = fetchCheckedInGuests();
-            console.log(guests);
         }
-    }, []);
+        if (isAuthenticated) {
+            fetchCheckedInGuests();
+        }
+    }, [isAuthenticated]);
 
     const handlePasswordSubmit = (e: React.FormEvent) => {
         e.preventDefault();
@@ -87,12 +88,11 @@ export default function CheckinPage() {
                         status: data.status,
                         message: data.message,
                         guestName: data.guest?.FullName,
-                        tickets: data.guest?.ConfirmedTickets
+                        tickets: data.guest?.ConfirmedTickets,
+                        isException: data.guest?.SpecialException
                     }));
-                    const guests = fetchCheckedInGuests();
-                    console.log(guests);
+                    fetchCheckedInGuests();
                 }
-
             } catch (error) {
                 console.error(error);
                 setScanResult({status: 'error', message: 'El código QR no es válido o no se pudo procesar.'})
@@ -165,6 +165,11 @@ export default function CheckinPage() {
                             <div className="">
                                 <p className="text-xl font-bold">{scanResult.guestName}</p>
                                 <p className="text-lg">{scanResult.tickets} pases</p>
+                            </div>
+                        )}
+                        {scanResult.isException && (
+                            <div className="mt-2 p-2 bg-blue-100 text-blue-800 rounded-md border border-blue-300">
+                                <p className="font-bold text-lg">Invitado con excepción</p>
                             </div>
                         )}
                     </div>

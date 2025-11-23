@@ -138,9 +138,9 @@ export default function History() {
                     <HighlightedText className="text-3xl font-bold mb-6 text-center">
                         Nuestra historia
                     </HighlightedText>
-                    <div className="flex flex-col items-center justify-center p-4">
+                    <div className="flex flex-col items-center justify-center p-2">
                         {guest && (
-                            <p className="lg:w-2/3 mx-auto leading-relaxed text-base text-justify"><b>{guest.name}</b> nos gustaría que {guest.assignedTickets!>1 ? "conozcan" : "conozcas"} nuestra historia, otra hermosa historia de amor que solamente Dios pudo haber diseñado.</p>
+                            <p className="text-justify p-2 text-base leading-relaxed landscape:px-12"><b>{guest.name}</b> nos gustaría que {guest.assignedTickets!>1 ? "conozcan" : "conozcas"} nuestra historia, otra hermosa historia de amor que solamente Dios pudo haber diseñado.</p>
                         )}
 {/*                        <div className="w-full lg:max-w-1/5 py-2">
                             <button onClick={toggleMute} aria-label={isMuted ? "Activar sonido" : "Silenciar"} className="bg-sky-700 hover:bg-sky-800 dark:bg-sky-600 dark:hover:bg-sky-700 cursor-pointer text-white px-4 py-2 rounded-md font-medium transition-colors w-full">

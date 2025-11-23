@@ -22,7 +22,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
     try {
         const allRecords = await base(tableName.invitados!).select({
-            fields: ["FullName", "ConfirmedTickets", "CheckedIn", "CheckedInTime"],
+            fields: ["FullName", "ConfirmedTickets", "InvitationStatus", "CheckedIn", "CheckedInTime"],
             sort: [{field: "CheckedInTime", direction: "desc"}],
         }).all();
 

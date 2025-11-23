@@ -32,21 +32,20 @@ export default function Welcome() {
             setIsOpen(false);
         }, 500)
     };
-    console.log("Running in: ", process.env.NEXT_PUBLIC_ENV);
     return isOpen ? (
         <>
-            <section className={`w-screen h-screen z-50 absolute top-0 left-0 bg-black/50 flex items-center justify-center backdrop-blur-sm transition-opacity duration-500 ${isClosing ? "opacity-0" : "opacity-100"}`}>
-                <div className={`bg-gray-50 dark:bg-slate-800 rounded-xl shadow-xl text-center flex flex-col gap-2 h-4/5 w-full lg:w-1/2 mx-4 -mt-20 lg:mt-0 transition-all duration-500 ${isClosing ? "scale-95 opacity-0" : "scale-100 opacity-100"}`}>
-                    <div className="relative lg:min-w-xl h-full">
-                        <Image className="absolute -top-24 lg:-top-31 left-4 w-11/12 lg:w-3/5 lg:left-1/5" src="/images/envelope.png" alt="Sobre de invitación" width={500} height={325} priority/>
+            <section className={`w-screen h-screen z-50 fixed top-0 left-0 bg-black/50 flex items-center justify-center backdrop-blur-sm transition-opacity duration-500 ${isClosing ? "opacity-0" : "opacity-100"}`}>
+                <div className={`bg-gray-50 dark:bg-slate-800 rounded-xl shadow-xl text-center flex flex-col landscape:flex-row gap-2 h-4/5 landscape:h-5/6 w-full lg:w-1/2 mx-4 -mt-20 lg:mt-0 transition-all duration-500 ${isClosing ? "scale-95 opacity-0" : "scale-100 opacity-100"}`}>
+                    <div className="relative lg:min-w-xl h-full landscape:w-full">
+                        <Image className="absolute -top-24 lg:-top-31 left-4 w-11/12 lg:w-3/5 lg:left-1/5 landscape:w-full landscape:left-0 landscape:top-2/5 landscape:-translate-y-1/2 landscape:p-4" src="/images/envelope.png" alt="Sobre de invitación" width={500} height={325} priority/>
                         <div className="overflow-hidden h-full">
-                            <div className="relative w-full h-full">
+                            <div className="relative w-full h-full landscape:hidden">
                                 <Image className="absolute top-16 lg:top-38 left-0 w-full h-full px-6 transform scale-200 lg:scale-125" src="/images/arc.svg" alt="Arco" width={1000} height={100} priority/>
                                 <Image className="absolute bottom-0 left-8/12" src="/images/logo_arc.svg" alt="Logo arco" width={80} height={80} priority/>
                             </div>
-                            <div className="absolute top-32 lg:top-48 w-full transition-all duration-500">
-                                <div className="relative w-4/6 lg:w-2/5 mx-auto px-2 bg-white dark:bg-white/80 shadow-xl rounded">
-                                    <p className="font-semibold py-2 text-xl text-center font-serif text-black">Andrea & Alexis</p>
+                            <div className="absolute top-32 lg:top-48 w-full transition-all duration-500 landscape:relative landscape:-top-4 landscape:w-full landscape:h-full landscape:flex landscape:items-center landscape:justify-center">
+                                <div className="relative w-4/6 lg:w-2/5 mx-auto px-2 bg-white dark:bg-white/80 shadow-xl rounded landscape:dark:bg-white/90 landscape:max-h-4/5">
+                                    <p className="font-semibold py-2 text-xl text-center font-serif text-black landscape:py-1">Andrea & Alexis</p>
                                     <div className="flex flex-col font-serif italic font-medium text-left px-2 text-gray-900">
                                         {isLoading ? (
                                             <span className="text-center font-medium font-sans">Cargando invitación...</span>
@@ -56,22 +55,28 @@ export default function Welcome() {
                                             <>
                                                 {guest.guestListDetails && !guest.confirmed ? (
                                                     <>
-                                                        <p className="font-light text-gray-900 dark:text-gray-800 font-sans text-justify text-sm pb-2">Tenemos el honor de invitarte a la celebración de nuestro matrimonio.</p>
-                                                        <p className="text-center italic"><b>{guest.name}</b></p>
-                                                        <p className="text-center font-normal font-sans">Pases asignados: <b>{guest.assignedTickets}</b></p>
-                                                        <details className="group mt-2" open>
-                                                            <summary className="flex justify-around items-center font-medium font-sans cursor-pointer list-none text-sm text-gray-500 hover:text-gray-700">
-                                                                <span>Invitados: </span>
-                                                                <span className="transition-transform duration-300 group-open:rotate-180">
+                                                        <p className="font-light text-gray-900 dark:text-gray-800 font-sans text-justify text-sm pb-2 landscape:p-0">Tenemos el honor de invitarte a la celebración de nuestro matrimonio.</p>
+                                                        <div className="flex flex-col landscape:flex-row landscape:w-full landscape:pb-2">
+                                                            <div className="flex flex-col justify-center items-center landscape:w-1/2">
+                                                                <p className="text-center italic landscape:p-0 landscape:m-0"><b>{guest.name}</b></p>
+                                                                <p className="text-center font-normal font-sans">Pases asignados: <b>{guest.assignedTickets}</b></p>
+                                                            </div>
+                                                            <div className="landscape:w-1/2">
+                                                                <details className="group mt-2 landscape:m-0" open>
+                                                                    <summary className="flex justify-around items-center font-medium font-sans cursor-pointer list-none text-sm text-gray-500 hover:text-gray-700">
+                                                                        <span>Invitados: </span>
+                                                                        <span className="transition-transform duration-300 group-open:rotate-180">
                                                                 <svg fill="none" height="20" shapeRendering="geometricPrecision" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" viewBox="0 0 24 24" width="20"><path d="M6 9l6 6 6-6"></path></svg>
                                                             </span>
-                                                            </summary>
-                                                            <div className="text-slate-800 text-xs whitespace-pre-wrap bg-gray-50 text-center rounded max-h-24 lg:max-h-24">
-                                                                {guest.guestDetails?.map((detail, index) => (
-                                                                    <p key={index} className="font-sans">{detail}</p>
-                                                                ))}
+                                                                    </summary>
+                                                                    <div className="text-slate-800 text-xs whitespace-pre-wrap bg-gray-50 text-center rounded max-h-24 lg:max-h-24">
+                                                                        {guest.guestDetails?.map((detail, index) => (
+                                                                            <p key={index} className="font-sans">{detail}</p>
+                                                                        ))}
+                                                                    </div>
+                                                                </details>
                                                             </div>
-                                                        </details>
+                                                        </div>
                                                     </>
                                                 ) : guest.confirmed && guest.invitationStatus === "Confirmed" ? (
                                                     <div className="font-sans not-italic text-justify text-sm">
@@ -90,16 +95,16 @@ export default function Welcome() {
                                             <span>Bienvenido/a</span>
                                         )}
                                     </div>
-                                    <div className="flex justify-around items-center py-2 lg:py-4 text-gray-900">
-                                        <span className="font-serif font-normal">SÁBADO</span>
-                                        <div className="flex flex-col justify-center items-center text-lg font-serif font-medium border-x border-black px-1.5">
+                                    <div className="flex justify-around items-center py-2 lg:py-4 text-gray-900 landscape:p-0">
+                                        <span className="font-serif font-normal landscape:font-thin">SÁBADO</span>
+                                        <div className="flex flex-col justify-center items-center text-lg font-serif font-medium border-x border-black px-1.5 landscape:flex-row landscape:gap-2">
                                             <span>28</span>
                                             <span>MARZO</span>
                                             <span>2026</span>
                                         </div>
-                                        <span className="font-serif font-normal">3:30 PM</span>
+                                        <span className="font-serif font-normal landscape:font-thin">3:30 PM</span>
                                     </div>
-                                    <div className="py-1 ">
+                                    <div className="py-1">
                                         <button
                                             className="w-full bg-sky-700 hover:bg-sky-800 dark:bg-sky-600 dark:hover:bg-sky-700 cursor-pointer text-white px-4 py-2 rounded-md font-medium transition-all duration-500 disabled:bg-gray-400 disabled:hover:bg-gray-500 disabled:cursor-not-allowed disabled:animate-none animate-pulse flex items-center justify-center gap-2"
                                             onClick={handleClose}

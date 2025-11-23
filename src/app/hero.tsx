@@ -85,7 +85,7 @@ export default function Hero() {
                         </div>
                         <div className="py-2 lg:py-4">
                             <h4 className="text-2xl font-medium">Nuestros padres</h4>
-                            <div className="flex justify-evenly items-center flex-col lg:flex-row gap-2">
+                            <div className="flex justify-evenly items-center flex-col lg:flex-row gap-2 landscape:flex-row">
                                 <div className="text-right">
                                     <p>Martín Salvador Lugo Aquino</p>
                                     <p>Ana María Rivero Ramírez</p>
