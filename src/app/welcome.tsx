@@ -35,7 +35,7 @@ export default function Welcome() {
     return isOpen ? (
         <>
             <section className={`w-screen h-screen z-50 fixed top-0 left-0 bg-black/50 flex items-center justify-center backdrop-blur-sm transition-opacity duration-500 ${isClosing ? "opacity-0" : "opacity-100"}`}>
-                <div className={`bg-gray-50 dark:bg-slate-800 rounded-xl shadow-xl text-center flex flex-col landscape:flex-row gap-2 h-4/5 landscape:h-5/6 w-full lg:w-1/2 mx-4 -mt-20 lg:mt-0 transition-all duration-500 ${isClosing ? "scale-95 opacity-0" : "scale-100 opacity-100"}`}>
+                <div className={`bg-gray-50 dark:bg-slate-800 rounded-xl shadow-xl text-center flex flex-col landscape:flex-row gap-2 h-4/5 landscape:h-5/6 w-full lg:w-1/2 mx-4 -mt-20 lg:mt-0 transition-all duration-500 ${isClosing ? "scale-95 opacity-0" : "scale-100 opacity-100"}`} onClick={handleClose}>
                     <div className="relative lg:min-w-xl h-full landscape:w-full">
                         <Image className="absolute -top-24 lg:-top-31 left-4 w-11/12 lg:w-3/5 lg:left-1/5 landscape:w-full landscape:left-0 landscape:top-2/5 landscape:-translate-y-1/2 landscape:p-4" src="/images/envelope.png" alt="Sobre de invitación" width={500} height={325} priority/>
                         <div className="overflow-hidden h-full">

@@ -5,7 +5,7 @@ import Link from "next/link";
 import Image from "next/image";
 import {useGuest} from "@/context/GuestContext";
 import HighlightedText from "@/components/HighlightedText";
-import {AccordionItem} from "@/components/Accordion";
+import {AccordionItem} from "@/components/AccordionItem";
 
 const detailsItems = [
     {
@@ -87,6 +87,7 @@ export default function Details() {
                         {detailsItems.map((item) => (
                             item.id !== "gifts" && (
                                 <AccordionItem
+                                    id={item.id}
                                     key={item.id}
                                     title={item.title}
                                     isOpen={openAccordion === item.id}
