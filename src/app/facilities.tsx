@@ -51,7 +51,7 @@ export default function Facilities() {
                     <HighlightedText className="text-3xl font-bold mb-6 text-center">Recomendaciones</HighlightedText>
                 </div>
                 {guest && (
-                    <p className="text-center p-2 text-base leading-relaxed landscape:px-12">{guest.name} en caso de buscar hospedaje para el evento, te podemos recomendar las siguientes opciones:</p>
+                    <p className="text-center p-2 text-base leading-relaxed">{guest.name} en caso de buscar hospedaje para el evento, te podemos recomendar las siguientes opciones:</p>
                 )}
                 <div
                     /*className="container p-4 mx-auto flex sm:flex-nowrap flex-wrap flex-col lg:flex-row justify-center items-center">*/
