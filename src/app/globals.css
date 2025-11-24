@@ -30,3 +30,36 @@ body {
     --color-dusty-green: #e1e1d7;
     --color-dusty-white: #faf5f5;
 }
+
+.orientation-blocker {
+    display: none; /* Oculto por defecto */
+    position: fixed;
+    inset: 0;
+    background-color: var(--background);
+    color: var(--foreground);
+    z-index: 9999;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 2rem;
+}
+
+@media (orientation: landscape) and (max-height: 600px) {
+    .orientation-blocker {
+        display: flex;
+    }
+}
+
+@keyframes rotate-phone {
+    0%, 40% {
+        transform: rotate(90deg);
+    }
+    60%, 100% {
+        transform: rotate(0deg);
+    }
+}
+
+.phone-icon-animation {
+    animation: rotate-phone 2.5s ease-in-out infinite;
+}

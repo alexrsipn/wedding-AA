@@ -5,7 +5,7 @@ import Link from "next/link";
 import Image from "next/image";
 import {useGuest} from "@/context/GuestContext";
 import HighlightedText from "@/components/HighlightedText";
-import {AccordionItem} from "@/components/Accordion";
+import {AccordionItem} from "@/components/AccordionItem";
 
 const detailsItems = [
     {
@@ -63,7 +63,7 @@ export default function Details() {
                 </div>
                 <HighlightedText className="text-3xl font-bold mb-6 text-center">Detalles del evento</HighlightedText>
                 {guest && (
-                    <p className="text-center p-2 text-base">{guest.name} {guest.assignedTickets!>1 ? "les" : "te"} recomendamos revisar todos los detalles de nuestro evento, presionando cada sección.</p>
+                    <p className="text-justify p-2 text-base">{guest.name} {guest.assignedTickets!>1 ? "les" : "te"} recomendamos revisar todos los detalles de nuestro evento, presionando cada sección.</p>
                 )}
                 <div className="container px-4 mx-auto flex sm:flex-nowrap flex-wrap flex-col lg:flex-row justify-center items-center gap-4">
                     <div
@@ -87,6 +87,7 @@ export default function Details() {
                         {detailsItems.map((item) => (
                             item.id !== "gifts" && (
                                 <AccordionItem
+                                    id={item.id}
                                     key={item.id}
                                     title={item.title}
                                     isOpen={openAccordion === item.id}
