@@ -169,7 +169,7 @@ export default function CheckinPage() {
                         )}
                         {scanResult.isException && (
                             <div className="mt-2 p-2 bg-blue-100 text-blue-800 rounded-md border border-blue-300">
-                                <p className="font-bold text-lg">Invitado con excepción</p>
+                                <p className="font-bold text-lg">Atención: Invitado con excepción aceptada.</p>
                             </div>
                         )}
                     </div>
