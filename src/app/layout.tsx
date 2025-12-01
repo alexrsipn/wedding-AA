@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import {Cinzel, Montserrat} from "next/font/google";
-import {JSX, Suspense} from "react";
+import {JSX, Suspense, ReactNode} from "react";
 import "./globals.css";
 import {AudioProvider} from "@/context/AudioContext";
 import {GuestProvider} from "@/context/GuestContext";
@@ -27,7 +27,7 @@ export const metadata: Metadata = {
 export default function RootLayout({
   children,
 }: Readonly<{
-  children: React.ReactNode;
+  children: ReactNode;
 }>): JSX.Element {
   return (
     <html lang="es">

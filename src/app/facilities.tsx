@@ -54,9 +54,7 @@ export default function Facilities() {
                     <p className="text-center p-2 text-base leading-relaxed">{guest.name} en caso de buscar hospedaje para el evento, te podemos recomendar las siguientes opciones:</p>
                 )}
                 <div
-                    /*className="container p-4 mx-auto flex sm:flex-nowrap flex-wrap flex-col lg:flex-row justify-center items-center">*/
                     className="container p-4 mx-auto grid grid-cols-1 md:grid-cols-2 gap-2">
-                    {/*<div className="flex flex-wrap justify-evenly items-center gap-2">*/}
                         {facilitiesItems.map((item) => (
                             <div key={item.id}>
                                 <div className="flex rounded-lg h-full bg-slate-50 p-8 flex-col text-gray-900">
@@ -84,11 +82,7 @@ export default function Facilities() {
                                 </div>
                             </div>
                         ))}
-                    {/*</div>*/}
                 </div>
-                {/*<div className="relative">
-                    <Image src="/images/corner_flowers.png" alt="Flores en la esquina" width={150} height={150} className="absolute bottom-0 right-0 m-0 p-0 -rotate-90 w-1/5 lg:w-1/12 saturate-75" unoptimized={true}/>
-                </div>*/}
             </section>
         </>
     );

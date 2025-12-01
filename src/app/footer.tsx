@@ -18,7 +18,6 @@ const Footer = () => {
                         <Link href={`/?guestId=${guest?.id}`} scroll={true}
                               className="flex title-font font-medium items-center md:justify-start justify-center text-gray-900">
                             <Image src="/images/logo_AA_light.svg" alt="Logo A&A" width={50} height={50} className="dark:invert" />
-                            {/*<span className="ml-3 text-sm">Andrea & Alexis</span>*/}
                         </Link>
                         <p className="text-sm text-gray-500">&copy; 2025 Andrea y Alexis</p>
                     </div>

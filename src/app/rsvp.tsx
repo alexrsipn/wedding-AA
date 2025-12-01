@@ -19,9 +19,6 @@ export default function Rsvp() {
                     <HighlightedText className="text-3xl font-bold mb-6 text-center">Asistencia</HighlightedText>
                     <RSVPForm/>
                 </div>
-                {/*<div className="relative">
-                    <Image src="/images/corner_flowers.png" alt="Flores en la esquina" width={150} height={150} className="absolute -bottom-12 lg:-bottom-12 right-0 m-0 p-0 -rotate-90 w-1/5 lg:w-1/12 saturate-75" unoptimized={true}/>
-                </div>*/}
             </section>
         </>
     );

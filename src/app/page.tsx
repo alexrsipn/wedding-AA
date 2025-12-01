@@ -18,7 +18,7 @@ export default function Home() {
       <Details/>
       <Rsvp/>
       <Facilities/>
-        <Gallery/>
+      <Gallery/>
       <Footer/>
     </div>
   );
