@@ -68,7 +68,6 @@ export default function Header() {
             className="sticky top-0 z-40 p-4 bg-white dark:bg-neutral-900"
         >
             <div className="container mx-auto flex items-center justify-between px-2">
-                {/*<Link href="#home" className={`flex-shrink-0 transition-all duration-300 ${isScrolled ? 'p-2' : 'p-4'}`} onClick={closeMenu}>*/}
                 <Image
                     src="/images/logo_AA_light.svg"
                     alt="Logo_boda_Andrea_y_Alexis"
@@ -77,7 +76,6 @@ export default function Header() {
                     priority
                     className="header-logo dark:invert"
                 />
-                {/*</Link>*/}
                 <nav className="hidden md:flex md:items-center md:justify-center gap-x-4">
                     {navLinks.map((link) => (
                         <Link

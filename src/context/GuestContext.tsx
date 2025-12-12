@@ -1,6 +1,6 @@
 "use client";
 
-import {createContext, useContext, useState, useEffect, ReactNode} from "react";
+import {createContext, useContext, useState, useEffect, ReactNode, Dispatch, SetStateAction} from "react";
 import {useSearchParams} from "next/navigation";
 
 export interface Guest {
@@ -10,6 +10,8 @@ export interface Guest {
     guestDetails?: string[],
     assignedTickets?: number,
     confirmedTickets?: number,
+    confirmedAttendees?: string,
+    confirmedAttendeesDetails?: string[],
     guestList?: string,
     phone?: string,
     email?: string,
@@ -21,12 +23,14 @@ interface GuestContextType {
     guest: Guest | null;
     isLoading: boolean;
     error: string | null;
+    setGuest: Dispatch<SetStateAction<Guest | null>>;
 }
 
 const GuestContext = createContext<GuestContextType>({
     guest: null,
     isLoading: true,
-    error: null
+    error: null,
+    setGuest: () => {}
 });
 
 export const useGuest = () => useContext(GuestContext);
@@ -48,7 +52,6 @@ export const GuestProvider = ({children}: {children: ReactNode}) => {
             try {
                 const response = await fetch(`/api/netlify/functions/get-guest?guestId=${guestId}`);
                 if (!response.ok) {
-                    /*throw new Error("No pudimos encontrar tu invitación");*/
                     console.error("No pudimos encontrar tu invitación");
                     setError("No pudimos encontrar tu invitación");
                     return;
@@ -56,7 +59,8 @@ export const GuestProvider = ({children}: {children: ReactNode}) => {
                 const data: Guest = await response.json();
 
                 const guestList = data.guestListDetails?.split(";");
-                const guestData = {
+                const guestsConfirmed = data.confirmedAttendees?.split(";");
+/*                const guestData = {
                     id: data.id,
                     name: data.name,
                     guestListDetails: data.guestListDetails,
@@ -67,8 +71,15 @@ export const GuestProvider = ({children}: {children: ReactNode}) => {
                     phone: data.phone,
                     email: data.email,
                     confirmed: data.confirmed,
-                    invitationStatus: data.invitationStatus
-                }
+                    invitationStatus: data.invitationStatus,
+                    confirmedAttendeesDetails: guestsConfirmed
+                };*/
+                const guestData = {
+                    ...data,
+                    guestDetails: guestList,
+                    confirmedAttendeesDetails: guestsConfirmed
+                };
+                console.log(guestData);
                 setGuest(guestData);
             } catch (err: unknown) {
                 if (err instanceof Error) {
@@ -84,8 +95,9 @@ export const GuestProvider = ({children}: {children: ReactNode}) => {
                 setIsLoading(false);
             }
         }
-        fetchGuest();
+        fetchGuest().catch(error => console.error(error));
     }, [guestId]);
-    const value = {guest, isLoading, error};
+    const value = {guest, isLoading, error, setGuest};
+
     return <GuestContext.Provider value={value}>{children}</GuestContext.Provider>;
 }
