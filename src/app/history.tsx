@@ -1,9 +1,7 @@
 "use client";
 
-import {useRef, useState, useEffect} from "react";
+import {useRef, useEffect} from "react";
 import Image from "next/image";
-import Typewriter from "@/components/Typewriter";
-import {useAudio} from "@/context/AudioContext";
 import {useGuest} from "@/context/GuestContext";
 import HighlightedText from "@/components/HighlightedText";
 import {gsap} from "gsap";
@@ -47,19 +45,11 @@ const historyItems: HistoryItem[] = [
         imageUrl: "/images/std_history_3.webp",
         audioUrl: "/audio/track_3.ogg"
     },
-/*    {
-        id: 4,
-        title: "El inicio de nuestra historia",
-        imageUrl: "/images/std_history_4.webp",
-        audioUrl: "/audio/track_1.ogg"
-    },*/
 ];
 
 export default function History() {
     const {guest} = useGuest();
-    const {isMuted, toggleMute} = useAudio();
     const containerRef = useRef<HTMLDivElement>(null);
-    const [activeCard, setActiveCard] = useState(-1);
     const audioRefs = useRef<(HTMLAudioElement | null)[]>([]);
 
     useEffect(() => {
@@ -69,22 +59,10 @@ export default function History() {
         };
     }, []);
 
-    useEffect(() => {
-        audioRefs.current.forEach((audio, index) => {
-            if (!audio) return;
-            audio.loop = true;
-            if (index === activeCard && !isMuted) {
-                audio.play().catch(e => console.error("Audio play error: ", e));
-            } else {
-                audio.pause();
-            }
-        });
-    }, [activeCard, isMuted]);
-
     useGSAP(() => {
         const sections = gsap.utils.toArray<HTMLDivElement>('.history-item');
 
-        sections.forEach((section, index) => {
+        sections.forEach((section) => {
             const imageEl = section.querySelector('.history-image') as HTMLImageElement;
             const textBox = section.querySelector('.history-text') as HTMLDivElement;
 
@@ -96,11 +74,7 @@ export default function History() {
                     trigger: section,
                     start: "top 50%",
                     scrub: true,
-                    end: "bottom 50%",
-                    onEnter: () => setActiveCard(index),
-                    onEnterBack: () => setActiveCard(index),
-                    onLeave: () => setActiveCard(-1),
-                    onLeaveBack: () => setActiveCard(-1)
+                    end: "bottom 50%"
                 }
             });
 
@@ -142,15 +116,6 @@ export default function History() {
                         {guest && (
                             <p className="text-justify p-2 text-base leading-relaxed"><b>{guest.name}</b> nos gustaría que {guest.assignedTickets!>1 ? "conozcan" : "conozcas"} nuestra historia, otra hermosa historia de amor que solamente Dios pudo haber diseñado.</p>
                         )}
-{/*                        <div className="w-full lg:max-w-1/5 py-2">
-                            <button onClick={toggleMute} aria-label={isMuted ? "Activar sonido" : "Silenciar"} className="bg-sky-700 hover:bg-sky-800 dark:bg-sky-600 dark:hover:bg-sky-700 cursor-pointer text-white px-4 py-2 rounded-md font-medium transition-colors w-full">
-                                {isMuted ? (
-                                    <span>Activar música</span>
-                                ) : (
-                                    <span>Silenciar</span>
-                                )}
-                            </button>
-                        </div>*/}
                     </div>
                     <div className="flex flex-col">
                         {historyItems.map((item, idx) => (
@@ -174,7 +139,6 @@ export default function History() {
                                         <div className="history-text max-w-3xl mt-0 py-4 bg-gray-50 dark:bg-slate-800 backdrop-blur-xl rounded-lg shadow-xl p-6">
                                             <h2 className="text-sm text-right font-medium leading-relaxed">{item.subtitle}</h2>
                                             <h4 className="text-lg md:text-xl text-center font-semibold italic">{item.title}</h4>
-                                            {/*<Typewriter text={item.title} finalBar={true} className="text-lg md:text-xl text-center font-semibold italic" startAnimation={true}></Typewriter>*/}
                                             <div className="flex flex-col gap-3 text-justify text-sm md:text-base">
                                                 <p className="py-2">{item.descriptionAndy}</p>
                                             </div>
@@ -186,9 +150,6 @@ export default function History() {
                         ))}
                     </div>
                 </div>
-{/*                <div className="relative">
-                    <Image src="/images/corner_flowers.png" alt="Flores en la esquina" width={150} height={150} className="absolute bottom-0 lg:-bottom-12 right-0 m-0 p-0 -rotate-90 w-1/5 lg:w-1/12 saturate-75" unoptimized={true}/>
-                </div>*/}
             </section>
         </>
     )

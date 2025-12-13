@@ -1,6 +1,6 @@
 "use client";
 
-import {useState, useEffect} from "react";
+import React, {useState, useEffect} from "react";
 import {Scanner} from "@yudiel/react-qr-scanner";
 
 const CHECKIN_PASSWORD = "1234";
@@ -47,7 +47,7 @@ export default function CheckinPage() {
             setIsAuthenticated(true);
         }
         if (isAuthenticated) {
-            fetchCheckedInGuests();
+            fetchCheckedInGuests().then(r => console.log("Fetched checked-in guests successfully: ", r));
         }
     }, [isAuthenticated]);
 
@@ -91,8 +91,10 @@ export default function CheckinPage() {
                         tickets: data.guest?.ConfirmedTickets,
                         isException: data.guest?.SpecialException
                     }));
-                    fetchCheckedInGuests();
+                    await fetchCheckedInGuests();
                 }
+                const result = await response.json();
+                console.log(result);
             } catch (error) {
                 console.error(error);
                 setScanResult({status: 'error', message: 'El código QR no es válido o no se pudo procesar.'})
@@ -104,7 +106,7 @@ export default function CheckinPage() {
 
     if (!isAuthenticated) {
         return (
-            <div className="flex items-center justify-center min-h-screen bg-gradient-to-r from-blue-200 to-cyan-200">
+            <div className="flex items-center justify-center min-h-screen bg-linear-to-r from-blue-200 to-cyan-200">
                 <form onSubmit={handlePasswordSubmit} className="bg-gray-50 dark:bg-slate-800 p-8 rounded-lg shadow-md w-full max-w-sm h-[40vh]">
                     <div className="flex flex-col justify-evenly items-center h-full">
                         <h2 className="text-3xl font-bold p-4 text-center">Boda A&A</h2>

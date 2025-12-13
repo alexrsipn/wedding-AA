@@ -2,7 +2,6 @@
 
 import {useState, useEffect, useRef} from "react";
 import Image from "next/image";
-import Typewriter from "@/components/Typewriter";
 import HighlightedText from "@/components/HighlightedText";
 import {useGSAP} from "@gsap/react";
 import {gsap} from "gsap";
@@ -45,14 +44,6 @@ export default function Hero() {
         gsap.fromTo(imageRef.current,
             {
                 y: 0,
-                /*ease: "sine.in",*/
-    /*            scrollTrigger: {
-                    trigger: heroRef.current,
-                    start: "top 50%",
-                    end: "bottom top",
-                    scrub: true,
-                    markers: true
-                }*/
             },
             {
                 y: "-50%",
@@ -78,7 +69,6 @@ export default function Hero() {
                             <Image src="/images/hero_flowers.png" alt="Flores" className="w-1/4 h-1/4 scale-x-130" width={300} height={400}/>
                         </div>
                         <div className="py-2 lg:py-4 w-full lg:w-4/5 mx-auto">
-                            {/*<Typewriter text={"¡Nos casamos!"} finalBar={true} className="text-4xl font-medium py-2" startAnimation={true}/>*/}
                             <HighlightedText className="text-4xl font-medium py-2">¡Nos casamos!</HighlightedText>
                             <p className="font-light italic text-justify px-4">&quot;Y a Aquel que es poderoso para hacer todas las cosas mucho más abundantemente de lo que pedimos o entendemos, según el poder que actúa en nosotros, a él sea gloria en la iglesia en Cristo Jesús por todas las edades, por los siglos de los siglos. Amén.&quot;</p>
                             <span className="font-light block text-right italic text-sm">Efesios 3:20-21</span>
@@ -114,11 +104,6 @@ export default function Hero() {
                                         <span className="text-2xl lg:text-4xl font-semibold">{String(timeLeft.minutos).padStart(2, '0')}</span>
                                         <span className="text-xs uppercase tracking-widest">Minutos</span>
                                     </div>
-{/*                                    <span className="text-4xl lg:text-5xl font-bold">:</span>
-                                    <div className="flex flex-col items-center">
-                                        <span className="text-4xl lg:text-5xl font-bold">{String(timeLeft.segundos).padStart(2, '0')}</span>
-                                        <span className="text-xs uppercase tracking-widest">Segundos</span>
-                                    </div>*/}
                                 </div>
                             ) : (
                                 <p className="text-2xl mt-4 font-semibold">¡El gran día ha llegado!</p>

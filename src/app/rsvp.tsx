@@ -19,17 +19,15 @@ export default function Rsvp() {
                     <HighlightedText className="text-3xl font-bold mb-6 text-center">Asistencia</HighlightedText>
                     <RSVPForm/>
                 </div>
-                {/*<div className="relative">
-                    <Image src="/images/corner_flowers.png" alt="Flores en la esquina" width={150} height={150} className="absolute -bottom-12 lg:-bottom-12 right-0 m-0 p-0 -rotate-90 w-1/5 lg:w-1/12 saturate-75" unoptimized={true}/>
-                </div>*/}
             </section>
         </>
     );
 }
 
 function RSVPForm() {
-    const {guest, isLoading, error} = useGuest();
+    const {guest, isLoading, error, setGuest} = useGuest();
     const [selectedGuests, setSelectedGuests] = useState<string[]>([]);
+    /*const [confirmedGuests, setConfirmedGuests] = useState<string[]>([]);*/
     const [status, setStatus] = useState<'idle' | 'submitting' | 'success' | 'declined' | 'error'>('idle');
     const [isDownloading, setIsDownloading] = useState(false);
     const ticketRef = useRef<HTMLDivElement>(null);
@@ -38,7 +36,9 @@ function RSVPForm() {
 
     useEffect(() => {
         if (guest?.guestDetails) {
-            setSelectedGuests(guest.guestDetails);
+            if (guest.invitationStatus !== "Confirmed" && guest.invitationStatus !== "Declined") {
+                setSelectedGuests(guest.guestDetails);
+            }
         }
     }, [guest]);
 
@@ -49,17 +49,19 @@ function RSVPForm() {
     const handleSubmit = async () => {
         if (!guest) return;
         setStatus('submitting');
+        const dataToSend = {
+            GuestId: guest.id,
+            Confirmed: selectedGuests.length > 0,
+            ConfirmedTickets: selectedGuests.length,
+            ConfirmedAttendees: selectedGuests.join(';'),
+            InvitationStatus: "Confirmed",
+            DeclineReason: ""
+        };
         try {
             const response = await fetch('/api/netlify/functions/confirm-guest', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({
-                    GuestId: guest.id,
-                    Confirmed: selectedGuests.length > 0,
-                    ConfirmedTickets: selectedGuests.length,
-                    ConfirmedAttendees: selectedGuests,
-                    InvitationStatus: "Confirmed"
-                }),
+                body: JSON.stringify(dataToSend),
             });
 
             if (!response.ok) {
@@ -67,6 +69,14 @@ function RSVPForm() {
                 console.log("Error al confirmar la asistencia")
                 return;
             }
+            setGuest(prevGuest => ({
+                ...prevGuest!,
+                invitationStatus: "Confirmed",
+                confirmed: true,
+                confirmedTickets: selectedGuests.length,
+                confirmedAttendees: selectedGuests.join(';'),
+                confirmedAttendeesDetails: selectedGuests
+            }));
             setStatus('success');
         } catch (e) {
             setStatus('error');
@@ -77,24 +87,33 @@ function RSVPForm() {
     const handleDecline = async (reason: string) => {
         if (!guest) return;
         setStatus('submitting');
+        const dataToSend = {
+            GuestId: guest.id,
+            Confirmed: true,
+            ConfirmedTickets: 0,
+            ConfirmedAttendees: "",
+            InvitationStatus: "Declined",
+            DeclineReason: reason
+        };
         try {
             const response = await fetch('/api/netlify/functions/confirm-guest', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({
-                    GuestId: guest.id,
-                    Confirmed: true,
-                    ConfirmedTickets: 0,
-                    ConfirmedAttendees: [],
-                    InvitationStatus: "Declined",
-                    DeclineReason: reason
-                }),
+                body: JSON.stringify(dataToSend),
             });
 
             if (!response.ok) {
                 setStatus('error');
                 return;
             }
+            setGuest(prevGuest => ({
+                ...prevGuest!,
+                invitationStatus: "Declined",
+                confirmed: true,
+                confirmedTickets: 0,
+                confirmedAttendees: "",
+                confirmedAttendeesDetails: []
+            }));
             setStatus('declined');
             setIsDeclineModalOpen(false);
         } catch (e: unknown) {
@@ -177,7 +196,7 @@ function RSVPForm() {
             <div className="w-full flex flex-col justify-center items-center text-center">
                 <h3 className="text-2xl lg:text-3xl font-serif font-semibold title-font mb-4 text-gray-900 dark:text-white">¡Gracias por confirmar!</h3>
                 <p className="text-xl lg:text-lg font-normal text-gray-900 dark:text-white pb-4">Tu respuesta ha sido guardada. ¡Nos llena de alegría saber que nos acompañarás!</p>
-                <Ticket ref={ticketRef} guestName={guest.name} confirmedGuests={guest.guestDetails || []} guestId={guest.id} />
+                <Ticket ref={ticketRef} guestName={guest.name} confirmedGuests={guest.confirmedAttendeesDetails || []} guestId={guest.id} />
                 <div className="flex flex-col sm:flex-row gap-8 mt-8">
                     <button
                         onClick={handleDownloadTicket}
