@@ -17,7 +17,6 @@ const navLinks = [
     { name: 'Asistencia', href: '#rvsp' },
     { name: 'Recomendaciones', href: '#facilities' },
     { name: 'Galería', href: '#gallery' },
-    { name: 'Momentos', href: '/library' }
 ];
 
 export default function Header() {
